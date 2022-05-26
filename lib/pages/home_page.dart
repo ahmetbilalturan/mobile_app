@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
         slivers: [
           SliverAppBar(
               backgroundColor: Colors.blue,
-              title: Text('home', style: TextStyle(color: Colors.black)),
+              title: Text('home', style: TextStyle(color: Colors.red)),
               systemOverlayStyle: SystemUiOverlayStyle.dark)
         ],
       ),
