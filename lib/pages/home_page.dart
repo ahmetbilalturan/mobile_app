@@ -27,16 +27,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: const CustomScrollView(
+    return const Scaffold(
+      drawer: NavigationDrawerWidget(),
+      body: CustomScrollView(
         slivers: [
           SliverAppBar(
               backgroundColor: Colors.blue,
-              title: Text('home', style: TextStyle(color: Colors.red)),
+              title: Text('home', style: TextStyle(color: Colors.white)),
               systemOverlayStyle: SystemUiOverlayStyle.dark)
         ],
       ),
