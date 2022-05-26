@@ -33,8 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
         slivers: [
           SliverAppBar(
               backgroundColor: Colors.red,
-              title: Text('home', style: TextStyle(color: Colors.white)),
-              systemOverlayStyle: SystemUiOverlayStyle.dark)
+              title: Text('home',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+              centerTitle: true)
         ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
