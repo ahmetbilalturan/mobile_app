@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.red,
               title: Text('home', style: TextStyle(color: Colors.white)),
               systemOverlayStyle: SystemUiOverlayStyle.dark)
         ],
