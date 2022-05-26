@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_app/widget/search_button.dart';
-
-import '../widget/navigation_drawer_widget.dart';
+import 'package:test_app/widget/all_widgets.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -28,11 +26,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
+    return const Scaffold(
+      drawer: NavigationDrawerWidget(),
       body: CustomScrollView(
         slivers: <Widget>[
-          const SliverAppBar(
+          SliverAppBar(
             backgroundColor: Colors.red,
             title: Text('home',
                 style: TextStyle(
@@ -42,27 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
             systemOverlayStyle: SystemUiOverlayStyle.dark,
             centerTitle: true,
             floating: true,
+            pinned: false,
+            snap: false,
             actions: [
               SearchButton(),
             ],
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  color: index.isOdd ? Colors.white : Colors.black12,
-                  height: 100.0,
-                  child: Center(
-                    child: Text(
-                      '$index',
-                      textScaleFactor: 5,
-                    ),
-                  ),
-                );
-              },
-              childCount: 20,
-            ),
-          ),
+          ScrollingBody(),
         ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
