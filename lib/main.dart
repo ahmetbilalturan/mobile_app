@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/screens.dart';
-import 'package:test_app/widget/navigation_drawer_widget.dart';
 
 void main() {
   runApp(const MyApp());
