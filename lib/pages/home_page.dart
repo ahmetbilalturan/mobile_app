@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_app/widget/search_button.dart';
 
 import '../widget/navigation_drawer_widget.dart';
 
@@ -27,13 +28,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
+    return const Scaffold(
+      drawer: NavigationDrawerWidget(),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             backgroundColor: Colors.red,
-            title: const Text('home',
+            title: Text('home',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
@@ -42,16 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             centerTitle: true,
             floating: true,
             actions: [
-              Container(
-                  margin: const EdgeInsets.all(6.0),
-                  decoration: const BoxDecoration(
-                      color: Colors.grey, shape: BoxShape.circle),
-                  child: IconButton(
-                    icon: const Icon(Icons.search),
-                    iconSize: 30,
-                    color: Colors.black,
-                    onPressed: () {},
-                  ))
+              SearchButton(),
             ],
           )
         ],
