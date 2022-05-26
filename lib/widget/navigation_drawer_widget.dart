@@ -23,6 +23,8 @@ class NavigationDrawerWidget extends StatelessWidget {
           const SizedBox(height: 8),
           buildMenuItem(text: 'Tüm Mangalar', icon: Icons.book),
           const SizedBox(height: 24),
+          buildMenuItem(text: 'Abonelikler', icon: Icons.home),
+          const SizedBox(height: 8),
           const Divider(color: Colors.white70),
           const SizedBox(height: 24),
           buildMenuItem(text: 'Profil', icon: Icons.face),
