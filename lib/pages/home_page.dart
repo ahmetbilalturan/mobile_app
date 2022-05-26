@@ -28,11 +28,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return const Scaffold(
-      drawer: NavigationDrawerWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
       body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
+        slivers: <Widget>[
+          const SliverAppBar(
             backgroundColor: Colors.red,
             title: Text('home',
                 style: TextStyle(
@@ -45,7 +45,24 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [
               SearchButton(),
             ],
-          )
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  color: index.isOdd ? Colors.white : Colors.black12,
+                  height: 100.0,
+                  child: Center(
+                    child: Text(
+                      '$index',
+                      textScaleFactor: 5,
+                    ),
+                  ),
+                );
+              },
+              childCount: 20,
+            ),
+          ),
         ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
