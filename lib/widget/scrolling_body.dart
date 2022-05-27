@@ -12,12 +12,12 @@ class ScrollingBody extends StatelessWidget {
         return Container(
             color: index.isOdd ? Colors.white : Colors.black12,
             height: 250.0,
-            //add container name from db and (see all) button!
+            //add container(for exp: new releases) name from db and (see all) button!
 
             child: ListView.builder(
               //This handles horizontal boxes.
               scrollDirection: Axis.horizontal,
-              itemCount: 7, //it comes from db!!!
+              itemCount: 7, //pull from db!!!
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: const EdgeInsets.fromLTRB(20, 30, 20, 30),
@@ -28,7 +28,8 @@ class ScrollingBody extends StatelessWidget {
               },
             ));
       },
-      childCount: 10, //this comes from db!
+      childCount: 10, //pull from db!
+      //for favorites and subscriptions pages divide manga count with 3 if remaining value is over 0 add 1 to result
     ));
   }
 }

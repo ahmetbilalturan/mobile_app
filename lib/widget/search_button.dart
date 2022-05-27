@@ -5,6 +5,7 @@ class SearchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //basic search button. should pull userID for specific searchs.
     return Container(
         margin: const EdgeInsets.all(6.0),
         decoration:

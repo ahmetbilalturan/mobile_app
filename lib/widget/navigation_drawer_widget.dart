@@ -7,6 +7,7 @@ class NavigationDrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //its sidebar menu
     return Drawer(
         child: Material(
       color: const Color.fromARGB(255, 158, 26, 26),
@@ -17,7 +18,8 @@ class NavigationDrawerWidget extends StatelessWidget {
           buildMenuItem(
               text: 'Anasayfa',
               icon: Icons.home,
-              onClicked: () => selectedItem(context, 0)),
+              onClicked: () => selectedItem(context,
+                  0)), //with int value selectedItem function resolve which pages it should go
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Haftalık En Beğenilenler', icon: Icons.auto_graph),
@@ -62,11 +64,12 @@ class NavigationDrawerWidget extends StatelessWidget {
   }
 
   void selectedItem(BuildContext context, int index) {
-    //check route if its same dont navigate
+    //check route if its same dont navigate!!!!!!
     switch (index) {
       case 0:
-        Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/homepage");
+        //should check current route name to set these clickable or not
+        Navigator.of(context).pop(); //closing drawer
+        Navigator.of(context).pushNamed("/homepage"); //navigating pages
         break;
       case 1:
         Navigator.of(context).pop();
