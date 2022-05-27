@@ -9,17 +9,24 @@ class ScrollingBody extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
       (BuildContext context, int index) {
         return Container(
-          color: index.isOdd ? Colors.white : Colors.black12,
-          height: 250.0,
-          child: Center(
-            child: Text(
-              '$index',
-              textScaleFactor: 5,
-            ),
-          ),
-        );
+            color: index.isOdd ? Colors.white : Colors.black12,
+            height: 250.0,
+            //add container name from db and (see all) button!
+
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 7, //it comes from db!!!
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                  width: 150,
+                  color: Colors
+                      .red, //there should be cover photo, name and genres!
+                );
+              },
+            ));
       },
-      childCount: 10,
+      childCount: 10, //this comes from db!
     ));
   }
 }
