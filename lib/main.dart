@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/screens.dart';
+import 'package:test_app/route_generator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,9 +26,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.grey,
       ),
-      home: const MyHomePage(
-        title: 'Anasayfa',
-      ),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

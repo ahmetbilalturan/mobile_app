@@ -14,12 +14,18 @@ class NavigationDrawerWidget extends StatelessWidget {
         padding: padding,
         children: <Widget>[
           const SizedBox(height: 48),
-          buildMenuItem(text: 'Anasayfa', icon: Icons.home),
+          buildMenuItem(
+              text: 'Anasayfa',
+              icon: Icons.home,
+              onClicked: () => selectedItem(context, 0)),
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Haftalık En Beğenilenler', icon: Icons.auto_graph),
           const SizedBox(height: 8),
-          buildMenuItem(text: 'Favoriler', icon: Icons.favorite),
+          buildMenuItem(
+              text: 'Favoriler',
+              icon: Icons.favorite,
+              onClicked: () => selectedItem(context, 1)),
           const SizedBox(height: 8),
           buildMenuItem(text: 'Abonelikler', icon: Icons.calendar_month),
           const SizedBox(height: 8),
@@ -39,12 +45,27 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget buildMenuItem({
     required String text,
     required IconData icon,
+    VoidCallback? onClicked,
   }) {
     return ListTile(
       leading: Icon(icon, color: Colors.white),
       title: Text(text, style: const TextStyle(color: Colors.white)),
       hoverColor: Colors.white70,
-      onTap: () {},
+      onTap: onClicked,
     );
+  }
+
+  void selectedItem(BuildContext context, int index) {
+    //check route if its same dont navigate
+    switch (index) {
+      case 0:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/");
+        break;
+      case 1:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/second");
+        break;
+    }
   }
 }
