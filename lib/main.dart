@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.grey,
       ),
-      initialRoute: '/',
+      initialRoute: '/homepage',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_app/widget/all_widgets.dart';
+import 'package:test_app/widget/sliver_app_bar.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -30,22 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: const NavigationDrawerWidget(),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor: const Color.fromARGB(255, 144, 34, 26),
-            title: Text(widget.title,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold)),
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            centerTitle: true,
-            floating: true,
-            pinned: false,
-            snap: false,
-            actions: const [
-              SearchButton(),
-            ],
-          ),
+          SliverHeader(title: widget.title),
           const ScrollingBody(),
         ],
       ),

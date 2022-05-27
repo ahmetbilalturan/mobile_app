@@ -27,9 +27,15 @@ class NavigationDrawerWidget extends StatelessWidget {
               icon: Icons.favorite,
               onClicked: () => selectedItem(context, 1)),
           const SizedBox(height: 8),
-          buildMenuItem(text: 'Abonelikler', icon: Icons.calendar_month),
+          buildMenuItem(
+              text: 'Abonelikler',
+              icon: Icons.calendar_month,
+              onClicked: () => selectedItem(context, 2)),
           const SizedBox(height: 8),
-          buildMenuItem(text: 'Tüm Mangalar', icon: Icons.book),
+          buildMenuItem(
+              text: 'Tüm Mangalar',
+              icon: Icons.book,
+              onClicked: () => selectedItem(context, 3)),
           const SizedBox(height: 8),
           const Divider(color: Colors.white70),
           const SizedBox(height: 24),
@@ -60,11 +66,20 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/");
+        Navigator.of(context).pushNamed("/homepage");
         break;
       case 1:
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/second");
+        Navigator.of(context).pushNamed("/favorites");
+        break;
+      //add weekly populers
+      case 2:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/subscriptions");
+        break;
+      case 3:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/all");
         break;
     }
   }

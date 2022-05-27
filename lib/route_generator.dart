@@ -6,13 +6,21 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+      case '/homepage':
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(title: 'Anasayfa'));
-      case '/second':
+      case '/favorites':
         //check user id from db
         return MaterialPageRoute(
-            builder: (context) => const MyHomePage(title: 'Favoriler'));
+            builder: (context) => const FavoritesPage(userID: 13));
+      case '/subscriptions':
+        //check user id from db
+        return MaterialPageRoute(
+            builder: (context) => const SubscriptionsPage(userID: 13));
+      case '/all':
+        //check user id from db
+        return MaterialPageRoute(
+            builder: (context) => const AllMangasPage(userID: 13));
 
       default:
         return MaterialPageRoute(
