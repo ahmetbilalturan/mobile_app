@@ -6,6 +6,7 @@ class ScrollingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList(
+        //this handles vertical boxes.
         delegate: SliverChildBuilderDelegate(
       (BuildContext context, int index) {
         return Container(
@@ -14,6 +15,7 @@ class ScrollingBody extends StatelessWidget {
             //add container name from db and (see all) button!
 
             child: ListView.builder(
+              //This handles horizontal boxes.
               scrollDirection: Axis.horizontal,
               itemCount: 7, //it comes from db!!!
               itemBuilder: (BuildContext context, int index) {

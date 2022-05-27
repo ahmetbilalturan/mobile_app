@@ -31,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            //backgroundColor: Colors.red,
-            title: Text('home',
+            backgroundColor: Color.fromARGB(255, 144, 34, 26),
+            title: Text("Anasayfa",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
