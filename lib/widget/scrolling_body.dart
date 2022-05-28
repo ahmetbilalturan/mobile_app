@@ -11,50 +11,71 @@ class ScrollingBody extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
       (BuildContext context, int index) {
         return Container(
-            margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            color: index.isOdd ? Colors.white10 : Colors.white10,
-            height: 250.0,
-            child: Stack(
-              children: [
-                const Align(
-                  alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    height: 50,
-                    width: 300,
-                    /*child: Row(
-                        children: [
-                          ButtonBar(
-                            children: [
-                              ElevatedButton(
-                                onPressed: () => print("selam"),
-                                child: const Text("salam"),
-                              )
-                            ],
-                          )               ///////// ADD SEE ALL BUTTON AND LIST NAME
-                                          //////// HTF I CAN DO THAT
-                        ],
-                      )*/
+            margin: const EdgeInsets.symmetric(vertical: 5.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            //color: index.isOdd ? Colors.white : Colors.black12,
+            color: Colors.purple,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          "container ismi",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => print("basıldı"),
+                        icon: const Icon(Icons.abc),
+                      )
+                    ],
                   ),
-                ),
-                ListView.builder(
-                  //This handles horizontal boxes.
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 7, //pull from db!!!
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: const EdgeInsets.fromLTRB(20, 40, 20, 30),
-                      width: 150,
-                      color: Colors
-                          .red, //there should be cover photo, name and genres!
-                    );
-                  },
-                )
-              ],
-            )
+                  Container(
+                    height: 255,
+                    color: Colors.red,
+                    margin: const EdgeInsets.symmetric(vertical: 5.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 7,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              height: 175,
+                              width: 125,
+                              color: Colors.blue,
+                              child: Text("photo"),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 10.0),
+                              height: 40,
+                              width: 125,
+                              color: Colors.green,
+                              child: Text("artist and genre"),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
 
-            //add container(for exp: new releases) name from db and (see all) button!
-
-            );
+              //add container(for exp: new releases) name from db and (see all) button!
+            ));
       },
       childCount: 10, //pull from db!
       //for favorites and subscriptions pages divide manga count with 3 if remaining value is over 0 add 1 to result
