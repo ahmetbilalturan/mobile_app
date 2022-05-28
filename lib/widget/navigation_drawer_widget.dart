@@ -12,7 +12,6 @@ class NavigationDrawerWidget extends StatelessWidget {
         child: Material(
       color: const Color.fromARGB(255, 158, 26, 26),
       child: ListView(
-        padding: padding,
         children: <Widget>[
           const SizedBox(height: 48),
           buildMenuItem(
