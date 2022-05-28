@@ -24,7 +24,7 @@ class ScrollingBody extends StatelessWidget {
                     children: [
                       const Expanded(
                         child: Text(
-                          "container ismi",
+                          "container name",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
