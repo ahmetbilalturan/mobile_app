@@ -19,13 +19,21 @@ class ScrollingBody extends StatelessWidget {
                 const Align(
                   alignment: Alignment.topCenter,
                   child: SizedBox(
-                    height: 20,
-                    width: 150,
-                    child: Text('Blabla', //pull from db????
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Color.fromARGB(255, 49, 5, 5))),
+                    height: 50,
+                    width: 300,
+                    /*child: Row(
+                        children: [
+                          ButtonBar(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () => print("selam"),
+                                child: const Text("salam"),
+                              )
+                            ],
+                          )               ///////// ADD SEE ALL BUTTON AND LIST NAME
+                                          //////// HTF I CAN DO THAT
+                        ],
+                      )*/
                   ),
                 ),
                 ListView.builder(
