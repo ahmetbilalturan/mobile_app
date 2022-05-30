@@ -36,7 +36,8 @@ class ScrollingBody extends StatelessWidget {
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(fontSize: 15),
                         ),
-                        onPressed: () => print("basıldı"),
+                        onPressed: () =>
+                            print("basıldı"), //navigate to container page
                         child: const Text('Tümünü Gör'),
                       ),
                       const SizedBox(height: 30)
@@ -55,20 +56,21 @@ class ScrollingBody extends StatelessWidget {
                         return Column(
                           children: [
                             Container(
-                              margin:
+                              margin: //add cover photo from db later
                                   const EdgeInsets.symmetric(horizontal: 10.0),
                               height: 175,
                               width: 125,
                               color: Colors.blue,
-                              child: Text("photo"),
+                              child: const Text("photo"),
                             ),
                             Container(
+                              //pull artist name and genre from db
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 10.0, vertical: 10.0),
                               height: 40,
                               width: 125,
                               color: Colors.green,
-                              child: Text("artist and genre"),
+                              child: const Text("artist and genre"),
                             )
                           ],
                         );
