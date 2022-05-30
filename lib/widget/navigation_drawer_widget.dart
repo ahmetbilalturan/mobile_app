@@ -32,7 +32,7 @@ class NavigationDrawerWidget extends StatelessWidget {
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Tüm Mangalar',
-              icon: Icons.book,
+              icon: Icons.book_sharp,
               onClicked: () => selectedItem(context, 3)),
           buildMenuItem(
               text: 'Haftalık En İyiler',

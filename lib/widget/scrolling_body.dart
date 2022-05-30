@@ -32,10 +32,14 @@ class ScrollingBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      IconButton(
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 15),
+                        ),
                         onPressed: () => print("basıldı"),
-                        icon: const Icon(Icons.abc),
-                      )
+                        child: const Text('Tümünü Gör'),
+                      ),
+                      const SizedBox(height: 30)
                     ],
                   ),
                   Container(
