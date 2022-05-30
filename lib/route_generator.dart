@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/screens.dart';
+import 'package:test_app/pages/weekly_best.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -27,7 +28,10 @@ class RouteGenerator {
         //check user id from db
         return MaterialPageRoute(
             builder: (context) => const AllMangasPage(userID: 13));
-
+      case '/wbest':
+        //check user id from db
+        return MaterialPageRoute(
+            builder: (context) => const WeeklyBestPage(userID: 13));
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(

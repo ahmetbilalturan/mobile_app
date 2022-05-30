@@ -21,9 +21,6 @@ class NavigationDrawerWidget extends StatelessWidget {
                   0)), //with int value selectedItem function resolve which pages it should go
           const SizedBox(height: 8),
           buildMenuItem(
-              text: 'Haftalık En Beğenilenler', icon: Icons.auto_graph),
-          const SizedBox(height: 8),
-          buildMenuItem(
               text: 'Favoriler',
               icon: Icons.favorite,
               onClicked: () => selectedItem(context, 1)),
@@ -37,6 +34,11 @@ class NavigationDrawerWidget extends StatelessWidget {
               text: 'Tüm Mangalar',
               icon: Icons.book,
               onClicked: () => selectedItem(context, 3)),
+          buildMenuItem(
+              text: 'Haftalık En İyiler',
+              icon: Icons.auto_graph,
+              onClicked: () => selectedItem(context, 4)),
+          const SizedBox(height: 8),
           const SizedBox(height: 8),
           const Divider(color: Colors.white70),
           const SizedBox(height: 24),
@@ -82,6 +84,10 @@ class NavigationDrawerWidget extends StatelessWidget {
       case 3:
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/all");
+        break;
+      case 4:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/wbest");
         break;
     }
   }
