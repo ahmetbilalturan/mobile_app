@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class ScrollingBody extends StatelessWidget {
@@ -120,7 +118,7 @@ class WebtoonList extends StatelessWidget {
                 height: 40,
                 width: 125,
                 color: Colors.green,
-                child: const Text("orospu çocu ve anası"),
+                child: const Text("artist and genre"),
               )
             ],
           );
