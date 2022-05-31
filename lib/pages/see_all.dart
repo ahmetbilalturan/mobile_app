@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:test_app/widget/all_widgets.dart';
+import 'package:test_app/widget/sliver_app_bar.dart';
+
+class SeeAllPage extends StatefulWidget {
+  final int userID;
+  final String title;
+
+  const SeeAllPage({Key? key, required this.title, required this.userID})
+      : super(key: key);
+
+  @override
+  State<SeeAllPage> createState() => _SeeAllPage();
+}
+
+class _SeeAllPage extends State<SeeAllPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(), //push user id
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverHeader(title: widget.title),
+          const ScrollingBody(), //push userid, list from db
+        ],
+      ),
+    );
+  }
+}

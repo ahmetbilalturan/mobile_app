@@ -32,6 +32,12 @@ class RouteGenerator {
         //check user id from db
         return MaterialPageRoute(
             builder: (context) => const WeeklyBestPage(userID: 13));
+      case '/seeall':
+        return MaterialPageRoute(
+            builder: (context) => const SeeAllPage(
+                  userID: 13,
+                  title: 'SeeAll',
+                ));
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(
