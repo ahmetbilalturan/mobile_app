@@ -33,10 +33,18 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) => const WeeklyBestPage(userID: 13));
       case '/seeall':
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (context) => SeeAllPage(
+              userID: 13,
+              title: args,
+            ),
+          );
+        }
         return MaterialPageRoute(
-            builder: (context) => const SeeAllPage(
+            builder: (context) => const MyHomePage(
+                  title: 'Hata',
                   userID: 13,
-                  title: 'SeeAll',
                 ));
       default:
         return MaterialPageRoute(

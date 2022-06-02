@@ -23,9 +23,11 @@ class ScrollingBody extends StatelessWidget {
                   Row(
                     children: const [
                       ContainerName(
-                        containerName: 'ContainerName',
+                        containerName: 'ContainerName', //pull from db
                       ),
-                      SeeAllButton(),
+                      SeeAllButton(
+                        seeallcontainerName: 'ContainerName', //pull from db
+                      ),
                       SizedBox(height: 30)
                     ],
                   ),
@@ -43,7 +45,9 @@ class ScrollingBody extends StatelessWidget {
 }
 
 class SeeAllButton extends StatelessWidget {
-  const SeeAllButton({Key? key}) : super(key: key);
+  final String seeallcontainerName;
+  const SeeAllButton({Key? key, required this.seeallcontainerName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +55,8 @@ class SeeAllButton extends StatelessWidget {
       style: TextButton.styleFrom(
         textStyle: const TextStyle(fontSize: 15),
       ),
-      onPressed: () => Navigator.of(context)
-          .pushNamed("/seeall"), //navigate to container page
+      onPressed: () => Navigator.of(context).pushNamed("/seeall",
+          arguments: seeallcontainerName), //navigate to container page
       child: const Text('Tümünü Gör'),
     );
   }
