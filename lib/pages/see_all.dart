@@ -21,8 +21,9 @@ class _SeeAllPage extends State<SeeAllPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverHeader(title: widget.title),
-          const ScrollingBody(), //push userid, list from db
+          const ScreenBody()
         ],
+        //push userid, list from db
       ),
     );
   }
