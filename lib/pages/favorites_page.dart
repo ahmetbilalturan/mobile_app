@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/widget/all_widgets.dart';
-import 'package:test_app/widget/sliver_app_bar.dart';
 
 class FavoritesPage extends StatefulWidget {
   final int userID;
@@ -15,12 +14,15 @@ class _FavoritesPage extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        drawer: NavigationDrawerWidget(),
-        body: CustomScrollView(
-          slivers: [
-            SliverHeader(title: "Favoriler"),
-            ScrollingBody(), //push int values for scrolling body
-          ],
-        ));
+      backgroundColor: Colors.purple,
+      drawer: NavigationDrawerWidget(),
+      body: CustomScrollView(
+        slivers: [
+          SliverHeader(title: "Favoriler"),
+          //push int values for scrolling body
+          ScreenBody(),
+        ],
+      ),
+    );
   }
 }

@@ -51,8 +51,8 @@ class SeeAllButton extends StatelessWidget {
       style: TextButton.styleFrom(
         textStyle: const TextStyle(fontSize: 15),
       ),
-      onPressed: () => print(MediaQuery.of(context).size.width),
-      //Navigator.of(context).pushNamed("/seeall"), //navigate to container page
+      onPressed: () => Navigator.of(context)
+          .pushNamed("/seeall"), //navigate to container page
       child: const Text('Tümünü Gör'),
     );
   }

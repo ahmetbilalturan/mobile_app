@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/widget/all_widgets.dart';
-import 'package:test_app/widget/sliver_app_bar.dart';
 
 class SeeAllPage extends StatefulWidget {
   final int userID;
@@ -17,6 +16,7 @@ class _SeeAllPage extends State<SeeAllPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.purple,
       drawer: const NavigationDrawerWidget(), //push user id
       body: CustomScrollView(
         slivers: <Widget>[
