@@ -9,10 +9,10 @@ class ScreenBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0),
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
+          maxCrossAxisExtent: 225,
           mainAxisSpacing: 10,
           crossAxisSpacing: 15,
-          childAspectRatio: .60,
+          childAspectRatio: .6,
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
@@ -43,7 +43,7 @@ class ScreenBody extends StatelessWidget {
                           child: const Text('artist name',
                               style: TextStyle(fontSize: 18)),
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 2),
                         GestureDetector(
                           onTap: () => print('genre sayfasına gidildi'),
                           child: const Text('genre',
