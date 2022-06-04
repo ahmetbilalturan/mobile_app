@@ -9,6 +9,17 @@ class InspectWebtoon extends StatefulWidget {
 }
 
 class _InspectWebtoonState extends State<InspectWebtoon> {
+  late String _dir;
+  late List<String> _images, _tempImages;
+  String _cbzPath = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _images = List();
+    _tempImages = List();
+  }
+
   @override
   Widget build(BuildContext context) {}
 }
