@@ -28,7 +28,6 @@ class ScrollingBody extends StatelessWidget {
                       SeeAllButton(
                         seeallcontainerName: 'ContainerName', //pull from db
                       ),
-                      SizedBox(height: 30)
                     ],
                   ),
                   const WebtoonList(), //pull list from db
@@ -90,7 +89,7 @@ class WebtoonList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 255,
+      height: 251,
       color: Colors.red,
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0),

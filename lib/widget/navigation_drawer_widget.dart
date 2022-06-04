@@ -13,7 +13,29 @@ class NavigationDrawerWidget extends StatelessWidget {
       color: const Color.fromARGB(255, 158, 26, 26),
       child: ListView(
         children: <Widget>[
-          const SizedBox(height: 48),
+          const SizedBox(height: 15),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => {
+                  Navigator.of(context).pop(),
+                  Navigator.of(context).pushNamed('/login', arguments: 'selam')
+                },
+                child: const Text('giriş yap'),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ElevatedButton(
+                onPressed: () => print('kayıt olundu'),
+                child: const Text('kayıt ol'),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
           buildMenuItem(
               text: 'Anasayfa',
               icon: Icons.home,

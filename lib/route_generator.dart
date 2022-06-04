@@ -46,6 +46,8 @@ class RouteGenerator {
                   title: 'Hata',
                   userID: 13,
                 ));
+      case '/login':
+        return MaterialPageRoute(builder: (context) => const LoginPage());
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(

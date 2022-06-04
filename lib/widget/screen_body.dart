@@ -12,17 +12,17 @@ class ScreenBody extends StatelessWidget {
           maxCrossAxisExtent: 225,
           mainAxisSpacing: 10,
           crossAxisSpacing: 15,
-          childAspectRatio: .6,
+          childAspectRatio: .55,
+          mainAxisExtent: 350,
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
                 color: Colors.blue,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 275,
                       alignment: Alignment.center,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
