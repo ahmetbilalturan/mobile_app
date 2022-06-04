@@ -24,15 +24,12 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
-              child: const Text(
-                'Manga',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 30,
-                ),
+              child: AspectRatio(
+                aspectRatio: 5,
+                child: Image.asset('png/manga-2.png'),
               ),
             ),
+            const SizedBox(height: 15),
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -56,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextButton(
               onPressed: () {
-                //forgot password screen
+                Navigator.of(context).pushNamed('/forgotpassword');
               },
               child: const Text(
                 'Şifremi Unuttum',
@@ -83,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontSize: 20, color: Colors.blue),
                   ),
                   onPressed: () {
-                    //signup screen
+                    Navigator.of(context).pushNamed('/signup');
                   },
                 ),
               ],

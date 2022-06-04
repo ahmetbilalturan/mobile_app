@@ -48,6 +48,10 @@ class RouteGenerator {
                 ));
       case '/login':
         return MaterialPageRoute(builder: (context) => const LoginPage());
+      case '/signup':
+        return MaterialPageRoute(builder: (context) => const SignUpPage());
+      case '/forgotpassword':
+        return MaterialPageRoute(builder: (context) => const ForgotPassword());
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(

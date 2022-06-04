@@ -29,7 +29,10 @@ class NavigationDrawerWidget extends StatelessWidget {
                 width: 15,
               ),
               ElevatedButton(
-                onPressed: () => print('kayıt olundu'),
+                onPressed: () => {
+                  Navigator.of(context).pop(),
+                  Navigator.of(context).pushNamed('/signup')
+                },
                 child: const Text('kayıt ol'),
               ),
             ],
