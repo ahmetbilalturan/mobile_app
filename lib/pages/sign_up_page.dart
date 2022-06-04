@@ -17,6 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
       String password, String passwordagain, String name, String mail) {
     if (password != '' && passwordagain != '' && name != '' && mail != '') {
       if (password == passwordagain) {
+        Navigator.of(context).pop();
         print('şifreler uyuşuyor');
       } else {
         print('şifreler uyuşmuyor');
@@ -51,6 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: TextField(
                 controller: mailController,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.alternate_email),
                   border: OutlineInputBorder(),
                   labelText: 'E-Mail',
                 ),
@@ -61,6 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.account_circle),
                   border: OutlineInputBorder(),
                   labelText: 'Kullanıcı Adı',
                 ),
@@ -72,6 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.key),
                   border: OutlineInputBorder(),
                   labelText: 'Şifre',
                 ),
@@ -83,6 +87,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 obscureText: true,
                 controller: passwordagainController,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.key),
                   border: OutlineInputBorder(),
                   labelText: 'Şifre Tekrar',
                 ),
@@ -100,7 +105,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       passwordagainController.text,
                       nameController.text,
                       mailController.text);
-                  Navigator.of(context).pop();
                   //Navigator.of(context).pushNamed('/login');
                 },
               ),

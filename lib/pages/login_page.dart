@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.account_circle),
                   border: OutlineInputBorder(),
                   labelText: 'Kullanıcı Adı',
                 ),
@@ -46,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.key),
                   border: OutlineInputBorder(),
                   labelText: 'Şifre',
                 ),
@@ -60,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
+              alignment: Alignment.center,
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
