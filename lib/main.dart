@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/content_screen.dart';
 import 'package:test_app/route_generator.dart';
 
 void main() {
@@ -16,8 +17,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
       ),
       //route to homepage
-      initialRoute: '/homepage',
-      onGenerateRoute: RouteGenerator.generateRoute,
+      /*initialRoute: '/homepage',
+      onGenerateRoute: RouteGenerator.generateRoute,*/
+      home: ContentScreen(),
     );
   }
 }

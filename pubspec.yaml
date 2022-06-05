@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   archive: ^3.3.0
   mno_streamer: ^0.1.1
+  web_scraper:
 
 dev_dependencies:
   flutter_test:

@@ -6,3 +6,4 @@ export 'package:test_app/pages/see_all.dart';
 export 'login_page.dart';
 export 'sign_up_page.dart';
 export 'forgot_password.dart';
+export 'content_screen.dart';
