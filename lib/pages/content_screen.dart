@@ -34,7 +34,8 @@ class _ContentScreenState extends State<ContentScreen> {
     getContent();
   }
 
-  String link = ''; // pull base64 link from db
+  String link =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAALQAQMAAABIQjEhAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAANQTFRFAAAAp3o92gAAAFVJREFUeJztwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4G+lAAAZQLO5IAAAAASUVORK5CYII='; // pull base64 link from db
   Uint8List encoder(String body) {
     return base64Decode(body.split(',')[1]);
   }
@@ -46,11 +47,12 @@ class _ContentScreenState extends State<ContentScreen> {
         title: const Text('Bölüm 1'),
         centerTitle: true,
       ),
-      body:
-          /*ClipRRect(
-      borderRadius: BorderRadius.circular(100),
-      child: Image.memory(encoder(link), fit: BoxFit.fitHeight),
-    )*/
+      body: /*ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: Image.memory(encoder(link), fit: BoxFit.fitHeight),
+        )
+            Image.network(
+                'https://media.geeksforgeeks.org/wp-content/uploads/20200121112744/logo11.png')*/
 
           dataFetched
               ? Container(
