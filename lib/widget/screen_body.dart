@@ -27,7 +27,8 @@ class ScreenBody extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: GestureDetector(
-                          onTap: () => print('basıldı'),
+                          onTap: () =>
+                              Navigator.of(context).pushNamed("/content"),
                           child: Image.asset(
                             'png/cover_page_2.png',
                             fit: BoxFit.fill,

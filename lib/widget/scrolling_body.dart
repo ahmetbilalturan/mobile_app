@@ -106,7 +106,7 @@ class WebtoonList extends StatelessWidget {
                   height: 175,
                   width: 125,
                   child: GestureDetector(
-                      onTap: () => Navigator.of(context).pushNamed("/seeall"),
+                      onTap: () => Navigator.of(context).pushNamed("/content"),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.asset(

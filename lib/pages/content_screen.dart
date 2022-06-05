@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:web_scraper/web_scraper.dart';
+import 'dart:convert';
 
 class ContentScreen extends StatefulWidget {
   const ContentScreen({Key? key}) : super(key: key);
@@ -31,33 +34,48 @@ class _ContentScreenState extends State<ContentScreen> {
     getContent();
   }
 
+  String link = ''; // pull base64 link from db
+  Uint8List encoder(String body) {
+    return base64Decode(body.split(',')[1]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: dataFetched
-          ? Container(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: contentPages.length,
-                  itemBuilder: (context, index) {
-                    return Image.network(
-                      contentPages[index]['attributes']['src']
-                          .toString()
-                          .trim(),
-                      fit: BoxFit.fitWidth,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
+      appBar: AppBar(
+        title: const Text('Bölüm 1'),
+        centerTitle: true,
+      ),
+      body:
+          /*ClipRRect(
+      borderRadius: BorderRadius.circular(100),
+      child: Image.memory(encoder(link), fit: BoxFit.fitHeight),
+    )*/
 
-                        return Center(
-                          child: CircularProgressIndicator(),
+          dataFetched
+              ? Container(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: contentPages.length,
+                      itemBuilder: (context, index) {
+                        return Image.network(
+                          contentPages[index]['attributes']['src']
+                              .toString()
+                              .trim(),
+                          fit: BoxFit.fitWidth,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
                         );
-                      },
-                    );
-                  }),
-            )
-          : Center(
-              child: CircularProgressIndicator(),
-            ),
+                      }),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
     );
   }
 }

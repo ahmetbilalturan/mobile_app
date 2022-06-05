@@ -52,6 +52,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const SignUpPage());
       case '/forgotpassword':
         return MaterialPageRoute(builder: (context) => const ForgotPassword());
+      case '/content':
+        return MaterialPageRoute(builder: (context) => const ContentScreen());
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(
