@@ -11,9 +11,8 @@ class MongoDatabase {
     inspect(db);
     var status = db.serverStatus();
     print(status);
-    print('hello');
     var coll = db.collection(COLLECTION_NAME);
-    print(await coll.find('Nickname: DawnTrick').toList());
+    print(await coll.find().toList());
 
     const port = 8081;
     final app = Router();
