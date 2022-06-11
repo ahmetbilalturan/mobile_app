@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/route_generator.dart';
+import 'package:test_app/server.dart' as server;
 
 void main() {
   runApp(const MyApp());
+  server.start();
 }
 
 class MyApp extends StatelessWidget {
