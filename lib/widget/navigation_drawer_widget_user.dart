@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class NavigationDrawerWidget extends StatelessWidget {
+class NavigationDrawerWidgetUser extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
-  const NavigationDrawerWidget({Key? key}) : super(key: key);
+  const NavigationDrawerWidgetUser({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +14,27 @@ class NavigationDrawerWidget extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           const SizedBox(height: 15),
-          buildHeader(context), //creating login and sign up buttons!
+
+          buildHeader(
+              name: 'Kullanıcı Adı',
+              onClicked: () => {}), //navigate profile page
+
           const SizedBox(height: 10),
           buildMenuItem(
               text: 'Anasayfa',
               icon: Icons.home,
               onClicked: () => selectedItem(context,
                   0)), //with int value selectedItem function resolve which pages it should go
+          const SizedBox(height: 8),
+          buildMenuItem(
+              text: 'Favoriler',
+              icon: Icons.favorite,
+              onClicked: () => selectedItem(context, 1)),
+          const SizedBox(height: 8),
+          buildMenuItem(
+              text: 'Abonelikler',
+              icon: Icons.calendar_month,
+              onClicked: () => selectedItem(context, 2)),
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Tüm Mangalar',
@@ -56,30 +70,28 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
-  Widget buildHeader(BuildContext context) {
-    return Container(
-      padding: padding.add(const EdgeInsets.symmetric(vertical: 10)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () => {
-              Navigator.of(context).pop(),
-              Navigator.of(context).pushNamed('/login', arguments: 'selam')
-            },
-            child: const Text('giriş yap'),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          ElevatedButton(
-            onPressed: () => {
-              Navigator.of(context).pop(),
-              Navigator.of(context).pushNamed('/signup')
-            },
-            child: const Text('kayıt ol'),
-          ),
-        ],
+  Widget buildHeader({
+    String urlImage = '',
+    required String name,
+    required VoidCallback onClicked,
+  }) {
+    return InkWell(
+      onTap: onClicked,
+      child: Container(
+        padding: padding.add(const EdgeInsets.symmetric(vertical: 20)),
+        child: Row(
+          children: [
+            const CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.black,
+            ),
+            const SizedBox(width: 20),
+            Text(
+              name,
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      drawer: const NavigationDrawerWidget(), //push user id
+      drawer: const NavigationDrawerWidgetUser(), //push user id
       body: CustomScrollView(
         slivers: <Widget>[
           SliverHeader(title: widget.title),

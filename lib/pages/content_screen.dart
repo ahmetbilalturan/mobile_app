@@ -55,27 +55,25 @@ class _ContentScreenState extends State<ContentScreen> {
                 'https://media.geeksforgeeks.org/wp-content/uploads/20200121112744/logo11.png')*/
 
           dataFetched
-              ? Container(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: contentPages.length,
-                      itemBuilder: (context, index) {
-                        return Image.network(
-                          contentPages[index]['attributes']['src']
-                              .toString()
-                              .trim(),
-                          fit: BoxFit.fitWidth,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: contentPages.length,
+                  itemBuilder: (context, index) {
+                    return Image.network(
+                      contentPages[index]['attributes']['src']
+                          .toString()
+                          .trim(),
+                      fit: BoxFit.fitWidth,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
 
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                      }),
-                )
-              : Center(
+                      },
+                    );
+                  })
+              : const Center(
                   child: CircularProgressIndicator(),
                 ),
     );
