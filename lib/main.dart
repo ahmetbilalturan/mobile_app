@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/route_generator.dart';
-import 'mongodb.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await MongoDatabase.connect();
+void main() {
   runApp(const MyApp());
 }
 
@@ -19,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
       ),
       //route to homepage
-      initialRoute: '/homepage',
+      initialRoute: '/login',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

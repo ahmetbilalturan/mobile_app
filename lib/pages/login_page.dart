@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,6 +12,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var username, password, token;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +43,9 @@ class _LoginPageState extends State<LoginPage> {
                   border: OutlineInputBorder(),
                   labelText: 'Kullanıcı Adı',
                 ),
+                onChanged: (val) {
+                  username = val;
+                },
               ),
             ),
             Container(
@@ -51,6 +58,9 @@ class _LoginPageState extends State<LoginPage> {
                   border: OutlineInputBorder(),
                   labelText: 'Şifre',
                 ),
+                onChanged: (val) {
+                  password = val;
+                },
               ),
             ),
             TextButton(
@@ -68,8 +78,20 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 child: const Text('Giriş Yap'),
                 onPressed: () {
-                  print(nameController.text);
-                  print(passwordController.text);
+                  AuthService().login(username, password).then((val) {
+                    if (val.data['success']) {
+                      token = val.data['token'];
+                      Fluttertoast.showToast(
+                        msg: 'Logined',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.green,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+                  });
                 },
               ),
             ),
