@@ -7,7 +7,7 @@ class AuthService {
 
   login(username, password) async {
     try {
-      return await dio.post('http://localhost:8080/login',
+      return await dio.post('http://mobileapp-server.herokuapp.com/login',
           data: {
             "username": username,
             "password": password,
