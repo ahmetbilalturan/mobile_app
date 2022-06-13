@@ -20,14 +20,11 @@ class _SignUpPageState extends State<SignUpPage> {
       String password, String passwordagain, String name, String mail) {
     if (password != '' && passwordagain != '' && name != '' && mail != '') {
       if (password == passwordagain) {
-        print('şifreler uyuşuyor');
         return true;
       } else {
-        print('şifreler uyuşmuyor');
         return false;
       }
     } else {
-      print('boş bırakılamaz');
       return false;
     }
   }
@@ -226,7 +223,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   child: const Text('Kayıt Ol'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
