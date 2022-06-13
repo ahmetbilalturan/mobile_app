@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
+  final String name;
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
-  const NavigationDrawerWidgetUser({Key? key}) : super(key: key);
+  const NavigationDrawerWidgetUser({Key? key, required this.name})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
           const SizedBox(height: 15),
 
           buildHeader(
-              name: 'Kullanıcı Adı', //Database'den Çekilecek
+              name: name, //Database'den Çekilecek
               onClicked: () =>
                   selectedItem(context, 5)), //navigate profile page
 

@@ -6,6 +6,7 @@ import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class MyHomePage extends StatefulWidget {
+  static var username, email;
   final String title;
 
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -17,12 +18,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    late String username;
-    String email;
     AuthService().getinfo(LoginPage.token).then((val) {
       if (val.data['success']) {
-        username = val.data['username'].toString();
-        email = val.data['email'].toString();
+        MyHomePage.username = val.data['username'];
+        MyHomePage.email = val.data['email'];
         Fluttertoast.showToast(
           msg: 'Veriler Çekildi',
           toastLength: Toast.LENGTH_SHORT,
@@ -37,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: NavigationDrawerWidgetUser(
-        name: username,
+        name: MyHomePage.username.toString(),
       ), //push user id
       body: CustomScrollView(
         slivers: <Widget>[

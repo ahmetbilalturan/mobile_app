@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final user = UserPreferences.myUser;
     return Scaffold(
       backgroundColor: Colors.blue,
-      drawer: const NavigationDrawerWidgetUser(),
+      drawer: const NavigationDrawerWidgetUser(name: 's'),
       appBar: AppBar(
         leading: BackButton(),
         backgroundColor: Colors.red,
