@@ -34,10 +34,6 @@ class NavigationDrawerWidget extends StatelessWidget {
           const SizedBox(height: 8),
           const Divider(color: Colors.white70),
           const SizedBox(height: 24),
-          buildMenuItem(text: 'Bildirimler', icon: Icons.notifications),
-          const SizedBox(height: 8),
-          buildMenuItem(text: 'Ayarlar', icon: Icons.settings),
-          const SizedBox(height: 8),
         ],
       ),
     ));

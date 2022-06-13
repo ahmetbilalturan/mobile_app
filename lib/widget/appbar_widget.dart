@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 AppBar buildAppBar(BuildContext context) {
-  final icon = CupertinoIcons.settings;
+  final icon = Icons.notifications;
 
   return AppBar(
     leading: BackButton(),

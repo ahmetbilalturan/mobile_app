@@ -21,7 +21,6 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
               name: name, //Database'den Çekilecek
               onClicked: () =>
                   selectedItem(context, 5)), //navigate profile page
-          buildHeader(name: name, onClicked: () => {}), //navigate profile page
 
           const SizedBox(height: 10),
           buildMenuItem(
@@ -52,10 +51,6 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
           const SizedBox(height: 8),
           const Divider(color: Colors.white70),
           const SizedBox(height: 24),
-          buildMenuItem(text: 'Bildirimler', icon: Icons.notifications),
-          const SizedBox(height: 8),
-          buildMenuItem(text: 'Ayarlar', icon: Icons.settings),
-          const SizedBox(height: 8),
         ],
       ),
     ));
