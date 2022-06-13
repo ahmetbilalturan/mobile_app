@@ -18,7 +18,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     AuthService().getinfo(LoginPage.token).then((val) {
+=======
+    late String username;
+    String email;
+    username = val.data['username'].toString();
+    /*AuthService().getinfo(LoginPage.token).then((val) {
+>>>>>>> Stashed changes
       if (val.data['success']) {
         MyHomePage.username = val.data['username'];
         MyHomePage.email = val.data['email'];
@@ -32,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
           fontSize: 16.0,
         );
       }
-    });
+    });*/
     return Scaffold(
       backgroundColor: Colors.blue,
       drawer: NavigationDrawerWidgetUser(
