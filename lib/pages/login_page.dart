@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {
+  static var token;
+
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -12,7 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  var username, password, token;
+  var username, password;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -131,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                       AuthService().login(username, password).then(
                         (val) {
                           if (val.data['success']) {
-                            token = val.data['token'];
+                            LoginPage.token = val.data['token'];
                             Fluttertoast.showToast(
                               msg: 'Başarıyla Giriş Yapıldı',
                               toastLength: Toast.LENGTH_SHORT,
@@ -141,7 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                               textColor: Colors.white,
                               fontSize: 16.0,
                             );
-                            Navigator.of(context).pushNamed('/homepage');
+                            Navigator.of(context).pushNamed('/homepage',
+                                arguments: LoginPage.token);
                           }
                         },
                       );

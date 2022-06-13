@@ -10,9 +10,9 @@ class RouteGenerator {
       //create new homepage for signed in users
       case '/homepage':
         return MaterialPageRoute(
-            builder: (context) => const MyHomePage(
+            builder: (context) => MyHomePage(
                   title: 'Anasayfa',
-                  userID: 13, //pull from db
+                  userToken: settings.arguments, //pull from db
                 ));
       case '/favorites':
         //check user id from db
@@ -42,9 +42,9 @@ class RouteGenerator {
           );
         }
         return MaterialPageRoute(
-            builder: (context) => const MyHomePage(
+            builder: (context) => MyHomePage(
                   title: 'Hata',
-                  userID: 13,
+                  userToken: 13,
                 ));
       case '/login':
         return MaterialPageRoute(builder: (context) => const LoginPage());
@@ -56,9 +56,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const ContentScreen());
       default:
         return MaterialPageRoute(
-            builder: (context) => const MyHomePage(
+            builder: (context) => MyHomePage(
                   title: 'Hata',
-                  userID: 13,
+                  userToken: 13,
                 ));
     }
   }
