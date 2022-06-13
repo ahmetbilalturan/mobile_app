@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Test App',
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        primaryColor: Colors.blue.shade300,
       ),
       //route to homepage
       home: const LoginPage(),

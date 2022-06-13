@@ -21,6 +21,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
               name: name, //Database'den Çekilecek
               onClicked: () =>
                   selectedItem(context, 5)), //navigate profile page
+          buildHeader(name: name, onClicked: () => {}), //navigate profile page
 
           const SizedBox(height: 10),
           buildMenuItem(
