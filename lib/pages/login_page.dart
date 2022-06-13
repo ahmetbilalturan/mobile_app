@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(10),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: <Widget>[
               Container(
                 alignment: Alignment.center,
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (val.data['success']) {
                             token = val.data['token'];
                             Fluttertoast.showToast(
-                              msg: 'Logined',
+                              msg: 'Başarıyla Giriş Yapıldı',
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,

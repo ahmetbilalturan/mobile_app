@@ -20,7 +20,6 @@ class _SignUpPageState extends State<SignUpPage> {
       String password, String passwordagain, String name, String mail) {
     if (password != '' && passwordagain != '' && name != '' && mail != '') {
       if (password == passwordagain) {
-        Navigator.of(context).pop();
         print('şifreler uyuşuyor');
         return true;
       } else {
@@ -44,7 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
         padding: const EdgeInsets.all(10),
         child: Form(
           key: _formKey,
-          child: Column(
+          child: ListView(
             children: <Widget>[
               Container(
                 alignment: Alignment.center,
@@ -57,85 +56,200 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 15),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: TextField(
+                child: TextFormField(
                   controller: mailController,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.alternate_email),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
                     labelText: 'E-Mail',
+                    icon: const Icon(Icons.alternate_email),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.red),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.redAccent),
+                    ),
                   ),
+                  validator: (val) {
+                    if (val != null) {
+                      if (val.isEmpty) {
+                        return 'Boş Bırakılamaz';
+                      } else if (!RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(val)) {
+                        return 'Geçerli Bir Email Adresi Girin';
+                      } else {
+                        return null;
+                      }
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: TextField(
+                child: TextFormField(
                   controller: nameController,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.account_circle),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
                     labelText: 'Kullanıcı Adı',
+                    icon: const Icon(Icons.account_circle),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.red),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.redAccent),
+                    ),
                   ),
+                  validator: (val) {
+                    if (val != null) {
+                      if (val.isEmpty) {
+                        return 'Boş Bırakılamaz';
+                      } else {
+                        return null;
+                      }
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: TextField(
+                child: TextFormField(
                   obscureText: true,
                   controller: passwordController,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.key),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
                     labelText: 'Şifre',
+                    icon: const Icon(Icons.key),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.red),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.redAccent),
+                    ),
                   ),
+                  validator: (val) {
+                    if (val != null) {
+                      if (val.isEmpty) {
+                        return 'Boş Bırakılamaz';
+                      } else if (!comparePaswords(
+                        passwordController.text,
+                        passwordagainController.text,
+                        nameController.text,
+                        mailController.text,
+                      )) {
+                        return 'Şifreler Uyuşmuyor';
+                      } else {
+                        return null;
+                      }
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: TextField(
+                child: TextFormField(
                   obscureText: true,
                   controller: passwordagainController,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.key),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
                     labelText: 'Şifre Tekrar',
+                    icon: const Icon(Icons.key),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.lightBlue),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.red),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Colors.redAccent),
+                    ),
                   ),
+                  validator: (val) {
+                    if (val != null) {
+                      if (val.isEmpty) {
+                        return 'Boş Bırakılamaz';
+                      } else if (!comparePaswords(
+                        passwordController.text,
+                        passwordagainController.text,
+                        nameController.text,
+                        mailController.text,
+                      )) {
+                        return 'Şifreler Uyuşmuyor';
+                      } else {
+                        return null;
+                      }
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               const SizedBox(height: 25),
               Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: ElevatedButton(
+                child: RaisedButton(
                   child: const Text('Kayıt Ol'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      if (comparePaswords(
-                        passwordController.text,
-                        passwordagainController.text,
-                        nameController.text,
-                        mailController.text,
-                      )) {
-                        AuthService()
-                            .adduser(
-                                nameController.text, passwordController.text)
-                            .then(
-                          (val) {
-                            if (val.data['success']) {
-                              Fluttertoast.showToast(
-                                msg: 'Logined',
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.green,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                            }
-                          },
-                        );
-                      }
+                      AuthService()
+                          .adduser(nameController.text, passwordController.text,
+                              mailController.text)
+                          .then(
+                        (val) {
+                          if (val.data['success']) {
+                            Fluttertoast.showToast(
+                              msg: 'Başarıyla Kaydolundu',
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      );
                     }
-                    //Navigator.of(context).pushNamed('/login');
                   },
                 ),
               ),

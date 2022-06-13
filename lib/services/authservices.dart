@@ -25,12 +25,13 @@ class AuthService {
     }
   }
 
-  adduser(username, password) async {
+  adduser(username, password, email) async {
     try {
       return await dio.post('http://mobileapp-server.herokuapp.com/adduser',
           data: {
             "username": username,
             "password": password,
+            "email": email,
           },
           options: Options(contentType: Headers.formUrlEncodedContentType));
     } on DioError catch (e) {

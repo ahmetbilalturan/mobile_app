@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/route_generator.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
       ),
       //route to homepage
-      initialRoute: '/login',
+      home: LoginPage(),
+      //initialRoute: '/login',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
