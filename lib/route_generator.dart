@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/profile_page.dart';
 import 'package:test_app/pages/screens.dart';
 import 'package:test_app/pages/weekly_best.dart';
 
@@ -54,6 +55,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const ForgotPassword());
       case '/content':
         return MaterialPageRoute(builder: (context) => const ContentScreen());
+      case '/profile':
+        return MaterialPageRoute(
+            builder: (context) => const ProfilePage(
+                  title: 'Hoşgeldin Kullanıcı', //Database'den isim
+                  userID: 13,
+                ));
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(

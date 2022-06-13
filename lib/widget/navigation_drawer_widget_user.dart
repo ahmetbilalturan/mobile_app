@@ -16,8 +16,9 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
           const SizedBox(height: 15),
 
           buildHeader(
-              name: 'Kullanıcı Adı',
-              onClicked: () => {}), //navigate profile page
+              name: 'Kullanıcı Adı', //Database'den Çekilecek
+              onClicked: () =>
+                  selectedItem(context, 5)), //navigate profile page
 
           const SizedBox(height: 10),
           buildMenuItem(
@@ -120,6 +121,10 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
       case 4:
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/wbest");
+        break;
+      case 5:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/profile");
         break;
     }
   }
