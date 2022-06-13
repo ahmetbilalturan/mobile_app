@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
-  var name;
+  final String name;
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
-  NavigationDrawerWidgetUser({Key? key, required this.name}) : super(key: key);
+  const NavigationDrawerWidgetUser({Key? key, required this.name})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

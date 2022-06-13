@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {
-  static var token;
+  static late String token;
 
   const LoginPage({Key? key}) : super(key: key);
 
@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  // ignore: prefer_typing_uninitialized_variables
   var username, password;
   final _formKey = GlobalKey<FormState>();
 
