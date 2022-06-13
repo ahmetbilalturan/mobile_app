@@ -16,9 +16,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    AuthService().getinfo(LoginPage.token).then((val) {
+  bool dataFetched = false;
+
+  void getName() async {
+    setState(() {
+      dataFetched = false;
+    });
+    await AuthService().getinfo(LoginPage.token).then((val) {
       if (val.data['success']) {
         MyHomePage.username = val.data['username'];
         MyHomePage.email = val.data['email'];
@@ -33,17 +37,34 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       }
     });
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      drawer: NavigationDrawerWidgetUser(
-        name: MyHomePage.username.toString(),
-      ), //push user id
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverHeader(title: widget.title),
-          const ScrollingBody(), //push user id
-        ],
-      ),
-    );
+    setState(() {
+      dataFetched = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getName();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return dataFetched
+        ? Scaffold(
+            backgroundColor: Colors.blue,
+            drawer: NavigationDrawerWidgetUser(
+              name: MyHomePage.username.toString(),
+            ), //push user id
+            body: CustomScrollView(
+              slivers: <Widget>[
+                SliverHeader(title: widget.title),
+                const ScrollingBody(), //push user id
+              ],
+            ),
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }
