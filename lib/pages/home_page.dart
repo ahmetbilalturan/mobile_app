@@ -27,11 +27,13 @@ class _MyHomePageState extends State<MyHomePage> {
       if (val.data['success']) {
         User MyUser = User(
             imagePath:
-                'https://scontent.fist10-1.fna.fbcdn.net/v/t1.18169-9/185137_358350839969_7617085_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=973b4a&_nc_ohc=FQ5vSYs0i7QAX8_cbr2&_nc_ht=scontent.fist10-1.fna&oh=00_AT-yn5WhuLp7fNW8ZNvd9-ICNrp2hYCswrhIdDB-nV1f-w&oe=62CB4E03',
-            name: val.data['username'].toString(),
-            email: val.data['email'].toString());
-        /*MyHomePage.username = val.data['username'];
-        MyHomePage.email = val.data['email'];*/
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg',
+            name: 'Default Username',
+            email: 'Default E-mail');
+        MyHomePage.username = val.data['username'];
+        MyHomePage.email = val.data['email'];
+        MyUser.setName(MyHomePage.username);
+        MyUser.setEmail(MyHomePage.email);
         Fluttertoast.showToast(
           msg: 'Veriler Çekildi',
           toastLength: Toast.LENGTH_SHORT,

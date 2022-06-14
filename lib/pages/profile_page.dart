@@ -19,8 +19,13 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
-
+    User user = User(
+        imagePath:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg',
+        name: 'Default Username',
+        email: 'Default E-mail');
+    user.setName(MyHomePage.username);
+    user.setEmail(MyHomePage.email);
     return Scaffold(
       appBar: buildAppBar(context),
       backgroundColor: Colors.blue,
