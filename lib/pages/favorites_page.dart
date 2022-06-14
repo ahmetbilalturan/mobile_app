@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
+
+import '../services/authservices.dart';
 
 class FavoritesPage extends StatefulWidget {
   final int userID;
@@ -12,6 +15,38 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPage extends State<FavoritesPage> {
+  bool dataFetched = false;
+
+  void getFavorites() async {
+    setState(() {
+      dataFetched = false;
+    });
+    await AuthService().getfavorites(MyHomePage.username).then((val) {
+      //val.data['array'] object arrayine atılacak daha sonra bu object arrayinden isim tür gibi veriler çekilecek
+      if (val.data['success']) {
+        print(val.data['array']);
+        Fluttertoast.showToast(
+          msg: 'Veriler Çekildi',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    });
+    setState(() {
+      dataFetched = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getFavorites();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
