@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/utils/user_preferences.dart';
 import 'package:test_app/widget/all_widgets.dart';
 import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:test_app/model/user.dart';
 import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
@@ -25,15 +24,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     await AuthService().getinfo(LoginPage.token).then((val) {
       if (val.data['success']) {
-        User MyUser = User(
-            imagePath:
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg',
-            name: 'Default Username',
-            email: 'Default E-mail');
         MyHomePage.username = val.data['username'];
         MyHomePage.email = val.data['email'];
-        MyUser.setName(MyHomePage.username);
-        MyUser.setEmail(MyHomePage.email);
         Fluttertoast.showToast(
           msg: 'Veriler Çekildi',
           toastLength: Toast.LENGTH_SHORT,
