@@ -40,14 +40,16 @@ class ScreenBody extends StatelessWidget {
                       //pull artist name and genre from db
                       children: [
                         GestureDetector(
-                          onTap: () => print('artist sayfasına gidildi'),
-                          child: const Text('artist name',
+                          onTap: () =>
+                              Navigator.of(context).pushNamed("/artist"),
+                          child: const Text('Artist Name',
                               style: TextStyle(fontSize: 18)),
                         ),
                         const SizedBox(height: 2),
                         GestureDetector(
-                          onTap: () => print('genre sayfasına gidildi'),
-                          child: const Text('genre',
+                          onTap: () =>
+                              Navigator.of(context).pushNamed("/genre"),
+                          child: const Text('Genre',
                               style: TextStyle(fontSize: 18)),
                         ),
                       ],

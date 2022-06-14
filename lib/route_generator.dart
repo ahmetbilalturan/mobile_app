@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/artist_page.dart';
+import 'package:test_app/pages/genre_page.dart';
 import 'package:test_app/pages/profile_page.dart';
 import 'package:test_app/pages/screens.dart';
 import 'package:test_app/pages/weekly_best.dart';
@@ -59,6 +61,12 @@ class RouteGenerator {
                   title: 'Hoşgeldin Kullanıcı', //Database'den isim
                   userID: 13,
                 ));
+      case '/genre':
+        return MaterialPageRoute(
+            builder: (context) => const GenrePage(userID: 13));
+      case '/artist':
+        return MaterialPageRoute(
+            builder: (context) => const ArtistPage(userID: 13));
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(
