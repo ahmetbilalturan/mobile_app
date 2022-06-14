@@ -89,7 +89,7 @@ class WebtoonList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 251,
+      height: 301,
       color: Colors.red,
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -118,10 +118,26 @@ class WebtoonList extends StatelessWidget {
                 //pull artist name and genre from db
                 margin: const EdgeInsets.symmetric(
                     horizontal: 10.0, vertical: 10.0),
-                height: 40,
+                height: 35,
                 width: 125,
                 color: Colors.green,
-                child: const Text("artist and genre"),
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed("/artist"),
+                  child:
+                      const Text('Artist Name', style: TextStyle(fontSize: 20)),
+                ),
+              ),
+              Container(
+                //pull artist name and genre from db
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 10.0),
+                height: 35,
+                width: 125,
+                color: Colors.green,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed("/genre"),
+                  child: const Text('Genre', style: TextStyle(fontSize: 20)),
+                ),
               )
             ],
           );
