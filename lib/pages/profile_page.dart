@@ -5,6 +5,7 @@ import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';
 import 'package:test_app/widget/profile_widget.dart';
 import 'package:test_app/model/user.dart';
+import 'package:test_app/pages/home_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final int userID;
@@ -39,6 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 24,
           ),
           Center(child: buildPasswordButton(user)),
+          Center(child: buildApplyButton(user)),
         ],
       ),
     );
@@ -68,6 +70,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildPasswordButton(User user) => ButtonWidget(
         text: 'Şifre Değiştir',
+        onClicked: () {},
+      );
+  Widget buildApplyButton(User user) => ButtonWidget(
+        text: 'Çizer Olmak İstiyorsan Başvur!',
         onClicked: () {},
       );
 }

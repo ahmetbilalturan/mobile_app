@@ -122,7 +122,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
         break;
       case 5:
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/profile");
+        Navigator.of(context).pushNamed("/profile", arguments: name.toString());
         break;
     }
   }
