@@ -28,9 +28,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: buildAppBar(context),
       backgroundColor: Colors.blue,
-      drawer: const NavigationDrawerWidgetUser(name: 's'),
+      drawer: NavigationDrawerWidgetUser(name: MyHomePage.username.toString()),
       body: ListView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(imagePath: user.imagePath, onClicked: () async {}),
           const SizedBox(

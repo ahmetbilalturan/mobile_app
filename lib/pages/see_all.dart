@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class SeeAllPage extends StatefulWidget {
@@ -17,7 +18,9 @@ class _SeeAllPage extends State<SeeAllPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: const NavigationDrawerWidget(), //push user id
+      drawer: NavigationDrawerWidgetUser(
+        name: MyHomePage.username.toString(),
+      ), //push user id
       body: CustomScrollView(
         slivers: <Widget>[
           SliverHeader(title: widget.title),

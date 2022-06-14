@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class AllMangasPage extends StatefulWidget {
@@ -13,10 +14,10 @@ class AllMangasPage extends StatefulWidget {
 class _AllMangasPage extends State<AllMangasPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidget(),
-      body: CustomScrollView(
+      drawer: NavigationDrawerWidgetUser(name: MyHomePage.username.toString()),
+      body: const CustomScrollView(
         slivers: [
           SliverHeader(title: "Tüm Mangalar"),
           ScreenBody(), //push int values for scrolling body

@@ -5,7 +5,7 @@ AppBar buildAppBar(BuildContext context) {
   final icon = Icons.notifications;
 
   return AppBar(
-    leading: BackButton(),
+    //leading: BackButton(),
     elevation: 0,
     backgroundColor: Colors.transparent,
     actions: [

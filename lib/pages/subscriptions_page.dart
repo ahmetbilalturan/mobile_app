@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class SubscriptionsPage extends StatefulWidget {
@@ -13,10 +14,10 @@ class SubscriptionsPage extends StatefulWidget {
 class _SubscriptionsPage extends State<SubscriptionsPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidget(),
-      body: CustomScrollView(
+      drawer: NavigationDrawerWidgetUser(name: MyHomePage.username.toString()),
+      body: const CustomScrollView(
         slivers: [
           SliverHeader(title: "Abonelikler"),
           ScreenBody(), //push int values for scrolling body
