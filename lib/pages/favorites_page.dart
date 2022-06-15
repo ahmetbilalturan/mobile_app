@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:test_app/pages/home_page.dart';
+import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 import '../services/authservices.dart';
@@ -21,7 +21,7 @@ class _FavoritesPage extends State<FavoritesPage> {
     setState(() {
       dataFetched = false;
     });
-    await AuthService().getfavorites(MyHomePage.username).then((val) {
+    await AuthService().getfavorites(LoginPage.username).then((val) {
       //val.data['array'] object arrayine atılacak daha sonra bu object arrayinden isim tür gibi veriler çekilecek
       if (val.data['success']) {
         print(val.data['array']);
@@ -49,10 +49,10 @@ class _FavoritesPage extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(name: MyHomePage.username.toString()),
-      body: const CustomScrollView(
+      drawer: NavigationDrawerWidgetUser(),
+      body: CustomScrollView(
         slivers: [
           SliverHeader(title: "Favoriler"),
           //push int values for scrolling body

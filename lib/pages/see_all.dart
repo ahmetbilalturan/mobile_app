@@ -18,9 +18,7 @@ class _SeeAllPage extends State<SeeAllPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(
-        name: MyHomePage.username.toString(),
-      ), //push user id
+      drawer: const NavigationDrawerWidgetUser(), //push user id
       body: CustomScrollView(
         slivers: <Widget>[
           SliverHeader(title: widget.title),

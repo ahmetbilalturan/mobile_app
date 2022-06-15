@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {
-  static late String token;
+  static var username, email;
 
   const LoginPage({Key? key}) : super(key: key);
 
@@ -17,6 +17,31 @@ class _LoginPageState extends State<LoginPage> {
   // ignore: prefer_typing_uninitialized_variables
   var username, password;
   final _formKey = GlobalKey<FormState>();
+  OverlayEntry? entry;
+
+  void showLoadingOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    entry = OverlayEntry(
+      builder: (context) => buildLoadingOverlay(),
+    );
+
+    overlay.insert(entry!);
+  }
+
+  void hideLoadingOverlay() {
+    entry!.remove();
+    entry = null;
+  }
+
+  Widget buildLoadingOverlay() => const Material(
+        color: Colors.transparent,
+        elevation: 8,
+        child: Center(
+          child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 163, 171, 192)),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -157,26 +182,55 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text('Giriş Yap'),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          WidgetsBinding.instance.addPostFrameCallback(
+                              (_) => showLoadingOverlay());
+                        });
                         AuthService().login(username, password).then(
                           (val) {
                             if (val.data['success']) {
-                              LoginPage.token = val.data['token'];
+                              AuthService().getinfo(val.data['token']).then(
+                                (val) {
+                                  if (val.data['success']) {
+                                    LoginPage.email = val.data['email'];
+                                    LoginPage.username = val.data['username'];
+                                    setState(() {
+                                      hideLoadingOverlay();
+                                    });
+                                    Navigator.of(context)
+                                        .popAndPushNamed('/homepage');
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: val.data['msg'],
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                    setState(() {
+                                      hideLoadingOverlay();
+                                    });
+                                  }
+                                },
+                              );
+                            } else {
                               Fluttertoast.showToast(
-                                msg: 'Başarıyla Giriş Yapıldı',
+                                msg: val.data['msg'],
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.red,
                                 textColor: Colors.white,
                                 fontSize: 16.0,
                               );
-                              Navigator.of(context).pushNamed('/homepage',
-                                  arguments: LoginPage.token);
+                              setState(() {
+                                hideLoadingOverlay();
+                              });
                             }
                           },
                         );
-                      } else {
-                        print('error');
                       }
                     },
                   ),

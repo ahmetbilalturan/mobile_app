@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -11,7 +10,7 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  void getName() async {
+  void tryServer() async {
     await AuthService().tryserver().then((val) {
       if (val.data['success']) {
         Fluttertoast.showToast(
@@ -31,7 +30,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    getName();
+    tryServer();
   }
 
   @override
@@ -84,7 +83,6 @@ class _LoadingPageState extends State<LoadingPage> {
               const SizedBox(height: 50),
             ],
           ),
-          //child: ,
         ),
       ),
     );

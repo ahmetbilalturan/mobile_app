@@ -16,7 +16,7 @@ class _GenrePage extends State<GenrePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(name: MyHomePage.username.toString()),
+      drawer: const NavigationDrawerWidgetUser(),
       body: const CustomScrollView(
         slivers: [
           SliverHeader(title: "Tür İsmi"), //Database'den çekilecek

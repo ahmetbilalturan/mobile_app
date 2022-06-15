@@ -10,6 +10,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  OverlayEntry? entry;
   final _formKey = GlobalKey<FormState>();
   TextEditingController mailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -28,6 +29,30 @@ class _SignUpPageState extends State<SignUpPage> {
       return false;
     }
   }
+
+  void showLoadingOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    entry = OverlayEntry(
+      builder: (context) => buildLoadingOverlay(),
+    );
+
+    overlay.insert(entry!);
+  }
+
+  void hideLoadingOverlay() {
+    entry!.remove();
+    entry = null;
+  }
+
+  Widget buildLoadingOverlay() => const Material(
+        color: Colors.transparent,
+        elevation: 8,
+        child: Center(
+          child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 163, 171, 192)),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -254,12 +279,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: const Text('Kayıt Ol'),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          WidgetsBinding.instance.addPostFrameCallback(
+                              (_) => showLoadingOverlay());
+                        });
                         AuthService()
                             .adduser(nameController.text,
                                 passwordController.text, mailController.text)
                             .then(
                           (val) {
                             if (val.data['success']) {
+                              setState(() {
+                                hideLoadingOverlay();
+                              });
                               Fluttertoast.showToast(
                                 msg: 'Başarıyla Kaydolundu',
                                 toastLength: Toast.LENGTH_SHORT,
@@ -270,6 +302,19 @@ class _SignUpPageState extends State<SignUpPage> {
                                 fontSize: 16.0,
                               );
                               Navigator.of(context).pop();
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: val.data['msg'],
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.green,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                              setState(() {
+                                hideLoadingOverlay();
+                              });
                             }
                           },
                         );

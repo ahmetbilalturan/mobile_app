@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/login_page.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
-  final String name;
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
-  const NavigationDrawerWidgetUser({Key? key, required this.name})
-      : super(key: key);
+  const NavigationDrawerWidgetUser({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
           const SizedBox(height: 15),
 
           buildHeader(
-              name: name, //Database'den Çekilecek
+              name: LoginPage.username, //Database'den Çekilecek
               onClicked: () =>
                   selectedItem(context, 5)), //navigate profile page
 
@@ -122,7 +121,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
         break;
       case 5:
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/profile", arguments: name.toString());
+        Navigator.of(context).pushNamed("/profile");
         break;
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';
@@ -23,12 +24,12 @@ class _ProfilePageState extends State<ProfilePage> {
             'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg',
         name: 'Default Username',
         email: 'Default E-mail');
-    user.setName(MyHomePage.username);
-    user.setEmail(MyHomePage.email);
+    user.setName(LoginPage.username);
+    user.setEmail(LoginPage.email);
     return Scaffold(
       appBar: buildAppBar(context),
       backgroundColor: Colors.blue,
-      drawer: NavigationDrawerWidgetUser(name: MyHomePage.username.toString()),
+      drawer: const NavigationDrawerWidgetUser(),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
