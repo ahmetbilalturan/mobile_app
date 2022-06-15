@@ -13,15 +13,16 @@ class SubscriptionsPage extends StatefulWidget {
 }
 
 class _SubscriptionsPage extends State<SubscriptionsPage> {
+  int lenght = 5;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(),
-      body: const CustomScrollView(
+      drawer: const NavigationDrawerWidgetUser(),
+      body: CustomScrollView(
         slivers: [
-          SliverHeader(title: "Abonelikler"),
-          ScreenBody(), //push int values for scrolling body
+          const SliverHeader(title: "Abonelikler"),
+          ScreenBody(lenght: lenght), //push int values for scrolling body
         ],
       ),
     );

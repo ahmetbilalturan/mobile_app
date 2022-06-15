@@ -11,15 +11,16 @@ class ArtistPage extends StatefulWidget {
 }
 
 class _ArtistPage extends State<ArtistPage> {
+  int lenght = 5;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
       drawer: NavigationDrawerWidget(),
       body: CustomScrollView(
         slivers: [
           SliverHeader(title: "Çizer İsmi"), //Database'den çekilecek
-          ScreenBody(), //push int values for scrolling body
+          ScreenBody(lenght: lenght), //push int values for scrolling body
         ],
       ),
     );

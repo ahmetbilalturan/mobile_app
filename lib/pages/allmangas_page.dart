@@ -12,15 +12,16 @@ class AllMangasPage extends StatefulWidget {
 }
 
 class _AllMangasPage extends State<AllMangasPage> {
+  int lenght = 5;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(),
+      drawer: const NavigationDrawerWidgetUser(),
       body: CustomScrollView(
         slivers: [
-          SliverHeader(title: "Tüm Mangalar"),
-          ScreenBody(), //push int values for scrolling body
+          const SliverHeader(title: "Tüm Mangalar"),
+          ScreenBody(lenght: lenght), //push int values for scrolling body
         ],
       ),
     );

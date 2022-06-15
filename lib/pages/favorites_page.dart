@@ -16,6 +16,7 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPage extends State<FavoritesPage> {
   bool dataFetched = false;
+  int lenght = 5;
 
   void getFavorites() async {
     setState(() {
@@ -24,7 +25,7 @@ class _FavoritesPage extends State<FavoritesPage> {
     await AuthService().getfavorites(LoginPage.username).then((val) {
       //val.data['array'] object arrayine atılacak daha sonra bu object arrayinden isim tür gibi veriler çekilecek
       if (val.data['success']) {
-        print(val.data['array']);
+        print(val.data['array'].lenght[0]);
         Fluttertoast.showToast(
           msg: 'Veriler Çekildi',
           toastLength: Toast.LENGTH_SHORT,
@@ -49,14 +50,14 @@ class _FavoritesPage extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(),
+      drawer: const NavigationDrawerWidgetUser(),
       body: CustomScrollView(
         slivers: [
-          SliverHeader(title: "Favoriler"),
+          const SliverHeader(title: "Favoriler"),
           //push int values for scrolling body
-          ScreenBody(),
+          ScreenBody(lenght: lenght),
         ],
       ),
     );

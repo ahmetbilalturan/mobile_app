@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ScreenBody extends StatelessWidget {
-  const ScreenBody({Key? key}) : super(key: key);
+  final int lenght;
+  const ScreenBody({Key? key, required this.lenght}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class ScreenBody extends StatelessWidget {
                   ],
                 ));
           },
-          childCount: 20,
+          childCount: lenght,
         ),
       ),
     );
