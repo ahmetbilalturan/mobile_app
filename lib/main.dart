@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/loading_page.dart';
 import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/route_generator.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue.shade300,
       ),
       //route to homepage
-      home: const LoginPage(),
+      home: const LoadingPage(),
       //initialRoute: '/login',
       onGenerateRoute: RouteGenerator.generateRoute,
     );

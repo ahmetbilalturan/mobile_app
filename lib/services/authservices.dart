@@ -81,4 +81,19 @@ class AuthService {
       );
     }
   }
+
+  tryserver() async {
+    try {
+      return await dio.get('http://mobileapp-server.herokuapp.com/testserver');
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
 }
