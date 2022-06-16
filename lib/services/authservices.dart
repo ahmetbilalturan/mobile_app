@@ -104,6 +104,12 @@ class AuthService {
     } */
   }
 
+  Future<List> getallmangas() async {
+    final res =
+        await dio.get('http://mobileapp-server.herokuapp.com/getallmangas');
+    return res.data['array'];
+  }
+
   tryserver() async {
     try {
       return await dio.get('http://mobileapp-server.herokuapp.com/testserver');
