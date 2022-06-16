@@ -15,29 +15,49 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPage extends State<FavoritesPage> {
+  OverlayEntry? entry;
   List mangas = [];
-  bool dataFetched = false;
   int lenght = 5;
 
   void getFavorites() async {
-    setState(() {
-      dataFetched = false;
-    });
     await AuthService().getfavorites(LoginPage.username).then((val) {
-      //val.data['array'] object arrayine atılacak daha sonra bu object arrayinden isim tür gibi veriler çekilecek
       setState(() {
         mangas = val;
-        dataFetched = true;
+        hideLoadingOverlay();
       });
-      print(mangas);
     });
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => showLoadingOverlay());
     getFavorites();
   }
+
+  void showLoadingOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    entry = OverlayEntry(
+      builder: (context) => buildLoadingOverlay(),
+    );
+
+    overlay.insert(entry!);
+  }
+
+  void hideLoadingOverlay() {
+    entry!.remove();
+    entry = null;
+  }
+
+  Widget buildLoadingOverlay() => const Material(
+        color: Colors.transparent,
+        elevation: 8,
+        child: Center(
+          child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 163, 171, 192)),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
