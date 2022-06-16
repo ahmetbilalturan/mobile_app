@@ -13,7 +13,7 @@ class SubscriptionsPage extends StatefulWidget {
 }
 
 class _SubscriptionsPage extends State<SubscriptionsPage> {
-  int lenght = 5;
+  int lenght = 20;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

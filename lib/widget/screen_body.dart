@@ -14,19 +14,26 @@ class ScreenBody extends StatelessWidget {
           mainAxisSpacing: 10,
           crossAxisSpacing: 15,
           childAspectRatio: .55,
-          mainAxisExtent: 350,
+          mainAxisExtent: 400,
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
-                color: Colors.blue,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
+              color: Colors.blue,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed("/artist"),
+                    child: Text('mangaismi', style: TextStyle(fontSize: 18)),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: SizedBox(
+                        height: 300,
+                        width: 200,
                         child: GestureDetector(
                           onTap: () =>
                               Navigator.of(context).pushNamed("/content"),
@@ -37,26 +44,26 @@ class ScreenBody extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Column(
-                      //pull artist name and genre from db
-                      children: [
-                        GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed("/artist"),
-                          child: const Text('Artist Name',
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                        const SizedBox(height: 2),
-                        GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed("/genre"),
-                          child: const Text('Genre',
-                              style: TextStyle(fontSize: 18)),
-                        ),
-                      ],
-                    )
-                  ],
-                ));
+                  ),
+                  Column(
+                    //pull artist name and genre from db
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pushNamed("/artist"),
+                        child: const Text('Artist Name',
+                            style: TextStyle(fontSize: 18)),
+                      ),
+                      const SizedBox(height: 2),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pushNamed("/genre"),
+                        child:
+                            const Text('Genre', style: TextStyle(fontSize: 18)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
           },
           childCount: lenght,
         ),

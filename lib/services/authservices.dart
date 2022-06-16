@@ -62,15 +62,16 @@ class AuthService {
     }
   }
 
-  getfavorites(username) async {
-    try {
-      return await dio.post(
-          'http://mobileapp-server.herokuapp.com/getfavorites',
-          data: {
-            "username": username,
-          },
-          options: Options(contentType: Headers.formUrlEncodedContentType));
-    } on DioError catch (e) {
+  Future<List> getfavorites(username) async {
+    //try {
+    final res =
+        await dio.post('http://mobileapp-server.herokuapp.com/getfavorites',
+            data: {
+              "username": username,
+            },
+            options: Options(contentType: Headers.formUrlEncodedContentType));
+    return res.data['array'];
+    /* } on DioError catch (e) {
       Fluttertoast.showToast(
         msg: e.response!.data['msg'],
         toastLength: Toast.LENGTH_SHORT,
@@ -79,7 +80,7 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    }
+    } */
   }
 
   tryserver() async {
