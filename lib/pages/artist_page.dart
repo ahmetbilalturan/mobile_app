@@ -16,10 +16,10 @@ class _ArtistPage extends State<ArtistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidget(),
+      drawer: const NavigationDrawerWidget(),
       body: CustomScrollView(
         slivers: [
-          SliverHeader(title: "Çizer İsmi"), //Database'den çekilecek
+          const SliverHeader(title: "Çizer İsmi"), //Database'den çekilecek
           ScreenBody(lenght: lenght), //push int values for scrolling body
         ],
       ),

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
-
-import '../services/authservices.dart';
+import 'package:test_app/services/authservices.dart';
 
 class FavoritesPage extends StatefulWidget {
   final int userID;
@@ -17,7 +16,6 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPage extends State<FavoritesPage> {
   OverlayEntry? entry;
   List mangas = [];
-  int lenght = 5;
 
   void getFavorites() async {
     await AuthService().getfavorites(LoginPage.username).then((val) {
@@ -64,7 +62,6 @@ class _FavoritesPage extends State<FavoritesPage> {
     return Scaffold(
       backgroundColor: Colors.purple,
       drawer: const NavigationDrawerWidgetUser(),
-      /* appBar: AppBar(), */
       body: CustomScrollView(
         slivers: [
           const SliverHeader(title: "Favoriler"),
@@ -90,6 +87,7 @@ class _FavoritesPage extends State<FavoritesPage> {
                               child: Text(manga['manganame'].toString(),
                                   style: TextStyle(fontSize: 18)),
                             ),
+                            const SizedBox(height: 10),
                             Container(
                               alignment: Alignment.center,
                               child: ClipRRect(
@@ -103,26 +101,53 @@ class _FavoritesPage extends State<FavoritesPage> {
                                     child: Image.network(
                                       manga['mangacoverurl'].toString(),
                                       fit: BoxFit.fill,
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                             Column(
-                              //pull artist name and genre from db
                               children: [
                                 GestureDetector(
                                   onTap: () => Navigator.of(context)
                                       .pushNamed("/artist"),
-                                  child: Text(manga['mangaartist'].toString(),
-                                      style: TextStyle(fontSize: 18)),
+                                  child: Text(
+                                    manga['mangaartist'].toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
                                 ),
-                                const SizedBox(height: 2),
                                 GestureDetector(
                                   onTap: () =>
                                       Navigator.of(context).pushNamed("/genre"),
-                                  child: Text(manga['mangagenre'].toString(),
-                                      style: TextStyle(fontSize: 18)),
+                                  child: Text(
+                                    manga['mangagenre'].toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )

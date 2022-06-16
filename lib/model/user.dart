@@ -10,10 +10,10 @@ class User {
   });
 
   void setName(String newName) {
-    this.name = newName;
+    name = newName;
   }
 
   void setEmail(String newEmail) {
-    this.email = newEmail;
+    email = newEmail;
   }
 }

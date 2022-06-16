@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue.shade300,
       ),
       //route to homepage
-      home: const LoginPage(),
-      //home: const LoadingPage(),
+      //home: const LoginPage(),
+      home: const LoadingPage(),
       //initialRoute: '/login',
       onGenerateRoute: RouteGenerator.generateRoute,
     );

@@ -83,6 +83,27 @@ class AuthService {
     } */
   }
 
+  Future<List> getsubscriptions(username) async {
+    //try {
+    final res =
+        await dio.post('http://mobileapp-server.herokuapp.com/getsubscriptions',
+            data: {
+              "username": username,
+            },
+            options: Options(contentType: Headers.formUrlEncodedContentType));
+    return res.data['array'];
+    /* } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } */
+  }
+
   tryserver() async {
     try {
       return await dio.get('http://mobileapp-server.herokuapp.com/testserver');
