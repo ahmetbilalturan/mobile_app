@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class GenrePage extends StatefulWidget {

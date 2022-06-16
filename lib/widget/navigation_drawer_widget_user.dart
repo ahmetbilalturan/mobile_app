@@ -10,8 +10,17 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
   Widget build(BuildContext context) {
     //its sidebar menu
     return Drawer(
-        child: Material(
-      color: const Color.fromARGB(255, 158, 26, 26),
+        child: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF16d8f3),
+            Color(0xFFe8ba66),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       child: ListView(
         children: <Widget>[
           const SizedBox(height: 15),
