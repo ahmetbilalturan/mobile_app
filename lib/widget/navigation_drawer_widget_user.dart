@@ -49,6 +49,12 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
           const SizedBox(height: 8),
           const SizedBox(height: 8),
           const Divider(color: Colors.white70),
+          const SizedBox(height: 8),
+          const SizedBox(height: 8),
+          buildMenuItem(
+              text: 'Çıkış Yap',
+              icon: Icons.logout,
+              onClicked: () => selectedItem(context, 6)),
           const SizedBox(height: 24),
         ],
       ),
@@ -123,6 +129,9 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/profile");
         break;
+      case 6:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/login");
     }
   }
 }

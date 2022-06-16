@@ -89,9 +89,10 @@ class _SignUpPageState extends State<SignUpPage> {
           padding: const EdgeInsets.all(10),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: ListView(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              physics: const ClampingScrollPhysics(),
               children: <Widget>[
                 Container(
                   alignment: Alignment.center,
