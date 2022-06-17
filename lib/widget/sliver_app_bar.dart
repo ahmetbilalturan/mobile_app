@@ -9,8 +9,9 @@ class SliverHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: const Color.fromARGB(
-          255, 144, 34, 26), //set it can be change in options menu
+      iconTheme: const IconThemeData(color: Colors.white),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
       title: Text(title,
           style: const TextStyle(
               color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),

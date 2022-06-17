@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 import 'package:test_app/services/authservices.dart';
@@ -16,11 +15,17 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPage extends State<FavoritesPage> {
   OverlayEntry? entry;
   List mangas = [];
+  bool isEmpty = false;
 
   void getFavorites() async {
     await AuthService().getfavorites(LoginPage.username).then((val) {
       setState(() {
         mangas = val;
+        if (mangas.isEmpty) {
+          isEmpty = true;
+        } else {
+          isEmpty = false;
+        }
         hideLoadingOverlay();
       });
     });
@@ -60,121 +65,212 @@ class _FavoritesPage extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.purple,
       drawer: const NavigationDrawerWidgetUser(),
-      body: CustomScrollView(
-        slivers: [
-          const SliverHeader(title: "Favoriler"),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 225,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 15,
-                childAspectRatio: .55,
-                mainAxisExtent: 400,
+      appBar: isEmpty
+          ? AppBar(
+              iconTheme: const IconThemeData(color: Colors.white),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              actions: const [
+                SearchButton(), //pull userid and push search button
+              ],
+              title: const Text("Favoriler",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+            )
+          : null,
+      body: isEmpty
+          ? Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFe699cb),
+                    Color(0xFFf3ccfb),
+                    Color(0xFFdce2f3),
+                    Color(0xFFd4fbcc),
+                    Color(0xFF73df99),
+                  ],
+                  stops: [
+                    0.03,
+                    0.25,
+                    0.5,
+                    0.85,
+                    1.6,
+                  ],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
               ),
-              delegate: SliverChildListDelegate.fixed(mangas
-                  .map<Widget>((manga) => Container(
-                        color: Colors.blue,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed("/artist"),
-                              child: Text(manga['manganame'].toString(),
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              alignment: Alignment.center,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: SizedBox(
-                                  height: 300,
-                                  width: 200,
-                                  child: GestureDetector(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed("/content"),
-                                    child: Image.network(
-                                      manga['mangacoverurl'].toString(),
-                                      fit: BoxFit.fill,
-                                      loadingBuilder: (BuildContext context,
-                                          Widget child,
-                                          ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        }
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
+              child: const Center(
+                child: Text(
+                  "Favorileriniz Bulunmamakta",
+                  style: TextStyle(fontSize: 26),
+                ),
+              ),
+            )
+          : Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFe699cb),
+                    Color(0xFFf3ccfb),
+                    Color(0xFFdce2f3),
+                    Color(0xFFd4fbcc),
+                    Color(0xFF73df99),
+                  ],
+                  stops: [
+                    0.03,
+                    0.25,
+                    0.5,
+                    0.85,
+                    1.6,
+                  ],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
+              ),
+              child: CustomScrollView(
+                slivers: [
+                  const SliverHeader(title: "Favoriler"),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    sliver: SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 150,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 3,
+                        childAspectRatio: .55,
+                        mainAxisExtent: 200,
+                      ),
+                      delegate: SliverChildListDelegate.fixed(mangas
+                          .map<Widget>(
+                            (manga) => Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(
+                                        0, 2), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        color: const Color.fromARGB(
+                                            255, 12, 12, 12),
+                                        height: 200,
+                                        width: 150,
+                                        child: GestureDetector(
+                                          onTap: () => Navigator.of(context)
+                                              .pushNamed("/content"),
+                                          child: ShaderMask(
+                                            shaderCallback: (rect) {
+                                              return const LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.black,
+                                                    Colors.transparent,
+                                                  ],
+                                                  stops: [
+                                                    .45,
+                                                    1,
+                                                  ]).createShader(Rect.fromLTRB(
+                                                  0,
+                                                  0,
+                                                  rect.width,
+                                                  rect.height));
+                                            },
+                                            blendMode: BlendMode.dstIn,
+                                            child: Image.network(
+                                              manga['mangacoverurl'].toString(),
+                                              fit: BoxFit.fill,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        );
-                                      },
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        10, 0, 10, 15),
+                                    alignment: Alignment.bottomLeft,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      verticalDirection: VerticalDirection.down,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          manga['manganame'].toString(),
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
+                                        InkWell(
+                                          onTap: () => {
+                                            print('genre sayfasına gidildi')
+                                          },
+                                          child: Text(
+                                            manga['mangagenre'].toString(),
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () => Navigator.of(context)
-                                      .pushNamed("/artist"),
-                                  child: Text(
-                                    manga['mangaartist'].toString(),
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () =>
-                                      Navigator.of(context).pushNamed("/genre"),
-                                  child: Text(
-                                    manga['mangagenre'].toString(),
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ))
-                  .toList()),
+                          )
+                          .toList()),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-
-      /*  ListView(
-            children: mangas
-                .map<Widget>((manga) => ListTile(
-                      title: Text(manga['manganame'].toString()),
-                    ))
-                .toList())  */
-      /* CustomScrollView(
-        slivers: [
-          const SliverHeader(title: "Favoriler"),
-          //push int values for scrolling body
-          ScreenBody(
-            mangas: mangas,
-          ),
-        ], 
-      ),*/
     );
   }
 }

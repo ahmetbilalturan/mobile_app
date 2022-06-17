@@ -10,62 +10,59 @@ class ScreenBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0),
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 225,
+          maxCrossAxisExtent: 150,
           mainAxisSpacing: 10,
-          crossAxisSpacing: 15,
+          crossAxisSpacing: 3,
           childAspectRatio: .55,
-          mainAxisExtent: 400,
+          mainAxisExtent: 200,
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
               color: Colors.blue,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Stack(
+                clipBehavior: Clip.antiAlias,
+                alignment: Alignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).pushNamed("/artist"),
-                    child: Text('mangaismi', style: TextStyle(fontSize: 18)),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: SizedBox(
-                        height: 300,
-                        width: 200,
-                        child: GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed("/content"),
-                          child: Image.asset(
-                            'png/cover_page_2.png',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.asset(
+                      'png/cover_page_2.png',
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  Column(
-                    //pull artist name and genre from db
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed("/artist"),
-                        child: const Text('Artist Name',
-                            style: TextStyle(fontSize: 18)),
-                      ),
-                      const SizedBox(height: 2),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed("/genre"),
-                        child:
-                            const Text('Genre', style: TextStyle(fontSize: 18)),
-                      ),
-                    ],
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(10, 0, 10, 15),
+                    alignment: Alignment.bottomLeft,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      verticalDirection: VerticalDirection.down,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "mangaismi",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        InkWell(
+                          onTap: () => {print('genre sayfasına gidildi')},
+                          child: Text(
+                            "genre",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
             );
           },
-          childCount: lenght,
+          childCount: 20,
         ),
       ),
     );
