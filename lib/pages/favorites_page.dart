@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
@@ -14,19 +16,26 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPage extends State<FavoritesPage> {
   OverlayEntry? entry;
-  List mangas = [];
   bool isEmpty = false;
+  List mangas = [];
+  List ids = [];
 
   void getFavorites() async {
-    await AuthService().getfavorites(LoginPage.username).then((val) {
+    await AuthService().getfavorites(LoginPage.username).then((val) async {
+      val.map((value) => {ids.add(value['_id'])}).toList();
+      if (ids.isNotEmpty) {
+        hideLoadingOverlay();
+      }
+      for (int i = 0; i < ids.length; i++) {
+        mangas.add(await AuthService().getonefromallmangas(ids[i]));
+        setState(() {});
+      }
       setState(() {
-        mangas = val;
         if (mangas.isEmpty) {
           isEmpty = true;
         } else {
           isEmpty = false;
         }
-        hideLoadingOverlay();
       });
     });
   }

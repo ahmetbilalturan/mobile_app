@@ -17,17 +17,23 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
   OverlayEntry? entry;
   List mangas = [];
   bool isEmpty = false;
+  List ids = [];
 
   void getSubscriptions() async {
-    await AuthService().getsubscriptions(LoginPage.username).then((val) {
+    await AuthService().getsubscriptions(LoginPage.username).then((val) async {
+      val.map((value) => {ids.add(value['_id'])}).toList();
+      if (ids.isNotEmpty) {
+        hideLoadingOverlay();
+      }
+      for (int i = 0; i < ids.length; i++) {
+        mangas.add(await AuthService().getonefromallmangas(ids[i]));
+      }
       setState(() {
-        mangas = val;
         if (mangas.isEmpty) {
           isEmpty = true;
         } else {
           isEmpty = false;
         }
-        hideLoadingOverlay();
       });
     });
   }

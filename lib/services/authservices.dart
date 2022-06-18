@@ -62,16 +62,17 @@ class AuthService {
     }
   }
 
-  Future<List> getfavorites(username) async {
-    //try {
-    final res =
-        await dio.post('http://mobileapp-server.herokuapp.com/getfavorites',
-            data: {
-              "username": username,
-            },
-            options: Options(contentType: Headers.formUrlEncodedContentType));
-    return res.data['array'];
-    /* } on DioError catch (e) {
+  getonefromallmangas(_id) async {
+    try {
+      final res = await dio.post(
+        'http://mobileapp-server.herokuapp.com/findfromallmangas',
+        data: {
+          "_id": _id,
+        },
+        options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
+      return res.data['manga'];
+    } on DioError catch (e) {
       Fluttertoast.showToast(
         msg: e.response!.data['msg'],
         toastLength: Toast.LENGTH_SHORT,
@@ -80,19 +81,41 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } */
+    }
+  }
+
+  Future<List> getfavorites(username) async {
+    try {
+      final res =
+          await dio.post('http://mobileapp-server.herokuapp.com/getfavorites',
+              data: {
+                "username": username,
+              },
+              options: Options(contentType: Headers.formUrlEncodedContentType));
+      return res.data['array'];
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      rethrow;
+    }
   }
 
   Future<List> getsubscriptions(username) async {
-    //try {
-    final res =
-        await dio.post('http://mobileapp-server.herokuapp.com/getsubscriptions',
-            data: {
-              "username": username,
-            },
-            options: Options(contentType: Headers.formUrlEncodedContentType));
-    return res.data['array'];
-    /* } on DioError catch (e) {
+    try {
+      final res = await dio.post(
+          'http://mobileapp-server.herokuapp.com/getsubscriptions',
+          data: {
+            "username": username,
+          },
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+      return res.data['array'];
+    } on DioError catch (e) {
       Fluttertoast.showToast(
         msg: e.response!.data['msg'],
         toastLength: Toast.LENGTH_SHORT,
@@ -101,7 +124,8 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } */
+      rethrow;
+    }
   }
 
   Future<List> getallmangas() async {
