@@ -113,41 +113,11 @@ class _AllMangasPage extends State<AllMangasPage> {
         ),
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              expandedHeight: 125,
-              iconTheme: const IconThemeData(color: Colors.white),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              title: const Text('Tüm Mangalar',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold)),
-              systemOverlayStyle: SystemUiOverlayStyle.dark,
-              centerTitle: true,
-              floating: false, //its
-              pinned: false, //for
-              snap: false, //floating
-              actions: const [
-                SearchButton(), //pull userid and push search button
-              ],
-              flexibleSpace: ListView(
-                children: [
-                  const SizedBox(height: 50.0),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 12.0,
-                      bottom: 12.0,
-                      left: 10.0,
-                      right: 10.0,
-                    ),
-                    child: Column(
-                      children: [
-                        buildSearch(),
-                      ],
-                    ),
-                  ),
-                ],
+            const SliverHeader(title: 'Tüm Mangalar'),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+              sliver: SliverToBoxAdapter(
+                child: buildSearch(),
               ),
             ),
             SliverPadding(

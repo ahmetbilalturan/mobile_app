@@ -17,12 +17,9 @@ class SliverHeader extends StatelessWidget {
               color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       centerTitle: true,
-      floating: true, //its
+      floating: false, //its
       pinned: false, //for
       snap: false, //floating
-      actions: const [
-        SearchButton(), //pull userid and push search button
-      ],
     );
   }
 }
