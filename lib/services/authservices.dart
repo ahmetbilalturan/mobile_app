@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test_app/model/manga.dart';
 
 class AuthService {
   Dio dio = new Dio();
@@ -131,7 +134,12 @@ class AuthService {
   Future<List> getallmangas() async {
     final res =
         await dio.get('http://mobileapp-server.herokuapp.com/getallmangas');
-    return res.data['array'];
+
+    if (res.statusCode == 200) {
+      return res.data['array'];
+    } else {
+      throw Exception();
+    }
   }
 
   tryserver() async {

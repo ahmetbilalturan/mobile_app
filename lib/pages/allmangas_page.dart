@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:test_app/model/manga.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
@@ -13,12 +15,15 @@ class AllMangasPage extends StatefulWidget {
 
 class _AllMangasPage extends State<AllMangasPage> {
   OverlayEntry? entry;
-  List mangas = [];
+  List<Manga> allmangas = [];
+  List<Manga> dummyMangas = [];
+  String query = '';
 
-  void getFavorites() async {
+  void getAllMangas() async {
     await AuthService().getallmangas().then((val) {
       setState(() {
-        mangas = val;
+        allmangas = val.map((json) => Manga.fromJson(json)).toList();
+        dummyMangas = allmangas;
         hideLoadingOverlay();
       });
     });
@@ -28,7 +33,7 @@ class _AllMangasPage extends State<AllMangasPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => showLoadingOverlay());
-    getFavorites();
+    getAllMangas();
   }
 
   void showLoadingOverlay() {
@@ -54,6 +59,31 @@ class _AllMangasPage extends State<AllMangasPage> {
               color: Color.fromARGB(255, 163, 171, 192)),
         ),
       );
+
+  Widget buildSearch() {
+    return SearchWidget(
+      text: query,
+      hintText: 'Manga or Genre',
+      onChanged: searchManga,
+    );
+  }
+
+  void searchManga(String query) {
+    final dummyMangas = allmangas.where((manga) {
+      final titleLower = manga.title.toLowerCase();
+      final genreLower = manga.genre.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return titleLower.startsWith(searchLower) ||
+          genreLower.startsWith(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      this.dummyMangas = dummyMangas;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +113,43 @@ class _AllMangasPage extends State<AllMangasPage> {
         ),
         child: CustomScrollView(
           slivers: [
-            const SliverHeader(title: "Tüm Mangalar"),
+            SliverAppBar(
+              expandedHeight: 125,
+              iconTheme: const IconThemeData(color: Colors.white),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: const Text('Tüm Mangalar',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+              centerTitle: true,
+              floating: false, //its
+              pinned: false, //for
+              snap: false, //floating
+              actions: const [
+                SearchButton(), //pull userid and push search button
+              ],
+              flexibleSpace: ListView(
+                children: [
+                  const SizedBox(height: 50.0),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 12.0,
+                      bottom: 12.0,
+                      left: 10.0,
+                      right: 10.0,
+                    ),
+                    child: Column(
+                      children: [
+                        buildSearch(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 0),
               sliver: SliverGrid(
@@ -94,111 +160,110 @@ class _AllMangasPage extends State<AllMangasPage> {
                   childAspectRatio: .55,
                   mainAxisExtent: 200,
                 ),
-                delegate: SliverChildListDelegate.fixed(mangas
-                    .map<Widget>(
-                      (manga) => Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: dummyMangas.length,
+                  (BuildContext context, int index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
                               color: Colors.black.withOpacity(.5),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset: const Offset(
-                                  0, 2), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  color: const Color.fromARGB(255, 12, 12, 12),
-                                  height: 200,
-                                  width: 150,
-                                  child: GestureDetector(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed("/content"),
-                                    child: ShaderMask(
-                                      shaderCallback: (rect) {
-                                        return const LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Colors.black,
-                                              Colors.transparent,
-                                            ],
-                                            stops: [
-                                              .45,
-                                              1,
-                                            ]).createShader(Rect.fromLTRB(
-                                            0, 0, rect.width, rect.height));
+                              offset: const Offset(0, 2)),
+                        ],
+                      ),
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                color: const Color.fromARGB(255, 12, 12, 12),
+                                height: 200,
+                                width: 150,
+                                child: GestureDetector(
+                                  onTap: () => Navigator.of(context)
+                                      .pushNamed("/content"),
+                                  child: ShaderMask(
+                                    shaderCallback: (rect) {
+                                      return const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.black,
+                                            Colors.transparent,
+                                          ],
+                                          stops: [
+                                            .45,
+                                            1,
+                                          ]).createShader(Rect.fromLTRB(
+                                          0, 0, rect.width, rect.height));
+                                    },
+                                    blendMode: BlendMode.dstIn,
+                                    child: Image.network(
+                                      dummyMangas[index].urlImage,
+                                      fit: BoxFit.fill,
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        );
                                       },
-                                      blendMode: BlendMode.dstIn,
-                                      child: Image.network(
-                                        manga['mangacoverurl'].toString(),
-                                        fit: BoxFit.fill,
-                                        loadingBuilder: (BuildContext context,
-                                            Widget child,
-                                            ImageChunkEvent? loadingProgress) {
-                                          if (loadingProgress == null) {
-                                            return child;
-                                          }
-                                          return Center(
-                                            child: CircularProgressIndicator(
-                                              value: loadingProgress
-                                                          .expectedTotalBytes !=
-                                                      null
-                                                  ? loadingProgress
-                                                          .cumulativeBytesLoaded /
-                                                      loadingProgress
-                                                          .expectedTotalBytes!
-                                                  : null,
-                                            ),
-                                          );
-                                        },
-                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(10, 0, 10, 15),
-                              alignment: Alignment.bottomLeft,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                verticalDirection: VerticalDirection.down,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    manga['manganame'].toString(),
-                                    style: TextStyle(color: Colors.white),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(10, 0, 10, 15),
+                            alignment: Alignment.bottomLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              verticalDirection: VerticalDirection.down,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  dummyMangas[index].title,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                InkWell(
+                                  onTap: () =>
+                                      {print('genre sayfasına gidildi')},
+                                  child: Text(
+                                    dummyMangas[index].genre,
+                                    style: const TextStyle(color: Colors.white),
                                   ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  InkWell(
-                                    onTap: () =>
-                                        {print('genre sayfasına gidildi')},
-                                    child: Text(
-                                      manga['mangagenre'].toString(),
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                    .toList()),
+                    );
+                  },
+                ),
               ),
             ),
           ],
