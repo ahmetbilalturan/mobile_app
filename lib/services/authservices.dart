@@ -142,6 +142,27 @@ class AuthService {
     }
   }
 
+  Future<List> getgenre(String genre) async {
+    final res = await dio.get('http://mobileapp-server.herokuapp.com/getgenre',
+        queryParameters: {'mangagenre': genre});
+
+    if (res.statusCode == 200) {
+      return res.data['array'];
+    } else {
+      throw Exception();
+    }
+  }
+
+  Future<List> getartist(String artist) async {
+    final res = await dio.get('http://mobileapp-server.herokuapp.com/getartist',
+        queryParameters: {'mangaartist': artist});
+    if (res.statusCode == 200) {
+      return res.data['array'];
+    } else {
+      throw Exception();
+    }
+  }
+
   tryserver() async {
     try {
       return await dio.get('http://mobileapp-server.herokuapp.com/testserver');

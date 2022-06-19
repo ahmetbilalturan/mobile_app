@@ -63,10 +63,14 @@ class RouteGenerator {
                 ));
       case '/genre':
         return MaterialPageRoute(
-            builder: (context) => const GenrePage(userID: 13));
+            builder: (context) => GenrePage(
+                  userID: 13,
+                  genre: args.toString(),
+                ));
       case '/artist':
         return MaterialPageRoute(
-            builder: (context) => const ArtistPage(userID: 13));
+            builder: (context) =>
+                ArtistPage(userID: 13, artist: args.toString()));
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(

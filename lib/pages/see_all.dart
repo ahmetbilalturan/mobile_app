@@ -23,9 +23,9 @@ class _SeeAllPage extends State<SeeAllPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverHeader(title: widget.title),
-          ScreenBody(
+          /*  ScreenBody(
             lenght: lenght,
-          )
+          ) */
         ],
         //push userid, list from db
       ),
