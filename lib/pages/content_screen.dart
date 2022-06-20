@@ -1,43 +1,24 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:web_scraper/web_scraper.dart';
-import 'dart:convert';
 
 class ContentScreen extends StatefulWidget {
-  const ContentScreen({Key? key}) : super(key: key);
+  final String pages;
+  const ContentScreen({Key? key, required this.pages}) : super(key: key);
 
   @override
   State<ContentScreen> createState() => _ContentScreenState();
 }
 
 class _ContentScreenState extends State<ContentScreen> {
-  late List<Map<String, dynamic>> contentPages;
-  bool dataFetched = false;
+  List<String> pages = [];
 
-  void getContent() async {
-    final webscraper = WebScraper('https://manhuas.net/');
-    String tempRoute =
-        'manhua/swordmasters-youngest-son-manhwa/swordmasters-youngest-son-chapter-1/';
-    if (await webscraper.loadWebPage(tempRoute)) {
-      contentPages =
-          webscraper.getElement('div.page-break.no-gaps > img', ['src']);
-      setState(() {
-        dataFetched = true;
-      });
-    }
+  void getPages() {
+    pages = widget.pages.split(',');
   }
 
   @override
   void initState() {
     super.initState();
-    getContent();
-  }
-
-  String link =
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAALQAQMAAABIQjEhAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAANQTFRFAAAAp3o92gAAAFVJREFUeJztwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4G+lAAAZQLO5IAAAAASUVORK5CYII='; // pull base64 link from db
-  Uint8List encoder(String body) {
-    return base64Decode(body.split(',')[1]);
+    getPages();
   }
 
   @override
@@ -47,35 +28,32 @@ class _ContentScreenState extends State<ContentScreen> {
         title: const Text('Bölüm 1'),
         centerTitle: true,
       ),
-      body: /*ClipRRect(
-          borderRadius: BorderRadius.circular(100),
-          child: Image.memory(encoder(link), fit: BoxFit.fitHeight),
-        )
-            Image.network(
-                'https://media.geeksforgeeks.org/wp-content/uploads/20200121112744/logo11.png')*/
-
-          dataFetched
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: contentPages.length,
-                  itemBuilder: (context, index) {
-                    return Image.network(
-                      contentPages[index]['attributes']['src']
-                          .toString()
-                          .trim(),
-                      fit: BoxFit.fitWidth,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    );
-                  })
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildBuilderDelegate(childCount: pages.length,
+                  (BuildContext context, int index) {
+            return Image.network(
+              pages[index],
+              fit: BoxFit.fitWidth,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+            );
+          })),
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/model/manga.dart';
+import 'package:test_app/pages/screens.dart';
 
 class ScreenBody extends StatelessWidget {
   List<Manga> mangalist = [];
@@ -43,8 +44,11 @@ class ScreenBody extends StatelessWidget {
                         height: 200,
                         width: 150,
                         child: GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed("/content"),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MangaPage(manga: mangalist[index]))),
                           child: ShaderMask(
                             shaderCallback: (rect) {
                               return const LinearGradient(
@@ -84,6 +88,32 @@ class ScreenBody extends StatelessWidget {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            color: Color.fromARGB(174, 17, 134, 21),
+                            child: Text(
+                              'New', //status (new, on going or end)
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Container(
+                            color: Color.fromARGB(174, 255, 235, 59),
+                            child: Text(
+                              '24', //chapter count
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

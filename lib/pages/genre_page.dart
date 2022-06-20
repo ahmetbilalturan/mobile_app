@@ -85,6 +85,12 @@ class _GenrePage extends State<GenrePage> {
     });
   }
 
+//
+//          Tüm mangaları çekip arasından istenilen genreyi gösterr!!!!!!
+  ///
+//////
+//////
+////
   @override
   Widget build(BuildContext context) {
     return Scaffold(

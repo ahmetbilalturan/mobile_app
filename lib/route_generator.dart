@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/model/manga.dart';
 import 'package:test_app/pages/artist_page.dart';
 import 'package:test_app/pages/genre_page.dart';
 import 'package:test_app/pages/profile_page.dart';
@@ -54,7 +55,10 @@ class RouteGenerator {
       case '/forgotpassword':
         return MaterialPageRoute(builder: (context) => const ForgotPassword());
       case '/content':
-        return MaterialPageRoute(builder: (context) => const ContentScreen());
+        return MaterialPageRoute(
+            builder: (context) => ContentScreen(
+                  pages: args.toString(),
+                ));
       case '/profile':
         return MaterialPageRoute(
             builder: (context) => const ProfilePage(
@@ -71,6 +75,11 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) =>
                 ArtistPage(userID: 13, artist: args.toString()));
+      /* case '/mangapage':
+        return MaterialPageRoute(
+            builder: ((context) => MangaPage(
+                  manga: args.toString(),
+                ))); */
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(
