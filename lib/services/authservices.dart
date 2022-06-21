@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/model/manga.dart';
+import 'package:test_app/pages/login_page.dart';
 
 class AuthService {
   Dio dio = new Dio();
@@ -128,6 +129,60 @@ class AuthService {
         fontSize: 16.0,
       );
       rethrow;
+    }
+  }
+
+  addtofavorites(String username, int id) async {
+    try {
+      return await dio.post(
+          'http://mobileapp-server.herokuapp.com/addtofavorites',
+          data: {'username': username, '_id': id},
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  checkifitsinfavorites(String username, int id) async {
+    try {
+      return await dio.post(
+          'http://mobileapp-server.herokuapp.com/checkifitsinfavorites',
+          data: {'username': username, 'mangaid': id},
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  removefromfavorites(String username, int id) async {
+    try {
+      return await dio.post(
+          'http://mobileapp-server.herokuapp.com/removefromfavorites',
+          data: {'username': username, 'mangaid': id},
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 

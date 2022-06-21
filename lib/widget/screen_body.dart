@@ -100,17 +100,24 @@ class ScreenBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            color: Color.fromARGB(174, 17, 134, 21),
+                            color: (mangalist[index].status == 'Yeni')
+                                ? const Color.fromARGB(201, 126, 10, 10)
+                                : (mangalist[index].status == 'Bitti')
+                                    ? const Color.fromARGB(190, 13, 44, 106)
+                                    : const Color.fromARGB(174, 17, 134, 21),
                             child: Text(
-                              'New', //status (new, on going or end)
-                              style: TextStyle(color: Colors.white),
+                              mangalist[index]
+                                  .status, //status (new, on going or end)
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ),
                           Container(
-                            color: Color.fromARGB(174, 255, 235, 59),
+                            color: const Color.fromARGB(196, 216, 198, 31),
                             child: Text(
-                              '24', //chapter count
-                              style: TextStyle(color: Colors.white),
+                              mangalist[index]
+                                  .chaptercount
+                                  .toString(), //chapter count
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ),
                         ],
