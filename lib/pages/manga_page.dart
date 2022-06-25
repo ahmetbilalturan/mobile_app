@@ -308,16 +308,16 @@ class _MangaPageState extends State<MangaPage> {
                                 children: [
                                   Text(
                                     allchapters[index].title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Text(
                                     'Bölüm ${index + 1}',
-                                    style: TextStyle(color: Colors.grey),
+                                    style: const TextStyle(color: Colors.grey),
                                   ),
-                                  SizedBox(height: 2),
-                                  Text(
+                                  const SizedBox(height: 2),
+                                  const Text(
                                     'date',
                                     style: TextStyle(color: Colors.grey),
                                   ),

@@ -62,7 +62,7 @@ class RouteGenerator {
       case '/profile':
         return MaterialPageRoute(
             builder: (context) => const ProfilePage(
-                  title: 'Hoşgeldin Kullanıcı', //Database'den isim
+                  title: 'Hoşgeldin Kullanıcı',
                   userID: 13,
                 ));
       case '/genre':
