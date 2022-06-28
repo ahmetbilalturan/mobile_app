@@ -132,6 +132,17 @@ class AuthService {
     }
   }
 
+  Future<List> gethomepagecontent(collectionname) async {
+    try {
+      final res = await dio.get(
+          'http://mobileapp-server.herokuapp.com/gethomepagecontent',
+          queryParameters: {'collectionname': collectionname});
+      return res.data['array'];
+    } on DioError catch (e) {
+      rethrow;
+    }
+  }
+
   addtofavorites(String username, int id) async {
     try {
       return await dio.post(
@@ -165,6 +176,24 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+    }
+  }
+
+  Future<List> gethomepage() async {
+    try {
+      final res =
+          await dio.get('http://mobileapp-server.herokuapp.com/gethomepage');
+      return res.data['array'];
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      rethrow;
     }
   }
 
