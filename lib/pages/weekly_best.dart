@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/pages/home_page.dart';
-import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class WeeklyBestPage extends StatefulWidget {
@@ -18,10 +16,10 @@ class _WeeklyBestPage extends State<WeeklyBestPage> {
     return const Scaffold(
       backgroundColor: Colors.purple,
       drawer: NavigationDrawerWidgetUser(),
-      body: const CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           SliverHeader(title: "Haftalık En İyiler"),
-          ScrollingBody(), //push int values for scrolling body
+          //ScrollingBody(), //push int values for scrolling body
         ],
       ),
     );

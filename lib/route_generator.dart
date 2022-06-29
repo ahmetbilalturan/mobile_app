@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/model/manga.dart';
 import 'package:test_app/pages/artist_page.dart';
 import 'package:test_app/pages/genre_page.dart';
 import 'package:test_app/pages/profile_page.dart';

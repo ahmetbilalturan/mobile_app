@@ -5,7 +5,6 @@ import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';
 import 'package:test_app/widget/profile_widget.dart';
 import 'package:test_app/model/user.dart';
-import 'package:test_app/pages/home_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final int userID;
@@ -58,14 +57,14 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Text(
             name + user.name,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
           Text(
             email + user.email,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/model/manga.dart';
 import 'package:test_app/pages/screens.dart';
 
+// ignore: must_be_immutable
 class ScreenBody extends StatelessWidget {
   List<Manga> mangalist = [];
   ScreenBody({Key? key, required this.mangalist}) : super(key: key);

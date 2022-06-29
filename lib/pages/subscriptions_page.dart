@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/home_page.dart';
 import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';

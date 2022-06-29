@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/loading_page.dart';
-import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/route_generator.dart';
 
 void main() {

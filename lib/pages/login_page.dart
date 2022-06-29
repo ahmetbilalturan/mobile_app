@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   static var username, email;
 
   const LoginPage({Key? key}) : super(key: key);

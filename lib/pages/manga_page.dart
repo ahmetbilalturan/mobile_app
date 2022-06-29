@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/colorlist.dart';
@@ -283,7 +281,7 @@ class _MangaPageState extends State<MangaPage> {
                   onTap: () => Navigator.of(context).popAndPushNamed('/content',
                       arguments: allchapters[index].pages),
                   child: Container(
-                    color: Color.fromARGB(255, 42, 42, 42),
+                    color: const Color.fromARGB(255, 42, 42, 42),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

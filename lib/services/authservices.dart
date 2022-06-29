@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/login_page.dart';
 
 class AuthService {
+  // ignore: unnecessary_new
   Dio dio = new Dio();
 
   login(username, password) async {
@@ -66,6 +63,7 @@ class AuthService {
     }
   }
 
+  // ignore: no_leading_underscores_for_local_identifiers
   getonefromallmangas(_id) async {
     try {
       final res = await dio.post(
@@ -139,6 +137,14 @@ class AuthService {
           queryParameters: {'collectionname': collectionname});
       return res.data['array'];
     } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       rethrow;
     }
   }

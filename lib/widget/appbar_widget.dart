@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 AppBar buildAppBar(BuildContext context) {
-  final icon = Icons.notifications;
+  const icon = Icons.notifications;
 
   return AppBar(
     //leading: BackButton(),
@@ -11,7 +10,7 @@ AppBar buildAppBar(BuildContext context) {
     actions: [
       IconButton(
         onPressed: () {},
-        icon: Icon(icon),
+        icon: const Icon(icon),
       ),
     ],
   );
