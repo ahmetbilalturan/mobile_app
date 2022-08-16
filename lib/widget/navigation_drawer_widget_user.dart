@@ -51,10 +51,10 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
               text: 'Tüm Mangalar',
               icon: Icons.book_sharp,
               onClicked: () => selectedItem(context, 3)),
-          buildMenuItem(
+          /* buildMenuItem(
               text: 'Haftalık En İyiler',
               icon: Icons.auto_graph,
-              onClicked: () => selectedItem(context, 4)),
+              onClicked: () => selectedItem(context, 4)), */
           const SizedBox(height: 8),
           const SizedBox(height: 8),
           const Divider(color: Colors.white70),

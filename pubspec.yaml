@@ -36,6 +36,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   web_scraper:
   dio:
+  camera:
+  path_provider:
+  path:
+  image_picker:
+  photo_view:
   fluttertoast:
 
 dev_dependencies:
