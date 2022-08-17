@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:test_app/pages/login_page.dart';
-import 'package:test_app/pages/takepicture_screen.dart';
+import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';
@@ -22,8 +23,32 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  OverlayEntry? entry;
   File? image;
 
+  void showLoadingOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    entry = OverlayEntry(
+      builder: (context) => buildLoadingOverlay(),
+    );
+
+    overlay.insert(entry!);
+  }
+
+  void hideLoadingOverlay() {
+    entry!.remove();
+    entry = null;
+  }
+
+  Widget buildLoadingOverlay() => const Material(
+        color: Colors.transparent,
+        elevation: 8,
+        child: Center(
+          child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 163, 171, 192)),
+        ),
+      );
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -33,6 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         this.image = imageTemp;
       });
+      await AuthService().uploadprofilepicture(imageTemp.path);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -141,7 +167,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 title: 'Pick Camera',
                                 icon: Icons.camera_alt_outlined,
                                 onClicked: () {
-                                  pickImage(ImageSource.gallery);
+                                  pickImage(ImageSource.camera);
                                   Navigator.pop(context);
                                 },
                               ),

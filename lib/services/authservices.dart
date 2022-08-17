@@ -6,6 +6,29 @@ class AuthService {
   // ignore: unnecessary_new
   Dio dio = new Dio();
 
+  uploadprofilepicture(filepath) async {
+    var formdata = FormData.fromMap(
+      {
+        "image": await MultipartFile.fromFile(filepath),
+      },
+    );
+
+    try {
+      return await dio.post(
+          'http://mobileapp-server.herokuapp.com/uploadProfilePicture',
+          data: formdata);
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
   login(username, password) async {
     try {
       return await dio.post('http://mobileapp-server.herokuapp.com/login',

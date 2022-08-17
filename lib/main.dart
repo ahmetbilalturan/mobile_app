@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/loading_page.dart';
-import 'package:test_app/pages/pickimage_screen.dart';
 import 'package:test_app/route_generator.dart';
 
 void main() {
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue.shade300,
       ),
       //route to homepage
-      //home: const PickImageScreen(),
+      //home: LandingScreen(),
       home: const LoadingPage(),
       //initialRoute: '/login',
       onGenerateRoute: RouteGenerator.generateRoute,

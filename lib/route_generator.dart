@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/pages/artist_page.dart';
-import 'package:test_app/pages/editphoto_screen.dart';
 import 'package:test_app/pages/genre_page.dart';
 import 'package:test_app/pages/profile_page.dart';
 import 'package:test_app/pages/screens.dart';
-import 'package:test_app/pages/takepicture_screen.dart';
 import 'package:test_app/pages/weekly_best.dart';
 
 class RouteGenerator {
@@ -49,8 +47,6 @@ class RouteGenerator {
             builder: (context) => const MyHomePage(
                   title: 'Hata',
                 ));
-      case '/editphoto':
-        return MaterialPageRoute(builder: ((context) => EditPhotoScreen()));
       case '/login':
         return MaterialPageRoute(builder: (context) => const LoginPage());
       case '/signup':
@@ -83,10 +79,7 @@ class RouteGenerator {
             builder: ((context) => MangaPage(
                   manga: args.toString(),
                 ))); */
-      case '/camera':
-        return MaterialPageRoute(
-          builder: (context) => TakePictureScreen(),
-        );
+
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(
