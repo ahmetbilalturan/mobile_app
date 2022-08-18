@@ -22,7 +22,7 @@ class _MangaPageState extends State<MangaPage> {
 
   void addtofavorites() async {
     await AuthService()
-        .addtofavorites(LoginPage.username, widget.manga.id)
+        .addtofavorites(LoginPage.userid, widget.manga.id)
         .then((val) {
       if (val.data['success']) {
         setState(() {
@@ -79,7 +79,7 @@ class _MangaPageState extends State<MangaPage> {
 
   void checkifitsinfavorites() async {
     await AuthService()
-        .checkifitsinfavorites(LoginPage.username, widget.manga.id)
+        .checkifitsinfavorites(LoginPage.userid, widget.manga.id)
         .then((val) {
       if (val.data['success']) {
         setState(() {

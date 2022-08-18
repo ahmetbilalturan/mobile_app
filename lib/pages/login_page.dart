@@ -4,7 +4,7 @@ import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
-  static var username, email;
+  static var username, email, profilepicture, userid;
 
   const LoginPage({Key? key}) : super(key: key);
 
@@ -196,8 +196,11 @@ class _LoginPageState extends State<LoginPage> {
                                 AuthService().getinfo(val.data['token']).then(
                                   (val) {
                                     if (val.data['success']) {
+                                      LoginPage.userid = val.data['userid'];
                                       LoginPage.email = val.data['email'];
                                       LoginPage.username = val.data['username'];
+                                      LoginPage.profilepicture =
+                                          val.data['profilepicture'];
                                       setState(() {
                                         hideLoadingOverlay();
                                       });

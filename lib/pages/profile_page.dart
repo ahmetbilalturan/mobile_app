@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +8,6 @@ import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';
-import 'package:test_app/widget/profile_widget.dart';
 import 'package:test_app/model/user.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -23,32 +20,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  OverlayEntry? entry;
   File? image;
 
-  void showLoadingOverlay() {
-    final overlay = Overlay.of(context)!;
-
-    entry = OverlayEntry(
-      builder: (context) => buildLoadingOverlay(),
-    );
-
-    overlay.insert(entry!);
-  }
-
-  void hideLoadingOverlay() {
-    entry!.remove();
-    entry = null;
-  }
-
-  Widget buildLoadingOverlay() => const Material(
-        color: Colors.transparent,
-        elevation: 8,
-        child: Center(
-          child: CircularProgressIndicator(
-              color: Color.fromARGB(255, 163, 171, 192)),
-        ),
-      );
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -58,7 +31,21 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         this.image = imageTemp;
       });
-      await AuthService().uploadprofilepicture(imageTemp.path);
+      await AuthService()
+          .uploadprofilepicture(imageTemp.path, LoginPage.userid)
+          .then((val) {
+        if (val.data['success']) {
+          LoginPage.profilepicture = val.data['url'];
+          Fluttertoast.showToast(
+            msg: val.data['msg'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+      });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -134,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.blue,
       drawer: const NavigationDrawerWidgetUser(),
       body: Container(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Column(
           children: [
             image != null

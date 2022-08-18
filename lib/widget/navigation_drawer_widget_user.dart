@@ -8,6 +8,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(LoginPage.profilepicture);
     //its sidebar menu
     return Drawer(
         child: Container(
@@ -26,6 +27,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
           const SizedBox(height: 15),
 
           buildHeader(
+              urlImage: LoginPage.profilepicture.toString(),
               name: LoginPage.username, //Database'den Çekilecek
               onClicked: () =>
                   selectedItem(context, 5)), //navigate profile page
@@ -84,7 +86,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
   }
 
   Widget buildHeader({
-    String urlImage = '',
+    required String urlImage,
     required String name,
     required VoidCallback onClicked,
   }) {
@@ -94,9 +96,16 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
         padding: padding.add(const EdgeInsets.symmetric(vertical: 20)),
         child: Row(
           children: [
-            const CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.black,
+            ClipOval(
+              child: Container(
+                color: Colors.black,
+                width: 50,
+                height: 50,
+                child: Image.network(
+                  urlImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 20),
             Text(

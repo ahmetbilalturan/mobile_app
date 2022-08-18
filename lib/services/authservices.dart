@@ -6,16 +6,12 @@ class AuthService {
   // ignore: unnecessary_new
   Dio dio = new Dio();
 
-  uploadprofilepicture(filepath) async {
+  uploadprofilepicture(filepath, userid) async {
     var formdata = FormData.fromMap(
-      {
-        "image": await MultipartFile.fromFile(filepath),
-      },
+      {"image": await MultipartFile.fromFile(filepath), "userid": userid},
     );
-
     try {
-      return await dio.post(
-          'http://mobileapp-server.herokuapp.com/uploadProfilePicture',
+      return await dio.post('http://10.0.2.2:8080/uploadProfilePicture',
           data: formdata);
     } on DioError catch (e) {
       Fluttertoast.showToast(
@@ -109,12 +105,12 @@ class AuthService {
     }
   }
 
-  Future<List> getfavorites(username) async {
+  Future<List> getfavorites(int userID) async {
     try {
       final res =
           await dio.post('http://mobileapp-server.herokuapp.com/getfavorites',
               data: {
-                "username": username,
+                "userID": userID,
               },
               options: Options(contentType: Headers.formUrlEncodedContentType));
       return res.data['array'];
@@ -172,11 +168,11 @@ class AuthService {
     }
   }
 
-  addtofavorites(String username, int id) async {
+  addtofavorites(int userID, int id) async {
     try {
       return await dio.post(
           'http://mobileapp-server.herokuapp.com/addtofavorites',
-          data: {'username': username, '_id': id},
+          data: {'userID': userID, '_id': id},
           options: Options(contentType: Headers.formUrlEncodedContentType));
     } on DioError catch (e) {
       Fluttertoast.showToast(
@@ -190,11 +186,11 @@ class AuthService {
     }
   }
 
-  checkifitsinfavorites(String username, int id) async {
+  checkifitsinfavorites(int userid, int id) async {
     try {
       return await dio.post(
           'http://mobileapp-server.herokuapp.com/checkifitsinfavorites',
-          data: {'username': username, 'mangaid': id},
+          data: {'userID': userid, 'mangaID': id},
           options: Options(contentType: Headers.formUrlEncodedContentType));
     } on DioError catch (e) {
       Fluttertoast.showToast(

@@ -24,14 +24,13 @@ class _FavoritesPage extends State<FavoritesPage> {
   String query = '';
 
   void getFavorites() async {
-    await AuthService().getfavorites(LoginPage.username).then((val) async {
-      val.map((value) => {ids.add(value['_id'])}).toList();
+    await AuthService().getfavorites(LoginPage.userid).then((val) async {
+      ids = val;
       for (int i = 0; i < ids.length; i++) {
         await AuthService().getonefromallmangas(ids[i]).then((val) {
           mangasjson.add(val);
         });
       }
-
       setState(() {
         allmangas = mangasjson.map((json) => Manga.fromJson(json)).toList();
         dummyMangas = allmangas;
