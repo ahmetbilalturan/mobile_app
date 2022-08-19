@@ -8,7 +8,6 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(LoginPage.profilepicture);
     //its sidebar menu
     return Drawer(
         child: Container(

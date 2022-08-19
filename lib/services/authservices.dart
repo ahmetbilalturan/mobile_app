@@ -127,12 +127,12 @@ class AuthService {
     }
   }
 
-  Future<List> getsubscriptions(username) async {
+  Future<List> getsubscriptions(userID) async {
     try {
       final res = await dio.post(
           'http://mobileapp-server.herokuapp.com/getsubscriptions',
           data: {
-            "username": username,
+            "userID": userID,
           },
           options: Options(contentType: Headers.formUrlEncodedContentType));
       return res.data['array'];
@@ -151,10 +151,10 @@ class AuthService {
 
   Future<List> gethomepagecontent(collectionname) async {
     try {
-      final res = await dio.get(
+      final res = await dio.post(
           'http://mobileapp-server.herokuapp.com/gethomepagecontent',
-          queryParameters: {'collectionname': collectionname});
-      return res.data['array'];
+          data: {'collectionName': collectionname});
+      return res.data['mangaIDs'];
     } on DioError catch (e) {
       Fluttertoast.showToast(
         msg: e.response!.data['msg'],
@@ -168,11 +168,11 @@ class AuthService {
     }
   }
 
-  addtofavorites(int userID, int id) async {
+  addtofavorites(userID, int id) async {
     try {
       return await dio.post(
           'http://mobileapp-server.herokuapp.com/addtofavorites',
-          data: {'userID': userID, '_id': id},
+          data: {'userID': userID, 'mangaID': id},
           options: Options(contentType: Headers.formUrlEncodedContentType));
     } on DioError catch (e) {
       Fluttertoast.showToast(
@@ -222,11 +222,11 @@ class AuthService {
     }
   }
 
-  removefromfavorites(String username, int id) async {
+  removefromfavorites(userID, int id) async {
     try {
       return await dio.post(
           'http://mobileapp-server.herokuapp.com/removefromfavorites',
-          data: {'username': username, 'mangaid': id},
+          data: {'userID': userID, 'mangaID': id},
           options: Options(contentType: Headers.formUrlEncodedContentType));
     } on DioError catch (e) {
       Fluttertoast.showToast(
@@ -265,7 +265,7 @@ class AuthService {
   Future<List> getchapters(int mangaid) async {
     final res = await dio.get(
         'http://mobileapp-server.herokuapp.com/getchapters',
-        queryParameters: {'mangaid': mangaid});
+        queryParameters: {'mangaID': mangaid});
 
     if (res.statusCode == 200) {
       return res.data['array'];

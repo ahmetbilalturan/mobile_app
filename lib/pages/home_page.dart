@@ -24,18 +24,15 @@ class _MyHomePageState extends State<MyHomePage> {
     List ids = [];
     await AuthService().gethomepage().then(
       (val) async {
-        val.map((value) => {containers.add(value['collectionname'])}).toList();
+        val.map((value) => {containers.add(value['collectionName'])}).toList();
         setState(() {});
         for (int i = 0; i < containers.length; i++) {
           ids.clear();
           mangatemp.clear();
           await AuthService()
-              .gethomepagecontent(containers[i]
-                  .toString()
-                  .toLowerCase()
-                  .replaceAll(RegExp(r"\s+\b|\b\s|\s|\b"), ""))
+              .gethomepagecontent(containers[i].toString())
               .then((val) async {
-            val.map((value) => {ids.add(value['mangaid'])}).toList();
+            ids = val;
             if (ids.isNotEmpty) {
               for (int j = 0; j < ids.length; j++) {
                 await AuthService().getonefromallmangas(ids[j]).then((val) {

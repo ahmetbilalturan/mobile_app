@@ -24,8 +24,8 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
   String query = '';
 
   void getSubscriptions() async {
-    await AuthService().getsubscriptions(LoginPage.username).then((val) async {
-      val.map((value) => {ids.add(value['_id'])}).toList();
+    await AuthService().getsubscriptions(LoginPage.userid).then((val) async {
+      ids = val;
       for (int i = 0; i < ids.length; i++) {
         await AuthService().getonefromallmangas(ids[i]).then((val) {
           mangasjson.add(val);
@@ -149,7 +149,7 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
               ),
               child: CustomScrollView(
                 slivers: [
-                  const SliverHeader(title: "Favoriler"),
+                  const SliverHeader(title: "Abonelikler"),
                   SliverPadding(
                     padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                     sliver: SliverToBoxAdapter(

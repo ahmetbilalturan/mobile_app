@@ -57,7 +57,7 @@ class _MangaPageState extends State<MangaPage> {
 
   void removefromfavorites() async {
     await AuthService()
-        .removefromfavorites(LoginPage.username, widget.manga.id)
+        .removefromfavorites(LoginPage.userid, widget.manga.id)
         .then((val) {
       if (val.data['success']) {
         setState(() {
@@ -171,26 +171,44 @@ class _MangaPageState extends State<MangaPage> {
                   height: 400,
                   child: Stack(
                     children: [
-                      SizedBox(
+                      Container(
+                        color: Colors.black,
                         height: 400,
-                        child: Image.network(
-                          'https://promo.com/tools/image-resizer/static/Pattern_image-8c050053eab884e51b8599607865d112.jpg',
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
+                        child: ShaderMask(
+                          blendMode: BlendMode.dstIn,
+                          shaderCallback: (rect) {
+                            return const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.black,
+                                  Colors.transparent,
+                                ],
+                                stops: [
+                                  .35,
+                                  1,
+                                ]).createShader(
+                                Rect.fromLTRB(0, 0, rect.width, rect.height));
                           },
-                          fit: BoxFit.fill,
+                          child: Image.network(
+                            widget.manga.bannerUrl,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                       Row(
@@ -235,13 +253,13 @@ class _MangaPageState extends State<MangaPage> {
                             Row(
                               children: [
                                 Text(
-                                  widget.manga.genre,
+                                  '${widget.manga.genre} /',
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 const SizedBox(width: 5),
-                                const Text(
-                                  'day',
-                                  style: TextStyle(color: Colors.white),
+                                Text(
+                                  '${widget.manga.weeklyPublishDay} /',
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
@@ -259,9 +277,9 @@ class _MangaPageState extends State<MangaPage> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            const Text(
-                              'mangakonusu mangakonusu mangakonusu mangakonusu mangakonusu mangakonusu mangakonusu mangakonusu mangakonusu',
-                              style: TextStyle(color: Colors.white),
+                            Text(
+                              widget.manga.plot,
+                              style: const TextStyle(color: Colors.white),
                             )
                           ],
                         ),
@@ -278,10 +296,15 @@ class _MangaPageState extends State<MangaPage> {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(0, 1, 0, 1),
                 child: InkWell(
-                  onTap: () => Navigator.of(context).popAndPushNamed('/content',
-                      arguments: allchapters[index].pages),
+                  //////////////////////       TEKRAR DÜZENLENMESİ GEREKİYOR!!!!!!!!!!          ///////////////
+                  ///
+                  ///
+                  ///
+                  ///////////////////////////////////////////////////////////////////////////////////////
+                  /*  onTap: () => Navigator.of(context).popAndPushNamed('/content',
+                      arguments: allchapters[index].pages), */
                   child: Container(
-                    color: const Color.fromARGB(255, 42, 42, 42),
+                    color: Color.fromARGB(154, 42, 42, 42),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -296,6 +319,10 @@ class _MangaPageState extends State<MangaPage> {
                                 height: 75,
                                 width: 100,
                                 color: Colors.black,
+                                child: Image.network(
+                                  allchapters[index].chapterCoverUrl,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -312,12 +339,14 @@ class _MangaPageState extends State<MangaPage> {
                                   const SizedBox(height: 10),
                                   Text(
                                     'Bölüm ${index + 1}',
-                                    style: const TextStyle(color: Colors.grey),
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 59, 59, 59)),
                                   ),
                                   const SizedBox(height: 2),
-                                  const Text(
-                                    'date',
-                                    style: TextStyle(color: Colors.grey),
+                                  Text(
+                                    allchapters[index].chapterDate,
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 59, 59, 59)),
                                   ),
                                 ],
                               ),

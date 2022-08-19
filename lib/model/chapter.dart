@@ -1,13 +1,19 @@
 class Chapter {
   final int id;
   final String title;
-  final String pages;
+  final String chapterCoverUrl;
+  final String chapterDate;
 
-  const Chapter({required this.id, required this.title, required this.pages});
+  const Chapter(
+      {required this.id,
+      required this.title,
+      required this.chapterCoverUrl,
+      required this.chapterDate});
 
   factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
-        id: json['_id'],
-        title: json['chaptername'],
-        pages: json['pages'],
+        id: json['chapterID'],
+        title: json['chapterName'],
+        chapterCoverUrl: json['chapterCoverUrl'],
+        chapterDate: json['chapterDate'],
       );
 }

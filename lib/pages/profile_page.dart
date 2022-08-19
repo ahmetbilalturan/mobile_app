@@ -47,7 +47,14 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       });
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      Fluttertoast.showToast(
+        msg: 'Failed to pick image: $e',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
