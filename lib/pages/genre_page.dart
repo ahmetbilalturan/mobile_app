@@ -25,7 +25,11 @@ class _GenrePage extends State<GenrePage> {
     await AuthService().getgenre(widget.genre).then((val) {
       setState(() {
         allmangas = val.map((json) => Manga.fromJson(json)).toList();
-        dummyMangas = allmangas;
+        for (int i = 0; i < allmangas.length; i++) {
+          if (allmangas[i].genre == widget.genre) {
+            dummyMangas.add(allmangas[i]);
+          }
+        }
         hideLoadingOverlay();
       });
     });

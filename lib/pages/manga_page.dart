@@ -252,19 +252,36 @@ class _MangaPageState extends State<MangaPage> {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  '${widget.manga.genre} /',
-                                  style: const TextStyle(color: Colors.white),
+                                InkWell(
+                                  onTap: () => Navigator.of(context)
+                                      .popAndPushNamed('/genre',
+                                          arguments: widget.manga.genre),
+                                  child: Text(
+                                    widget.manga.genre,
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
                                 ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  '${widget.manga.weeklyPublishDay} /',
-                                  style: const TextStyle(color: Colors.white),
+                                const Text(
+                                  ' / ',
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                                const SizedBox(width: 5),
+                                InkWell(
+                                  onTap: () => Navigator.of(context)
+                                      .popAndPushNamed('/weekly',
+                                          arguments:
+                                              widget.manga.weeklyPublishDay),
+                                  child: Text(
+                                    widget.manga.weeklyPublishDay,
+                                    style: const TextStyle(color: Colors.green),
+                                  ),
+                                ),
+                                const Text(
+                                  ' / ',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                                 Text(
                                   widget.manga.artist,
-                                  style: const TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.amber),
                                 ),
                               ],
                             ),
@@ -272,14 +289,14 @@ class _MangaPageState extends State<MangaPage> {
                             Text(
                               widget.manga.title,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.purple,
                                 fontSize: 25,
                               ),
                             ),
                             const SizedBox(height: 10),
                             Text(
                               widget.manga.plot,
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.grey),
                             )
                           ],
                         ),
@@ -304,7 +321,7 @@ class _MangaPageState extends State<MangaPage> {
                   /*  onTap: () => Navigator.of(context).popAndPushNamed('/content',
                       arguments: allchapters[index].pages), */
                   child: Container(
-                    color: Color.fromARGB(154, 42, 42, 42),
+                    color: const Color.fromARGB(154, 42, 42, 42),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

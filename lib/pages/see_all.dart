@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
+import '../colorlist.dart';
+import '../model/manga.dart';
+import '../services/authservices.dart';
+
 class SeeAllPage extends StatefulWidget {
   final int userID;
   final String title;
@@ -13,21 +17,151 @@ class SeeAllPage extends StatefulWidget {
 }
 
 class _SeeAllPage extends State<SeeAllPage> {
-  int lenght = 5;
+  OverlayEntry? entry;
+  bool isEmpty = false;
+  List mangasjson = [];
+  List<Manga> allmangas = [];
+  List ids = [];
+  List<Manga> dummyMangas = [];
+  String query = '';
+
+  void getContent() async {
+    await AuthService().gethomepagecontent(widget.title).then((val) async {
+      ids = val;
+      for (int i = 0; i < ids.length; i++) {
+        await AuthService().getonefromallmangas(ids[i]).then((val) {
+          mangasjson.add(val);
+        });
+      }
+      setState(() {
+        allmangas = mangasjson.map((json) => Manga.fromJson(json)).toList();
+        dummyMangas = allmangas;
+        if (allmangas.isEmpty) {
+          isEmpty = true;
+        } else {
+          isEmpty = false;
+        }
+        hideLoadingOverlay();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => showLoadingOverlay());
+    getContent();
+  }
+
+  void showLoadingOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    entry = OverlayEntry(
+      builder: (context) => buildLoadingOverlay(),
+    );
+
+    overlay.insert(entry!);
+  }
+
+  void hideLoadingOverlay() {
+    entry!.remove();
+    entry = null;
+  }
+
+  Widget buildLoadingOverlay() => const Material(
+        color: Colors.transparent,
+        elevation: 8,
+        child: Center(
+          child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 163, 171, 192)),
+        ),
+      );
+
+  Widget buildSearch() {
+    return SearchWidget(
+      text: query,
+      hintText: 'Manga or Genre',
+      onChanged: searchManga,
+    );
+  }
+
+  void searchManga(String query) {
+    final dummyMangas = allmangas.where((manga) {
+      final titleLower = manga.title.toLowerCase();
+      final genreLower = manga.genre.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return titleLower.startsWith(searchLower) ||
+          genreLower.startsWith(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      this.dummyMangas = dummyMangas;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple,
-      drawer: const NavigationDrawerWidgetUser(), //push user id
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverHeader(title: widget.title),
-          /*  ScreenBody(
-            lenght: lenght,
-          ) */
-        ],
-        //push userid, list from db
-      ),
+      extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xFFd4fbcc),
+      drawer: const NavigationDrawerWidgetUser(),
+      appBar: isEmpty
+          ? AppBar(
+              iconTheme: const IconThemeData(color: Colors.white),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              actions: const [
+                SearchButton(), //pull userid and push search button
+              ],
+              title: Text(widget.title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+            )
+          : null,
+      body: isEmpty
+          ? Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: ColorList.colors,
+                  stops: ColorList.stops,
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
+              ),
+              child: const Center(
+                child: Text(
+                  "Bu Liste Boştur",
+                  style: TextStyle(fontSize: 26),
+                ),
+              ),
+            )
+          : Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: ColorList.colors,
+                  stops: ColorList.stops,
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
+              ),
+              child: CustomScrollView(
+                slivers: [
+                  SliverHeader(title: widget.title),
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                    sliver: SliverToBoxAdapter(
+                      child: buildSearch(),
+                    ),
+                  ),
+                  ScreenBody(mangalist: dummyMangas),
+                ],
+              ),
+            ),
     );
   }
 }

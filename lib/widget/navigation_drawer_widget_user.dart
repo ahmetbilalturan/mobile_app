@@ -29,29 +29,34 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
               urlImage: LoginPage.profilepicture.toString(),
               name: LoginPage.username, //Database'den Çekilecek
               onClicked: () =>
-                  selectedItem(context, 5)), //navigate profile page
+                  selectedItem(context, 0)), //navigate profile page
 
           const SizedBox(height: 10),
           buildMenuItem(
               text: 'Anasayfa',
               icon: Icons.home,
               onClicked: () => selectedItem(context,
-                  0)), //with int value selectedItem function resolve which pages it should go
+                  1)), //with int value selectedItem function resolve which pages it should go
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Favoriler',
               icon: Icons.favorite,
-              onClicked: () => selectedItem(context, 1)),
+              onClicked: () => selectedItem(context, 2)),
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Abonelikler',
+              icon: Icons.subscriptions,
+              onClicked: () => selectedItem(context, 3)),
+          const SizedBox(height: 8),
+          buildMenuItem(
+              text: 'Haftalık Yayınlar',
               icon: Icons.calendar_month,
-              onClicked: () => selectedItem(context, 2)),
+              onClicked: () => selectedItem(context, 4)),
           const SizedBox(height: 8),
           buildMenuItem(
               text: 'Tüm Mangalar',
               icon: Icons.book_sharp,
-              onClicked: () => selectedItem(context, 3)),
+              onClicked: () => selectedItem(context, 5)),
           /* buildMenuItem(
               text: 'Haftalık En İyiler',
               icon: Icons.auto_graph,
@@ -121,34 +126,38 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
     //check route if its same dont navigate!!!!!!
     switch (index) {
       case 0:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/profile");
+        break;
+      case 1:
         //should check current route name to set these clickable or not
         Navigator.of(context).pop(); //closing drawer
         Navigator.of(context).pushNamed("/homepage"); //navigating pages
         break;
-      case 1:
+      case 2:
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/favorites");
         break;
       //add weekly populers
-      case 2:
+      case 3:
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/subscriptions");
         break;
-      case 3:
-        Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/all");
-        break;
       case 4:
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/wbest");
+        Navigator.of(context).pushNamed("/weekly");
         break;
       case 5:
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/profile");
+        Navigator.of(context).pushNamed("/all");
         break;
       case 6:
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/login");
+      /* case 4:
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed("/wbest");
+        break; */
     }
   }
 }

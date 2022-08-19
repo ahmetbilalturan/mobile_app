@@ -8,12 +8,14 @@ class SliverHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      iconTheme: const IconThemeData(color: Colors.white),
+      iconTheme: const IconThemeData(color: Color.fromARGB(255, 249, 220, 237)),
       elevation: 0,
       backgroundColor: Colors.transparent,
       title: Text(title,
           style: const TextStyle(
-              color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
+              color: Color.fromARGB(255, 249, 220, 237),
+              fontSize: 28,
+              fontWeight: FontWeight.bold)),
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       centerTitle: true,
       floating: false, //its

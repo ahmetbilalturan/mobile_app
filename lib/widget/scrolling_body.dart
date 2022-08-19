@@ -278,7 +278,7 @@ class ContainerName extends StatelessWidget {
         containerName,
         style: const TextStyle(
           fontSize: 20,
-          color: Colors.white,
+          color: Color.fromARGB(255, 253, 241, 248),
           fontWeight: FontWeight.bold,
         ),
       ),

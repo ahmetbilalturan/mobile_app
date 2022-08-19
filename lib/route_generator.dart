@@ -4,6 +4,7 @@ import 'package:test_app/pages/genre_page.dart';
 import 'package:test_app/pages/profile_page.dart';
 import 'package:test_app/pages/screens.dart';
 import 'package:test_app/pages/weekly_best.dart';
+import 'package:test_app/pages/weekly_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -74,6 +75,11 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) =>
                 ArtistPage(userID: 13, artist: args.toString()));
+      case '/weekly':
+        return MaterialPageRoute(
+            builder: (context) => WeeklyScreen(
+                  day: args.toString(),
+                ));
       /* case '/mangapage':
         return MaterialPageRoute(
             builder: ((context) => MangaPage(
