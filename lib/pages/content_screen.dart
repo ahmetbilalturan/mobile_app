@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/services/authservices.dart';
+import 'package:test_app/widget/scroll_to_hide_widget.dart';
 
 import '../colorlist.dart';
 import '../model/chapter.dart';
@@ -31,6 +32,7 @@ class _ContentScreenState extends State<ContentScreen> {
   List<String> pages = [];
   bool isEmpty = true;
   OverlayEntry? entry;
+  late ScrollController _controller;
 
   void getPages() async {
     await AuthService()
@@ -79,71 +81,74 @@ class _ContentScreenState extends State<ContentScreen> {
   @override
   void initState() {
     super.initState();
+    _controller = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) => showLoadingOverlay());
     getPages();
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFd4fbcc),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: ColorList.colors,
-            stops: ColorList.stops,
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+      bottomNavigationBar: ScrollToHideWidget(
+          controller: _controller,
+          child: Container(
+            height: 56,
+            color: Colors.black,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (widget.indexofchapter > 0)
+                  ForwardBackButton(
+                      widget: widget, goto: -1, icon: Icons.arrow_back_ios),
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    color: Colors.white,
+                    icon: const Icon(Icons.home)),
+                if (widget.indexofchapter < widget.allchapters.length - 1)
+                  ForwardBackButton(
+                      widget: widget, goto: 1, icon: Icons.arrow_forward_ios),
+              ],
+            ),
+          )),
+      backgroundColor: Colors.black,
+      body: CustomScrollView(
+        controller: _controller,
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+            sliver: SliverHeader(title: widget.chapterName),
           ),
-        ),
-        child: CustomScrollView(
-          slivers: [
-            SliverList(
-                delegate: SliverChildBuilderDelegate(childCount: pages.length,
-                    (BuildContext context, int index) {
-              return Image.network(
-                pages[index],
-                fit: BoxFit.fitWidth,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                },
-              );
-            })),
-            /* SliverToBoxAdapter(
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: widget.indexofchapter > 0
-                        ? ForwardBackButton(
-                            widget: widget,
-                            goto: -1,
-                            icon: Icons.arrow_back_ios)
-                        : null),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: widget.indexofchapter < widget.allchapters.length - 1
-                      ? ForwardBackButton(
-                          widget: widget,
-                          goto: 1,
-                          icon: Icons.arrow_forward_ios)
-                      : null,
-                )
-              ]),
-            ), */
-          ],
-        ),
+          SliverList(
+              delegate: SliverChildBuilderDelegate(childCount: pages.length,
+                  (BuildContext context, int index) {
+            return Image.network(
+              pages[index],
+              fit: BoxFit.fitWidth,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+            );
+          })),
+        ],
       ),
     );
   }
@@ -159,30 +164,32 @@ class ForwardBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Color.fromARGB(38, 0, 0, 0)),
-        shadowColor: MaterialStateProperty.all(Colors.transparent),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ContentScreen(
-              chapterID: widget.allchapters[widget.indexofchapter + goto].id,
-              mangaID: widget.mangaID,
-              indexofchapter: widget.indexofchapter + goto,
-              allchapters: widget.allchapters,
-              chapterName:
-                  widget.allchapters[widget.indexofchapter + goto].title,
-              manga: widget.manga,
+    return Padding(
+      padding: !(widget.indexofchapter < widget.allchapters.length - 1 ||
+              widget.indexofchapter > 0)
+          ? const EdgeInsets.symmetric(horizontal: 10)
+          : const EdgeInsets.symmetric(horizontal: 0),
+      child: IconButton(
+        color: Colors.white,
+        icon: Icon(icon),
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ContentScreen(
+                chapterID: widget.allchapters[widget.indexofchapter + goto].id,
+                mangaID: widget.mangaID,
+                indexofchapter: widget.indexofchapter + goto,
+                allchapters: widget.allchapters,
+                chapterName:
+                    widget.allchapters[widget.indexofchapter + goto].title,
+                manga: widget.manga,
+              ),
             ),
-          ),
-        );
-      },
-      child: Icon(icon),
+          );
+        },
+      ),
     );
   }
 }
