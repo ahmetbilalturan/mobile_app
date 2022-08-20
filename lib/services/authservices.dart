@@ -274,6 +274,26 @@ class AuthService {
     }
   }
 
+  Future<List> getchapterpages(int mangaID, int chapterID) async {
+    try {
+      final res = await dio.post(
+          'http://mobileapp-server.herokuapp.com/getchapterpages',
+          data: {'mangaID': mangaID, 'chapterID': chapterID},
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+      return res.data['pages'];
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+        msg: e.response!.data['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      rethrow;
+    }
+  }
+
   Future<List> getartist(String artist) async {
     final res = await dio.get('http://mobileapp-server.herokuapp.com/getartist',
         queryParameters: {'mangaartist': artist});

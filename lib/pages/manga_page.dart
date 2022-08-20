@@ -7,6 +7,8 @@ import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
+import 'content_screen.dart';
+
 class MangaPage extends StatefulWidget {
   final Manga manga;
   const MangaPage({Key? key, required this.manga}) : super(key: key);
@@ -147,7 +149,6 @@ class _MangaPageState extends State<MangaPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFFd4fbcc),
-      drawer: const NavigationDrawerWidgetUser(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -313,13 +314,21 @@ class _MangaPageState extends State<MangaPage> {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(0, 1, 0, 1),
                 child: InkWell(
-                  //////////////////////       TEKRAR DÜZENLENMESİ GEREKİYOR!!!!!!!!!!          ///////////////
-                  ///
-                  ///
-                  ///
-                  ///////////////////////////////////////////////////////////////////////////////////////
-                  /*  onTap: () => Navigator.of(context).popAndPushNamed('/content',
-                      arguments: allchapters[index].pages), */
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ContentScreen(
+                          chapterID: allchapters[index].id,
+                          mangaID: widget.manga.id,
+                          indexofchapter: index,
+                          allchapters: allchapters,
+                          chapterName: allchapters[index].title,
+                          manga: widget.manga,
+                        ),
+                      ),
+                    );
+                  },
                   child: Container(
                     color: const Color.fromARGB(154, 42, 42, 42),
                     child: Row(

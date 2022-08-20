@@ -54,11 +54,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const SignUpPage());
       case '/forgotpassword':
         return MaterialPageRoute(builder: (context) => const ForgotPassword());
-      case '/content':
+      /* case '/content':
         return MaterialPageRoute(
             builder: (context) => ContentScreen(
-                  pages: args.toString(),
-                ));
+                  pages: args,
+                )); */
       case '/profile':
         return MaterialPageRoute(
             builder: (context) => const ProfilePage(

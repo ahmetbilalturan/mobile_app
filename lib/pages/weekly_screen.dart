@@ -184,7 +184,7 @@ class TabContent extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 2),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
             sliver: ScreenBody(mangalist: mangalist)),
       ],
     );

@@ -10,7 +10,7 @@ class ScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 3),
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 150,
