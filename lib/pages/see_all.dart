@@ -4,6 +4,7 @@ import 'package:test_app/widget/all_widgets.dart';
 import '../colorlist.dart';
 import '../model/manga.dart';
 import '../services/authservices.dart';
+import '../widget/on_will_pop.dart';
 
 class SeeAllPage extends StatefulWidget {
   final int userID;
@@ -103,65 +104,69 @@ class _SeeAllPage extends State<SeeAllPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xFFd4fbcc),
-      drawer: const NavigationDrawerWidgetUser(),
-      appBar: isEmpty
-          ? AppBar(
-              iconTheme: const IconThemeData(color: Colors.white),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-              actions: const [
-                SearchButton(), //pull userid and push search button
-              ],
-              title: Text(widget.title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold)),
-            )
-          : null,
-      body: isEmpty
-          ? Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: ColorList.colors,
-                  stops: ColorList.stops,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                ),
-              ),
-              child: const Center(
-                child: Text(
-                  "Bu Liste Boştur",
-                  style: TextStyle(fontSize: 26),
-                ),
-              ),
-            )
-          : Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: ColorList.colors,
-                  stops: ColorList.stops,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                ),
-              ),
-              child: CustomScrollView(
-                slivers: [
-                  SliverHeader(title: widget.title),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                    sliver: SliverToBoxAdapter(
-                      child: buildSearch(),
-                    ),
-                  ),
-                  ScreenBody(mangalist: dummyMangas),
+    return WillPopScope(
+      onWillPop: OnWillPop(context: context).onWillPop,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xFFd4fbcc),
+        drawer: const NavigationDrawerWidgetUser(),
+        appBar: isEmpty
+            ? AppBar(
+                iconTheme: const IconThemeData(color: Colors.white),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                actions: const [
+                  SearchButton(), //pull userid and push search button
                 ],
+                title: Text(widget.title,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold)),
+              )
+            : null,
+        body: isEmpty
+            ? Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: ColorList.colors,
+                    stops: ColorList.stops,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Bu Liste Boştur",
+                    style: TextStyle(fontSize: 26),
+                  ),
+                ),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: ColorList.colors,
+                    stops: ColorList.stops,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                ),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverHeader(title: widget.title),
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                      sliver: SliverToBoxAdapter(
+                        child: buildSearch(),
+                      ),
+                    ),
+                    ScreenBody(mangalist: dummyMangas),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }

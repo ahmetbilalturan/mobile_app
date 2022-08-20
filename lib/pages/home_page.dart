@@ -4,6 +4,8 @@ import 'package:test_app/model/manga.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
+import '../widget/on_will_pop.dart';
+
 class MyHomePage extends StatefulWidget {
   final String title;
 
@@ -60,25 +62,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xFFd4fbcc),
-      drawer: const NavigationDrawerWidgetUser(), //push user id
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: ColorList.colors,
-            stops: ColorList.stops,
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+    return WillPopScope(
+      onWillPop: OnWillPop(context: context).onWillPop,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xFFd4fbcc),
+        drawer: const NavigationDrawerWidgetUser(), //push user id
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: ColorList.colors,
+              stops: ColorList.stops,
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
           ),
-        ),
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverHeader(title: widget.title),
-            ScrollingBody(
-                mangas: mangas, containers: containers, isFetched: isFetched),
-          ],
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverHeader(title: widget.title),
+              ScrollingBody(
+                  mangas: mangas, containers: containers, isFetched: isFetched),
+            ],
+          ),
         ),
       ),
     );

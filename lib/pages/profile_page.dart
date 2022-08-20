@@ -10,6 +10,8 @@ import 'package:test_app/widget/appbar_widget.dart';
 import 'package:test_app/widget/button_widget.dart';
 import 'package:test_app/model/user.dart';
 
+import '../widget/on_will_pop.dart';
+
 class ProfilePage extends StatefulWidget {
   final int userID;
   final String title;
@@ -123,102 +125,106 @@ class _ProfilePageState extends State<ProfilePage> {
         email: 'Default E-mail');
     user.setName(LoginPage.username);
     user.setEmail(LoginPage.email);
-    return Scaffold(
-      appBar: buildAppBar(context),
-      backgroundColor: Colors.blue,
-      drawer: const NavigationDrawerWidgetUser(),
-      body: Container(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          children: [
-            image != null
-                ? Stack(
-                    children: [
-                      InkWell(
-                        child: ClipOval(
-                          child: Image.file(
-                            image!,
-                            width: 160,
-                            height: 160,
-                            fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: OnWillPop(context: context).onWillPop,
+      child: Scaffold(
+        appBar: buildAppBar(context),
+        backgroundColor: Colors.blue,
+        drawer: const NavigationDrawerWidgetUser(),
+        body: Container(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            children: [
+              image != null
+                  ? Stack(
+                      children: [
+                        InkWell(
+                          child: ClipOval(
+                            child: Image.file(
+                              image!,
+                              width: 160,
+                              height: 160,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          onTap: () => showModalBottomSheet(
+                            context: context,
+                            builder: (context) => Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                buildButton(
+                                  title: 'Pick Gallery',
+                                  icon: Icons.image_outlined,
+                                  onClicked: () {
+                                    pickImage(ImageSource.gallery);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                buildButton(
+                                  title: 'Pick Camera',
+                                  icon: Icons.camera_alt_outlined,
+                                  onClicked: () {
+                                    pickImage(ImageSource.camera);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        onTap: () => showModalBottomSheet(
-                          context: context,
-                          builder: (context) => Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              buildButton(
+                        Positioned(
+                          bottom: 0,
+                          right: 4,
+                          child: buildEditIcon(
+                            color: Colors.black,
+                            size: 20,
+                            icon: Icons.edit,
+                            all: 3,
+                          ),
+                        ),
+                      ],
+                    )
+                  : InkWell(
+                      child: buildEditIcon(
+                        color: Colors.black,
+                        size: 120,
+                        icon: Icons.camera_alt_outlined,
+                        all: 5,
+                      ),
+                      onTap: () => showModalBottomSheet(
+                        context: context,
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            buildButton(
                                 title: 'Pick Gallery',
                                 icon: Icons.image_outlined,
-                                onClicked: () {
-                                  pickImage(ImageSource.gallery);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              buildButton(
+                                onClicked: () =>
+                                    pickImage(ImageSource.gallery)),
+                            buildButton(
                                 title: 'Pick Camera',
                                 icon: Icons.camera_alt_outlined,
-                                onClicked: () {
-                                  pickImage(ImageSource.camera);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),
+                                onClicked: () => pickImage(ImageSource.camera)),
+                          ],
                         ),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        right: 4,
-                        child: buildEditIcon(
-                          color: Colors.black,
-                          size: 20,
-                          icon: Icons.edit,
-                          all: 3,
-                        ),
-                      ),
-                    ],
-                  )
-                : InkWell(
-                    child: buildEditIcon(
-                      color: Colors.black,
-                      size: 120,
-                      icon: Icons.camera_alt_outlined,
-                      all: 5,
                     ),
-                    onTap: () => showModalBottomSheet(
-                      context: context,
-                      builder: (context) => Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          buildButton(
-                              title: 'Pick Gallery',
-                              icon: Icons.image_outlined,
-                              onClicked: () => pickImage(ImageSource.gallery)),
-                          buildButton(
-                              title: 'Pick Camera',
-                              icon: Icons.camera_alt_outlined,
-                              onClicked: () => pickImage(ImageSource.camera)),
-                        ],
-                      ),
-                    ),
-                  ),
-            const SizedBox(
-              height: 24,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            buildName(user),
-            const SizedBox(
-              height: 24,
-            ),
-            Center(child: buildPasswordButton(user)),
-            Center(child: buildApplyButton(user)),
-          ],
+              const SizedBox(
+                height: 24,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              buildName(user),
+              const SizedBox(
+                height: 24,
+              ),
+              Center(child: buildPasswordButton(user)),
+              Center(child: buildApplyButton(user)),
+            ],
+          ),
         ),
       ),
     );

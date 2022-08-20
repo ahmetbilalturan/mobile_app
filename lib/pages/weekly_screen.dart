@@ -6,6 +6,7 @@ import 'package:test_app/widget/all_widgets.dart';
 import '../colorlist.dart';
 import '../model/manga.dart';
 import '../services/authservices.dart';
+import '../widget/on_will_pop.dart';
 
 class WeeklyScreen extends StatefulWidget {
   final String day;
@@ -130,44 +131,51 @@ class _WeeklyScreenState extends State<WeeklyScreen>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 7,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: const Color(0xFFd4fbcc),
-        drawer: const NavigationDrawerWidgetUser(),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: ColorList.colors,
-              stops: ColorList.stops,
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
+    return WillPopScope(
+      onWillPop: OnWillPop(context: context).onWillPop,
+      child: DefaultTabController(
+        length: 7,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          extendBodyBehindAppBar: true,
+          backgroundColor: const Color(0xFFd4fbcc),
+          drawer: const NavigationDrawerWidgetUser(),
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: ColorList.colors,
+                stops: ColorList.stops,
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+              ),
             ),
-          ),
-          child: NestedScrollView(
-            headerSliverBuilder: (context, _) {
-              return [
-                SliverTabHeader(
-                  tabcontroller: _tabController,
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                  sliver: SliverToBoxAdapter(
-                    child: buildSearch(),
+            child: NestedScrollView(
+              headerSliverBuilder: (context, _) {
+                return [
+                  SliverTabHeader(
+                    tabcontroller: _tabController,
                   ),
-                ),
-              ];
-            },
-            body: TabBarView(controller: _tabController, children: [
-              TabContent(mangalist: findDailyMangas('Pazartesi')),
-              TabContent(mangalist: findDailyMangas('Salı')),
-              TabContent(mangalist: findDailyMangas('Çarşamba')),
-              TabContent(mangalist: findDailyMangas('Perşembe')),
-              TabContent(mangalist: findDailyMangas('Cuma')),
-              TabContent(mangalist: findDailyMangas('Cumartesi')),
-              TabContent(mangalist: findDailyMangas('Pazar')),
-            ]),
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                    sliver: SliverToBoxAdapter(
+                      child: buildSearch(),
+                    ),
+                  ),
+                ];
+              },
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  TabContent(mangalist: findDailyMangas('Pazartesi')),
+                  TabContent(mangalist: findDailyMangas('Salı')),
+                  TabContent(mangalist: findDailyMangas('Çarşamba')),
+                  TabContent(mangalist: findDailyMangas('Perşembe')),
+                  TabContent(mangalist: findDailyMangas('Cuma')),
+                  TabContent(mangalist: findDailyMangas('Cumartesi')),
+                  TabContent(mangalist: findDailyMangas('Pazar')),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -184,7 +192,7 @@ class TabContent extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
             sliver: ScreenBody(mangalist: mangalist)),
       ],
     );

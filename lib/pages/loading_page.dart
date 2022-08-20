@@ -33,55 +33,62 @@ class _LoadingPageState extends State<LoadingPage> {
     tryServer();
   }
 
+  Future<bool> _onWillPop() async {
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFe699cb),
-              Color(0xFFf3ccfb),
-              Color(0xFFdce2f3),
-              Color(0xFFd4fbcc),
-              Color(0xFF73df99),
-            ],
-            stops: [
-              0.03,
-              0.25,
-              0.5,
-              0.85,
-              1.6,
-            ],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFe699cb),
+                Color(0xFFf3ccfb),
+                Color(0xFFdce2f3),
+                Color(0xFFd4fbcc),
+                Color(0xFF73df99),
+              ],
+              stops: [
+                0.03,
+                0.25,
+                0.5,
+                0.85,
+                1.6,
+              ],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AspectRatio(
-                aspectRatio: 6,
-                child: Image.asset('png/manga-2.png'),
-              ),
-              const SizedBox(height: 300),
-              const CircularProgressIndicator(
-                  color: Color.fromARGB(255, 163, 171, 192)),
-              const SizedBox(height: 200),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: const Text(
-                  'Yükleniyor...',
-                  style: TextStyle(
-                      color: Color(0xFF73df99),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AspectRatio(
+                  aspectRatio: 6,
+                  child: Image.asset('png/manga-2.png'),
                 ),
-              ),
-              const SizedBox(height: 50),
-            ],
+                const SizedBox(height: 300),
+                const CircularProgressIndicator(
+                    color: Color.fromARGB(255, 163, 171, 192)),
+                const SizedBox(height: 200),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: const Text(
+                    'Yükleniyor...',
+                    style: TextStyle(
+                        color: Color(0xFF73df99),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                  ),
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

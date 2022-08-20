@@ -4,6 +4,8 @@ import 'package:test_app/model/manga.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
+import '../widget/on_will_pop.dart';
+
 class AllMangasPage extends StatefulWidget {
   final int userID;
 
@@ -86,30 +88,34 @@ class _AllMangasPage extends State<AllMangasPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xFFd4fbcc),
-      drawer: const NavigationDrawerWidgetUser(),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: ColorList.colors,
-            stops: ColorList.stops,
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-        ),
-        child: CustomScrollView(
-          slivers: [
-            const SliverHeader(title: 'Tüm Mangalar'),
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-              sliver: SliverToBoxAdapter(
-                child: buildSearch(),
-              ),
+    return WillPopScope(
+      onWillPop: OnWillPop(context: context).onWillPop,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xFFd4fbcc),
+        drawer: const NavigationDrawerWidgetUser(),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: ColorList.colors,
+              stops: ColorList.stops,
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
             ),
-            ScreenBody(mangalist: dummyMangas),
-          ],
+          ),
+          child: CustomScrollView(
+            slivers: [
+              const SliverHeader(title: 'Tüm Mangalar'),
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                sliver: SliverToBoxAdapter(
+                  child: buildSearch(),
+                ),
+              ),
+              ScreenBody(mangalist: dummyMangas),
+            ],
+          ),
         ),
       ),
     );

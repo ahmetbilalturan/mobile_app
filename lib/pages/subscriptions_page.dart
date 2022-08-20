@@ -5,6 +5,8 @@ import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
+import '../widget/on_will_pop.dart';
+
 class SubscriptionsPage extends StatefulWidget {
   final int userID;
 
@@ -101,65 +103,69 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xFFd4fbcc),
-      drawer: const NavigationDrawerWidgetUser(),
-      appBar: isEmpty
-          ? AppBar(
-              iconTheme: const IconThemeData(color: Colors.white),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-              actions: const [
-                SearchButton(), //pull userid and push search button
-              ],
-              title: const Text("Abonelikler",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold)),
-            )
-          : null,
-      body: isEmpty
-          ? Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: ColorList.colors,
-                  stops: ColorList.stops,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                ),
-              ),
-              child: const Center(
-                child: Text(
-                  "Aboneliğiniz Bulunmamakta",
-                  style: TextStyle(fontSize: 26),
-                ),
-              ),
-            )
-          : Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: ColorList.colors,
-                  stops: ColorList.stops,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                ),
-              ),
-              child: CustomScrollView(
-                slivers: [
-                  const SliverHeader(title: "Abonelikler"),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                    sliver: SliverToBoxAdapter(
-                      child: buildSearch(),
-                    ),
-                  ),
-                  ScreenBody(mangalist: dummyMangas),
+    return WillPopScope(
+      onWillPop: OnWillPop(context: context).onWillPop,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xFFd4fbcc),
+        drawer: const NavigationDrawerWidgetUser(),
+        appBar: isEmpty
+            ? AppBar(
+                iconTheme: const IconThemeData(color: Colors.white),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                actions: const [
+                  SearchButton(), //pull userid and push search button
                 ],
+                title: const Text("Abonelikler",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold)),
+              )
+            : null,
+        body: isEmpty
+            ? Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: ColorList.colors,
+                    stops: ColorList.stops,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Aboneliğiniz Bulunmamakta",
+                    style: TextStyle(fontSize: 26),
+                  ),
+                ),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: ColorList.colors,
+                    stops: ColorList.stops,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                ),
+                child: CustomScrollView(
+                  slivers: [
+                    const SliverHeader(title: "Abonelikler"),
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                      sliver: SliverToBoxAdapter(
+                        child: buildSearch(),
+                      ),
+                    ),
+                    ScreenBody(mangalist: dummyMangas),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }
