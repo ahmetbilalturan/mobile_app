@@ -1,12 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/scroll_to_hide_widget.dart';
-
-import '../colorlist.dart';
 import '../model/chapter.dart';
 import '../model/manga.dart';
 import '../widget/sliver_app_bar.dart';
-import 'manga_page.dart';
 
 class ContentScreen extends StatefulWidget {
   final int chapterID, mangaID, indexofchapter;
@@ -33,6 +34,7 @@ class _ContentScreenState extends State<ContentScreen> {
   bool isEmpty = true;
   OverlayEntry? entry;
   late ScrollController _controller;
+  StreamController<bool> streamController = StreamController<bool>();
 
   void getPages() async {
     await AuthService()
@@ -94,61 +96,67 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: ScrollToHideWidget(
+    return GestureDetector(
+      onTap: () {
+        streamController.add(true);
+      },
+      child: Scaffold(
+        bottomNavigationBar: ScrollToHideWidget(
+            stream: streamController.stream,
+            controller: _controller,
+            child: Container(
+              height: 56,
+              color: Colors.black,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (widget.indexofchapter > 0)
+                    ForwardBackButton(
+                        widget: widget, goto: -1, icon: Icons.arrow_back_ios),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      color: Colors.white,
+                      icon: const Icon(Icons.home)),
+                  if (widget.indexofchapter < widget.allchapters.length - 1)
+                    ForwardBackButton(
+                        widget: widget, goto: 1, icon: Icons.arrow_forward_ios),
+                ],
+              ),
+            )),
+        backgroundColor: Colors.black,
+        body: CustomScrollView(
           controller: _controller,
-          child: Container(
-            height: 56,
-            color: Colors.black,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (widget.indexofchapter > 0)
-                  ForwardBackButton(
-                      widget: widget, goto: -1, icon: Icons.arrow_back_ios),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    color: Colors.white,
-                    icon: const Icon(Icons.home)),
-                if (widget.indexofchapter < widget.allchapters.length - 1)
-                  ForwardBackButton(
-                      widget: widget, goto: 1, icon: Icons.arrow_forward_ios),
-              ],
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+              sliver: SliverHeader(title: widget.chapterName),
             ),
-          )),
-      backgroundColor: Colors.black,
-      body: CustomScrollView(
-        controller: _controller,
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-            sliver: SliverHeader(title: widget.chapterName),
-          ),
-          SliverList(
-              delegate: SliverChildBuilderDelegate(childCount: pages.length,
-                  (BuildContext context, int index) {
-            return Image.network(
-              pages[index],
-              fit: BoxFit.fitWidth,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
-              },
-            );
-          })),
-        ],
+            SliverList(
+                delegate: SliverChildBuilderDelegate(childCount: pages.length,
+                    (BuildContext context, int index) {
+              return Image.network(
+                pages[index],
+                fit: BoxFit.fitWidth,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+              );
+            })),
+          ],
+        ),
       ),
     );
   }

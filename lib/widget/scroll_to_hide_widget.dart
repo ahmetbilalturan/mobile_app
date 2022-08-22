@@ -1,18 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/rendering.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ScrollToHideWidget extends StatefulWidget {
   final Widget child;
   final ScrollController controller;
   final Duration duration;
+  bool isVisible = true;
+  late Function callback;
+  final Stream<bool> stream;
 
-  const ScrollToHideWidget(
+  ScrollToHideWidget(
       {Key? key,
       required this.child,
       required this.controller,
-      this.duration = const Duration(milliseconds: 200)})
+      this.duration = const Duration(milliseconds: 200),
+      required this.stream})
       : super(key: key);
 
   @override
@@ -20,12 +25,24 @@ class ScrollToHideWidget extends StatefulWidget {
 }
 
 class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
-  bool isVisible = true;
+  void mySetState(bool boolean) {
+    /*  setState(() {
+      widget.isVisible = boolean;
+    }); */
+    if (!(widget.isVisible)) {
+      setState(() => widget.isVisible = true);
+    } else if (widget.isVisible) {
+      setState(() => widget.isVisible = false);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(listen);
+    widget.stream.listen((boolean) {
+      mySetState(boolean);
+    });
   }
 
   @override
@@ -44,17 +61,17 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
   }
 
   void show() {
-    if (!isVisible) setState(() => isVisible = true);
+    if (!(widget.isVisible)) setState(() => widget.isVisible = true);
   }
 
   void hide() {
-    if (isVisible) setState(() => isVisible = false);
+    if (widget.isVisible) setState(() => widget.isVisible = false);
   }
 
   @override
   Widget build(BuildContext context) => AnimatedContainer(
         duration: widget.duration,
-        height: isVisible ? kBottomNavigationBarHeight : 0,
+        height: widget.isVisible ? kBottomNavigationBarHeight : 0,
         child: Wrap(children: [widget.child]),
       );
 }
