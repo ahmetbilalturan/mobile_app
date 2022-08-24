@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test_app/colorlist.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/scroll_to_hide_widget.dart';
 import '../model/chapter.dart';
@@ -106,7 +107,7 @@ class _ContentScreenState extends State<ContentScreen> {
             controller: _controller,
             child: Container(
               height: 56,
-              color: Colors.black,
+              color: ColorList.backgroundColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

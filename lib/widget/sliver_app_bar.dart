@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_app/colorlist.dart';
 
 class SliverHeader extends StatelessWidget {
   final String title;
@@ -8,12 +9,21 @@ class SliverHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      iconTheme: const IconThemeData(color: Colors.white),
+      iconTheme: IconThemeData(
+        color: ColorList.iconColor,
+        shadows: ColorList.textShadows,
+      ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: Text(title,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
+      title: Text(
+        title,
+        style: (TextStyle(
+            fontFamily: 'DynaPuff',
+            shadows: ColorList.textShadows,
+            color: ColorList.textColor,
+            fontSize: 28,
+            fontWeight: FontWeight.bold)),
+      ),
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       centerTitle: true,
       floating: false, //its

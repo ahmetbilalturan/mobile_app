@@ -106,66 +106,52 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
     return WillPopScope(
       onWillPop: OnWillPop(context: context).onWillPop,
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        backgroundColor: const Color(0xFFd4fbcc),
-        drawer: const NavigationDrawerWidgetUser(),
-        appBar: isEmpty
-            ? AppBar(
-                iconTheme: const IconThemeData(color: Colors.white),
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                centerTitle: true,
-                actions: const [
-                  SearchButton(), //pull userid and push search button
-                ],
-                title: const Text("Abonelikler",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold)),
-              )
-            : null,
-        body: isEmpty
-            ? Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: ColorList.colors,
-                    stops: ColorList.stops,
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Aboneliğiniz Bulunmamakta",
-                    style: TextStyle(fontSize: 26),
-                  ),
-                ),
-              )
-            : Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: ColorList.colors,
-                    stops: ColorList.stops,
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                ),
-                child: CustomScrollView(
-                  slivers: [
-                    const SliverHeader(title: "Abonelikler"),
-                    SliverPadding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                      sliver: SliverToBoxAdapter(
-                        child: buildSearch(),
-                      ),
-                    ),
-                    ScreenBody(mangalist: dummyMangas),
+          resizeToAvoidBottomInset: false,
+          extendBodyBehindAppBar: true,
+          backgroundColor: const Color(0xFFd4fbcc),
+          drawer: const NavigationDrawerWidgetUser(),
+          appBar: isEmpty
+              ? AppBar(
+                  iconTheme: IconThemeData(
+                      color: ColorList.iconColor,
+                      shadows: ColorList.textShadows),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  centerTitle: true,
+                  actions: const [
+                    SearchButton(), //pull userid and push search button
                   ],
-                ),
-              ),
-      ),
+                  title: Text("Abonelikler",
+                      style: TextStyle(
+                          shadows: ColorList.textShadows,
+                          color: ColorList.textColor,
+                          fontSize: 28,
+                          fontFamily: 'DynaPuff',
+                          fontWeight: FontWeight.bold)),
+                )
+              : null,
+          body: Container(
+            color: ColorList.backgroundColor,
+            child: isEmpty
+                ? const Center(
+                    child: Text(
+                      "Aboneliğiniz Bulunmamakta",
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  )
+                : CustomScrollView(
+                    slivers: [
+                      const SliverHeader(title: "Abonelikler"),
+                      SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                        sliver: SliverToBoxAdapter(
+                          child: buildSearch(),
+                        ),
+                      ),
+                      ScreenBody(mangalist: dummyMangas),
+                    ],
+                  ),
+          )),
     );
   }
 }

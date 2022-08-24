@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/colorlist.dart';
 import 'package:test_app/model/manga.dart';
 import 'package:test_app/pages/manga_page.dart';
 
@@ -276,9 +277,11 @@ class ContainerName extends StatelessWidget {
     return Expanded(
       child: Text(
         containerName,
-        style: const TextStyle(
-          fontSize: 20,
-          color: Color.fromARGB(255, 253, 241, 248),
+        style: TextStyle(
+          fontFamily: 'DynaPuff',
+          shadows: ColorList.textShadows,
+          fontSize: 17,
+          color: ColorList.textColor,
           fontWeight: FontWeight.bold,
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/colorlist.dart';
 import 'package:test_app/pages/login_page.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
@@ -11,16 +12,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
     //its sidebar menu
     return Drawer(
         child: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF16d8f3),
-            Color(0xFFe8ba66),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      color: ColorList.drawerBackgrounColor,
       child: ListView(
         children: <Widget>[
           const SizedBox(height: 15),
@@ -82,8 +74,41 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
     VoidCallback? onClicked,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.white),
-      title: Text(text, style: const TextStyle(color: Colors.white)),
+      leading: Icon(
+        icon,
+        color: ColorList.iconColor,
+        shadows: const <Shadow>[
+          Shadow(
+            offset: Offset(1, 1),
+            blurRadius: 3.0,
+            color: Colors.black,
+          ),
+          Shadow(
+            offset: Offset(3, 3),
+            blurRadius: 8.0,
+            color: Colors.black,
+          ),
+        ],
+      ),
+      title: Text(
+        text,
+        style: TextStyle(
+            shadows: const <Shadow>[
+              Shadow(
+                offset: Offset(1, 1),
+                blurRadius: 3.0,
+                color: Colors.black,
+              ),
+              Shadow(
+                offset: Offset(3, 3),
+                blurRadius: 8.0,
+                color: Colors.black,
+              ),
+            ],
+            color: ColorList.textColor,
+            fontFamily: 'DynaPuff',
+            fontWeight: FontWeight.bold),
+      ),
       hoverColor: Colors.white70,
       onTap: onClicked,
     );
@@ -114,7 +139,23 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
             const SizedBox(width: 20),
             Text(
               name,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
+              style: TextStyle(
+                  shadows: const <Shadow>[
+                    Shadow(
+                      offset: Offset(1, 1),
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                    Shadow(
+                      offset: Offset(3, 3),
+                      blurRadius: 8.0,
+                      color: Colors.black,
+                    ),
+                  ],
+                  fontSize: 17,
+                  color: ColorList.textColor,
+                  fontFamily: 'DynaPuff',
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),

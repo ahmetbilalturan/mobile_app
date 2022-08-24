@@ -69,14 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: const Color(0xFFd4fbcc),
         drawer: const NavigationDrawerWidgetUser(), //push user id
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: ColorList.colors,
-              stops: ColorList.stops,
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-            ),
-          ),
+          color: ColorList.backgroundColor,
           child: CustomScrollView(
             slivers: <Widget>[
               SliverHeader(title: widget.title),

@@ -141,14 +141,7 @@ class _WeeklyScreenState extends State<WeeklyScreen>
           backgroundColor: const Color(0xFFd4fbcc),
           drawer: const NavigationDrawerWidgetUser(),
           body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: ColorList.colors,
-                stops: ColorList.stops,
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-              ),
-            ),
+            color: ColorList.backgroundColor,
             child: NestedScrollView(
               headerSliverBuilder: (context, _) {
                 return [
@@ -208,13 +201,15 @@ class SliverTabHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       bottom: TabBar(
-        labelColor: const Color.fromARGB(255, 188, 133, 192),
-        labelStyle: const TextStyle(
-            fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+        labelColor: const Color.fromARGB(255, 126, 134, 159),
+        labelStyle: TextStyle(
+            shadows: ColorList.textShadows,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold),
         unselectedLabelStyle: const TextStyle(
             fontStyle: FontStyle.normal, fontWeight: FontWeight.bold),
         indicatorSize: TabBarIndicatorSize.label,
-        indicatorColor: const Color(0xFFe699cb),
+        indicatorColor: const Color.fromARGB(255, 219, 92, 105),
         isScrollable: true,
         controller: tabcontroller,
         tabs: const [
@@ -243,12 +238,17 @@ class SliverTabHeader extends StatelessWidget {
           ),
         ],
       ),
-      iconTheme: const IconThemeData(color: Color.fromARGB(255, 249, 220, 237)),
+      iconTheme: IconThemeData(
+        color: ColorList.iconColor,
+        shadows: ColorList.textShadows,
+      ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: const Text('Haftalık',
+      title: Text('Haftalık',
           style: TextStyle(
-              color: Color.fromARGB(255, 249, 220, 237),
+              fontFamily: 'DynaPuff',
+              shadows: ColorList.textShadows,
+              color: ColorList.textColor,
               fontSize: 28,
               fontWeight: FontWeight.bold)),
       systemOverlayStyle: SystemUiOverlayStyle.dark,

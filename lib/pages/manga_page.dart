@@ -150,19 +150,12 @@ class _MangaPageState extends State<MangaPage> {
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFFd4fbcc),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: ColorList.colors,
-            stops: ColorList.stops,
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-        ),
+        color: ColorList.backgroundColor,
         child: CustomScrollView(
           slivers: [
-            const SliverPadding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-              sliver: SliverHeader(title: ''),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+              sliver: SliverHeader(title: widget.manga.title),
             ),
             SliverPadding(
               padding: const EdgeInsets.all(0),
@@ -225,9 +218,10 @@ class _MangaPageState extends State<MangaPage> {
                                     });
                                     removefromfavorites();
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.favorite,
                                     color: Colors.red,
+                                    shadows: ColorList.textShadows,
                                   ))
                               : IconButton(
                                   onPressed: () {
@@ -238,9 +232,10 @@ class _MangaPageState extends State<MangaPage> {
                                     });
                                     addtofavorites();
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.favorite,
                                     color: Colors.white,
+                                    shadows: ColorList.textShadows,
                                   ),
                                 ),
                         ],
@@ -259,12 +254,18 @@ class _MangaPageState extends State<MangaPage> {
                                           arguments: widget.manga.genre),
                                   child: Text(
                                     widget.manga.genre,
-                                    style: const TextStyle(color: Colors.blue),
+                                    style: TextStyle(
+                                        shadows: ColorList.textShadows,
+                                        color: Colors.blue,
+                                        fontFamily: 'DynaPuff'),
                                   ),
                                 ),
-                                const Text(
+                                Text(
                                   ' / ',
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      shadows: ColorList.textShadows,
+                                      color: Colors.white,
+                                      fontFamily: 'DynaPuff'),
                                 ),
                                 InkWell(
                                   onTap: () => Navigator.of(context)
@@ -273,23 +274,34 @@ class _MangaPageState extends State<MangaPage> {
                                               widget.manga.weeklyPublishDay),
                                   child: Text(
                                     widget.manga.weeklyPublishDay,
-                                    style: const TextStyle(color: Colors.green),
+                                    style: TextStyle(
+                                        shadows: ColorList.textShadows,
+                                        color: Colors.green,
+                                        fontFamily: 'DynaPuff'),
                                   ),
                                 ),
-                                const Text(
+                                Text(
                                   ' / ',
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      shadows: ColorList.textShadows,
+                                      color: Colors.white,
+                                      fontFamily: 'DynaPuff'),
                                 ),
                                 Text(
                                   widget.manga.artist,
-                                  style: const TextStyle(color: Colors.amber),
+                                  style: TextStyle(
+                                      shadows: ColorList.textShadows,
+                                      color: Colors.amber,
+                                      fontFamily: 'DynaPuff'),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 10),
                             Text(
                               widget.manga.title,
-                              style: const TextStyle(
+                              style: TextStyle(
+                                shadows: ColorList.textShadows,
+                                fontFamily: 'DynaPuff',
                                 color: Colors.purple,
                                 fontSize: 25,
                               ),
@@ -297,7 +309,10 @@ class _MangaPageState extends State<MangaPage> {
                             const SizedBox(height: 10),
                             Text(
                               widget.manga.plot,
-                              style: const TextStyle(color: Colors.grey),
+                              style: TextStyle(
+                                  shadows: ColorList.textShadows,
+                                  color: Colors.grey,
+                                  fontFamily: 'DynaPuff'),
                             )
                           ],
                         ),
@@ -338,17 +353,24 @@ class _MangaPageState extends State<MangaPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(35),
-                              child: Container(
-                                margin: const EdgeInsets.all(8),
-                                height: 75,
-                                width: 100,
+                            Container(
+                              decoration: const BoxDecoration(
                                 color: Colors.black,
-                                child: Image.network(
-                                  allchapters[index].chapterCoverUrl,
-                                  fit: BoxFit.fill,
-                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    offset: Offset(1, 1),
+                                    blurRadius: 5,
+                                    spreadRadius: 1,
+                                  ),
+                                ],
+                              ),
+                              margin: const EdgeInsets.all(8),
+                              height: 75,
+                              width: 100,
+                              child: Image.network(
+                                allchapters[index].chapterCoverUrl,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             SizedBox(
@@ -359,8 +381,22 @@ class _MangaPageState extends State<MangaPage> {
                                 children: [
                                   Text(
                                     allchapters[index].title,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                    style: TextStyle(
+                                        shadows: const <Shadow>[
+                                          Shadow(
+                                            offset: Offset(1, 1),
+                                            blurRadius: 3.0,
+                                            color: Colors.black,
+                                          ),
+                                          Shadow(
+                                            offset: Offset(3, 3),
+                                            blurRadius: 8.0,
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                        color: ColorList.textColor,
+                                        fontSize: 20,
+                                        fontFamily: 'DynaPuff'),
                                   ),
                                   const SizedBox(height: 10),
                                   Text(

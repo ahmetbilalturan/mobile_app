@@ -101,14 +101,7 @@ class _GenrePage extends State<GenrePage> {
         backgroundColor: const Color(0xFFd4fbcc),
         drawer: const NavigationDrawerWidgetUser(),
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: ColorList.colors,
-              stops: ColorList.stops,
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-            ),
-          ),
+          color: ColorList.backgroundColor,
           child: CustomScrollView(
             slivers: [
               SliverHeader(title: widget.genre),

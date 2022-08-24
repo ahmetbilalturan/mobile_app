@@ -23,13 +23,14 @@ class ScreenBody extends StatelessWidget {
           childCount: mangalist.length,
           (BuildContext context, int index) {
             return Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 2)),
+                    color: Colors.black,
+                    offset: Offset(1, 1),
+                    spreadRadius: 2,
+                    blurRadius: 5.15,
+                  ),
                 ],
               ),
               margin: const EdgeInsets.symmetric(horizontal: 5),

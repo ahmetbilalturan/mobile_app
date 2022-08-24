@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoadingPage extends StatefulWidget {
+  static bool isLogined = false;
   const LoadingPage({Key? key}) : super(key: key);
 
   @override
