@@ -99,8 +99,6 @@ class _LoginPageState extends State<LoginPage> {
             key: _formKey,
             child: Center(
               child: ListView(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.center,
                 physics: const ClampingScrollPhysics(),
                 children: <Widget>[
                   Container(
@@ -223,8 +221,11 @@ class _LoginPageState extends State<LoginPage> {
                                       setState(() {
                                         hideLoadingOverlay();
                                       });
+                                      LoadingPage.currentRoute = '/homepage';
                                       Navigator.of(context)
-                                          .popAndPushNamed('/homepage');
+                                          .popUntil((route) => false);
+                                      Navigator.of(context)
+                                          .pushNamed('/homepage');
                                     } else {
                                       Fluttertoast.showToast(
                                         msg: val.data['msg'],

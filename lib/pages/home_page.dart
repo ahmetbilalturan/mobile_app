@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onWillPop: OnWillPop(context: context).onWillPop,
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: const Color(0xFFd4fbcc),
+        backgroundColor: Colors.black,
         drawer: LoadingPage.isLogined
             ? const NavigationDrawerWidgetUser()
             : const NavigationDrawerWidget(), //push user id
