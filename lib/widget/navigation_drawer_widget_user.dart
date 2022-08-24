@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/colorlist.dart';
+import 'package:test_app/pages/loading_page.dart';
 import 'package:test_app/pages/login_page.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
@@ -77,34 +79,12 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
       leading: Icon(
         icon,
         color: ColorList.iconColor,
-        shadows: const <Shadow>[
-          Shadow(
-            offset: Offset(1, 1),
-            blurRadius: 3.0,
-            color: Colors.black,
-          ),
-          Shadow(
-            offset: Offset(3, 3),
-            blurRadius: 8.0,
-            color: Colors.black,
-          ),
-        ],
+        shadows: ColorList.textShadows,
       ),
       title: Text(
         text,
         style: TextStyle(
-            shadows: const <Shadow>[
-              Shadow(
-                offset: Offset(1, 1),
-                blurRadius: 3.0,
-                color: Colors.black,
-              ),
-              Shadow(
-                offset: Offset(3, 3),
-                blurRadius: 8.0,
-                color: Colors.black,
-              ),
-            ],
+            shadows: ColorList.textShadows,
             color: ColorList.textColor,
             fontFamily: 'DynaPuff',
             fontWeight: FontWeight.bold),
@@ -140,18 +120,7 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
             Text(
               name,
               style: TextStyle(
-                  shadows: const <Shadow>[
-                    Shadow(
-                      offset: Offset(1, 1),
-                      blurRadius: 3.0,
-                      color: Colors.black,
-                    ),
-                    Shadow(
-                      offset: Offset(3, 3),
-                      blurRadius: 8.0,
-                      color: Colors.black,
-                    ),
-                  ],
+                  shadows: ColorList.textShadows,
                   fontSize: 17,
                   color: ColorList.textColor,
                   fontFamily: 'DynaPuff',
@@ -172,12 +141,20 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
         break;
       case 1:
         //should check current route name to set these clickable or not
-        Navigator.of(context).pop(); //closing drawer
-        Navigator.of(context).pushNamed("/homepage"); //navigating pages
+        if (LoadingPage.currentRoute != '/homepage') {
+          Navigator.of(context).popAndPushNamed("/homepage"); //navigating pages
+          LoadingPage.currentRoute = '/homepage';
+        } else {
+          Navigator.of(context).pop();
+        }
         break;
       case 2:
-        Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/favorites");
+        if (LoadingPage.currentRoute != '/favorites') {
+          Navigator.of(context).popAndPushNamed("/favorites");
+          LoadingPage.currentRoute = '/favorites';
+        } else {
+          Navigator.of(context).pop();
+        }
         break;
       //add weekly populers
       case 3:
@@ -193,8 +170,16 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
         Navigator.of(context).pushNamed("/all");
         break;
       case 6:
+        SharedPreferences.getInstance().then(
+          (prefs) {
+            prefs.setString('userName', '');
+            prefs.setString('password', '');
+          },
+        );
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed("/login");
+        Navigator.of(context).pop();
+        LoadingPage.isLogined = false;
+        Navigator.of(context).pushNamed("/homepage");
       /* case 4:
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed("/wbest");

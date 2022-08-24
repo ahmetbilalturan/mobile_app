@@ -1,8 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_app/pages/loading_page.dart';
 import 'package:test_app/widget/all_widgets.dart';
-
 import '../colorlist.dart';
 import '../model/manga.dart';
 import '../services/authservices.dart';
@@ -139,7 +138,9 @@ class _WeeklyScreenState extends State<WeeklyScreen>
           resizeToAvoidBottomInset: false,
           extendBodyBehindAppBar: true,
           backgroundColor: const Color(0xFFd4fbcc),
-          drawer: const NavigationDrawerWidgetUser(),
+          drawer: LoadingPage.isLogined
+              ? const NavigationDrawerWidgetUser()
+              : const NavigationDrawerWidget(),
           body: Container(
             color: ColorList.backgroundColor,
             child: NestedScrollView(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/model/manga.dart';
+import 'package:test_app/pages/loading_page.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
@@ -94,7 +95,9 @@ class _AllMangasPage extends State<AllMangasPage> {
         resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         backgroundColor: const Color(0xFFd4fbcc),
-        drawer: const NavigationDrawerWidgetUser(),
+        drawer: LoadingPage.isLogined
+            ? const NavigationDrawerWidgetUser()
+            : const NavigationDrawerWidget(),
         body: Container(
           color: ColorList.backgroundColor,
           child: CustomScrollView(

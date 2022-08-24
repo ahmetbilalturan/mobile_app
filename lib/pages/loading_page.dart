@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_app/pages/login_page.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoadingPage extends StatefulWidget {
   static bool isLogined = false;
+  static String currentRoute = '/homepage';
   const LoadingPage({Key? key}) : super(key: key);
 
   @override
@@ -11,27 +14,50 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  void tryServer() async {
-    await AuthService().tryserver().then((val) {
-      if (val.data['success']) {
-        Fluttertoast.showToast(
-          msg: val.data['msg'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Navigator.of(context).popAndPushNamed('/login');
-      }
-    });
+  late String userName, password;
+
+  void tryToLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userName = prefs.getString('userName') ?? '';
+    password = prefs.getString('password') ?? '';
+    await AuthService().login(userName.toString(), password.toString()).then(
+      (val) async {
+        if (val.data['success']) {
+          await AuthService().getinfo(val.data['token']).then(
+            (val) {
+              if (val.data['success']) {
+                LoadingPage.isLogined = true;
+                LoginPage.userid = val.data['userid'];
+                LoginPage.email = val.data['email'];
+                LoginPage.username = val.data['username'];
+                LoginPage.profilepicture = val.data['profilepicture'];
+                Navigator.of(context).popAndPushNamed('/homepage');
+              } else {
+                Navigator.of(context).popAndPushNamed('/homepage');
+              }
+            },
+          );
+          Fluttertoast.showToast(
+            msg: val.data['msg'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        } else {
+          Navigator.of(context).popAndPushNamed('/homepage');
+        }
+      },
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    tryServer();
+
+    tryToLogin();
   }
 
   Future<bool> _onWillPop() async {

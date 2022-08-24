@@ -48,8 +48,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: ElevatedButton(
                 child: const Text('Giriş Bağlantısı Gönder'),
                 onPressed: () {
-                  print(forgotpasswordController
-                      .text); //daha sonra buraya tekrar dön
+                  //daha sonra buraya tekrar dön
                 },
               ),
             ),
