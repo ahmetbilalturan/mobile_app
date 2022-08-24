@@ -31,9 +31,11 @@ class _LoadingPageState extends State<LoadingPage> {
                 LoginPage.email = val.data['email'];
                 LoginPage.username = val.data['username'];
                 LoginPage.profilepicture = val.data['profilepicture'];
-                Navigator.of(context).popAndPushNamed('/homepage');
+                Navigator.of(context)
+                    .popAndPushNamed('/homepage', arguments: []);
               } else {
-                Navigator.of(context).popAndPushNamed('/homepage');
+                Navigator.of(context)
+                    .popAndPushNamed('/homepage', arguments: []);
               }
             },
           );
@@ -47,7 +49,7 @@ class _LoadingPageState extends State<LoadingPage> {
             fontSize: 16.0,
           );
         } else {
-          Navigator.of(context).popAndPushNamed('/homepage');
+          Navigator.of(context).popAndPushNamed('/homepage', arguments: []);
         }
       },
     );

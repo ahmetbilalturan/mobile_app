@@ -6,7 +6,8 @@ import 'package:test_app/pages/loading_page.dart';
 class MenuItems {
   void drawerRouteFunc(BuildContext context, String routeName) {
     if (LoadingPage.currentRoute != routeName) {
-      Navigator.of(context).popAndPushNamed(routeName); //navigating pages
+      Navigator.of(context)
+          .popAndPushNamed(routeName, arguments: []); //navigating pages
       LoadingPage.currentRoute = routeName;
     } else {
       Navigator.of(context).pop();
@@ -66,10 +67,10 @@ class MenuItems {
                 color: Colors.black,
                 width: 50,
                 height: 50,
-                child: Image.network(
+                /* child: Image.network(
                   urlImage,
                   fit: BoxFit.cover,
-                ),
+                ), */
               ),
             ),
             const SizedBox(width: 20),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/model/manga.dart';
+import 'package:test_app/pages/loading_page.dart';
 import 'package:test_app/pages/manga_page.dart';
 
 // ignore: must_be_immutable
@@ -258,8 +259,11 @@ class SeeAllButton extends StatelessWidget {
       style: TextButton.styleFrom(
         textStyle: const TextStyle(fontSize: 15),
       ),
-      onPressed: () => Navigator.of(context).pushNamed("/seeall",
-          arguments: seeallcontainerName), //navigate to container page
+      onPressed: () {
+        LoadingPage.currentRoute = '/seeall';
+        Navigator.of(context)
+            .pushNamed("/seeall", arguments: [seeallcontainerName]);
+      }, //navigate to container page
       child: const Text('Tümünü Gör'),
     );
   }
