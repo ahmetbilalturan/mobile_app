@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
+import 'package:test_app/model/models.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
-import '../widget/on_will_pop.dart';
-
 class GenrePage extends StatefulWidget {
   final String genre;
-  final int userID;
 
-  const GenrePage({Key? key, required this.userID, required this.genre})
-      : super(key: key);
+  const GenrePage({Key? key, required this.genre}) : super(key: key);
 
   @override
   State<GenrePage> createState() => _GenrePage();
@@ -93,27 +89,23 @@ class _GenrePage extends State<GenrePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: OnWillPop(context: context).onWillPop,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBodyBehindAppBar: true,
-        backgroundColor: const Color(0xFFd4fbcc),
-        drawer: const NavigationDrawerWidgetUser(),
-        body: Container(
-          color: ColorList.backgroundColor,
-          child: CustomScrollView(
-            slivers: [
-              SliverHeader(title: widget.genre),
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                sliver: SliverToBoxAdapter(
-                  child: buildSearch(),
-                ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xFFd4fbcc),
+      body: Container(
+        color: ColorList.backgroundColor,
+        child: CustomScrollView(
+          slivers: [
+            SliverHeader(title: widget.genre),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+              sliver: SliverToBoxAdapter(
+                child: buildSearch(),
               ),
-              ScreenBody(mangalist: dummyMangas),
-            ],
-          ),
+            ),
+            ScreenBody(mangalist: dummyMangas),
+          ],
         ),
       ),
     );

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/widget/all_widgets.dart';
-
-import '../colorlist.dart';
-import '../model/manga.dart';
-import '../services/authservices.dart';
-import '../widget/on_will_pop.dart';
+import 'package:test_app/colorlist.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/services/authservices.dart';
 
 class SeeAllPage extends StatefulWidget {
-  final int userID;
   final String title;
 
-  const SeeAllPage({Key? key, required this.title, required this.userID})
-      : super(key: key);
+  const SeeAllPage({Key? key, required this.title}) : super(key: key);
 
   @override
   State<SeeAllPage> createState() => _SeeAllPage();
@@ -104,55 +100,49 @@ class _SeeAllPage extends State<SeeAllPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: OnWillPop(context: context).onWillPop,
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          extendBodyBehindAppBar: true,
-          backgroundColor: const Color(0xFFd4fbcc),
-          drawer: const NavigationDrawerWidgetUser(),
-          appBar: isEmpty
-              ? AppBar(
-                  iconTheme: IconThemeData(
-                    color: ColorList.iconColor,
-                    shadows: ColorList.textShadows,
-                  ),
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  centerTitle: true,
-                  actions: const [
-                    SearchButton(), //pull userid and push search button
-                  ],
-                  title: Text(widget.title,
-                      style: TextStyle(
-                          shadows: ColorList.textShadows,
-                          color: ColorList.textColor,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold)),
-                )
-              : null,
-          body: Container(
-            color: ColorList.backgroundColor,
-            child: isEmpty
-                ? const Center(
-                    child: Text(
-                      "Bu Liste Boştur",
-                      style: TextStyle(fontSize: 26),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xFFd4fbcc),
+      appBar: isEmpty
+          ? AppBar(
+              iconTheme: IconThemeData(
+                color: ColorList.iconColor,
+                shadows: ColorList.textShadows,
+              ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              title: Text(widget.title,
+                  style: TextStyle(
+                      shadows: ColorList.textShadows,
+                      color: ColorList.textColor,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
+            )
+          : null,
+      body: Container(
+        color: ColorList.backgroundColor,
+        child: isEmpty
+            ? const Center(
+                child: Text(
+                  "Bu Liste Boştur",
+                  style: TextStyle(fontSize: 26),
+                ),
+              )
+            : CustomScrollView(
+                slivers: [
+                  SliverHeader(title: widget.title),
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                    sliver: SliverToBoxAdapter(
+                      child: buildSearch(),
                     ),
-                  )
-                : CustomScrollView(
-                    slivers: [
-                      SliverHeader(title: widget.title),
-                      SliverPadding(
-                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                        sliver: SliverToBoxAdapter(
-                          child: buildSearch(),
-                        ),
-                      ),
-                      ScreenBody(mangalist: dummyMangas),
-                    ],
                   ),
-          )),
+                  ScreenBody(mangalist: dummyMangas),
+                ],
+              ),
+      ),
     );
   }
 }

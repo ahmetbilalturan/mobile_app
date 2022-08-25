@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/loading_page.dart';
-import 'package:test_app/pages/manga_page.dart';
+import 'package:test_app/model/models.dart';
 
 // ignore: must_be_immutable
 class ScrollingBody extends StatelessWidget {
@@ -81,14 +79,11 @@ class ScrollingBody extends StatelessWidget {
                                             height: 200,
                                             width: 150,
                                             child: GestureDetector(
-                                              onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          MangaPage(
-                                                              manga: mangas[
-                                                                      index]
-                                                                  [index2]))),
+                                              onTap: () => Navigator.of(context)
+                                                  .pushNamed('/mangapage',
+                                                      arguments: [
+                                                    mangas[index][index2]
+                                                  ]),
                                               child: ShaderMask(
                                                 shaderCallback: (rect) {
                                                   return const LinearGradient(
@@ -212,10 +207,10 @@ class ScrollingBody extends StatelessWidget {
                                             ),
                                             InkWell(
                                               onTap: () => Navigator.of(context)
-                                                  .popAndPushNamed('/genre',
-                                                      arguments: mangas[index]
-                                                              [index2]
-                                                          .genre),
+                                                  .pushNamed('/genre',
+                                                      arguments: [
+                                                    mangas[index][index2].genre
+                                                  ]),
                                               child: Text(
                                                 mangas[index][index2].genre,
                                                 style: const TextStyle(
@@ -260,7 +255,6 @@ class SeeAllButton extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 15),
       ),
       onPressed: () {
-        LoadingPage.currentRoute = '/seeall';
         Navigator.of(context)
             .pushNamed("/seeall", arguments: [seeallcontainerName]);
       }, //navigate to container page
@@ -290,65 +284,5 @@ class ContainerName extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class WebtoonList extends StatelessWidget {
-  const WebtoonList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 251,
-        color: Colors.red,
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 7, //pull from db
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  Container(
-                      margin: //add cover photo from db later
-                          const EdgeInsets.symmetric(horizontal: 10.0),
-                      height: 175,
-                      width: 125,
-                      child: GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed("/content"),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                              'png/cover_page_2.png',
-                              fit: BoxFit.fill,
-                            ),
-                          ))),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed("/artist"),
-                        child: const Text('Artist Name',
-                            style: TextStyle(fontSize: 20, color: Colors.blue)),
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed("/genre"),
-                        child: const Text('Genre',
-                            style: TextStyle(fontSize: 20, color: Colors.blue)),
-                      ),
-                    ],
-                  )
-                ],
-              );
-            },
-          ),
-        ));
   }
 }

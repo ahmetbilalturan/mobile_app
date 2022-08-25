@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/login_page.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
-import '../widget/on_will_pop.dart';
-
 class SubscriptionsPage extends StatefulWidget {
-  final int userID;
-
-  const SubscriptionsPage({Key? key, required this.userID}) : super(key: key);
+  const SubscriptionsPage({Key? key}) : super(key: key);
 
   @override
   State<SubscriptionsPage> createState() => _SubscriptionsPage();
@@ -118,9 +114,6 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
                   elevation: 0,
                   backgroundColor: Colors.transparent,
                   centerTitle: true,
-                  actions: const [
-                    SearchButton(), //pull userid and push search button
-                  ],
                   title: Text("Abonelikler",
                       style: TextStyle(
                           shadows: ColorList.textShadows,

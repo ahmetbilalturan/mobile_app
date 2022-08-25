@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
 class WeeklyBestPage extends StatefulWidget {
-  final int userID;
-
-  const WeeklyBestPage({Key? key, required this.userID}) : super(key: key);
+  const WeeklyBestPage({Key? key}) : super(key: key);
 
   @override
   State<WeeklyBestPage> createState() => _WeeklyBestPage();

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/loading_page.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
-
-import '../widget/on_will_pop.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;

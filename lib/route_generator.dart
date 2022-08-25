@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/pages/artist_page.dart';
-import 'package:test_app/pages/genre_page.dart';
-import 'package:test_app/pages/profile_page.dart';
 import 'package:test_app/pages/screens.dart';
-import 'package:test_app/pages/weekly_best.dart';
-import 'package:test_app/pages/weekly_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -18,22 +13,22 @@ class RouteGenerator {
             child: const MyHomePage(title: 'Anasayfa')); //pull from db
       case '/favorites':
         //check user id from db
-        return CustomPageRoute(child: const FavoritesPage(userID: 13));
+        return CustomPageRoute(child: const FavoritesPage());
       //save favorites in db for each userID
       case '/subscriptions':
         //check user id from db
-        return CustomPageRoute(child: const SubscriptionsPage(userID: 13));
+        return CustomPageRoute(child: const SubscriptionsPage());
       //save subscriptions in db for each userID
       case '/all':
         //check user id from db
-        return CustomPageRoute(child: const AllMangasPage(userID: 13));
+        return CustomPageRoute(child: const AllMangasPage());
       case '/wbest':
         //check user id from db
-        return CustomPageRoute(child: const WeeklyBestPage(userID: 13));
+        return CustomPageRoute(child: const WeeklyBestPage());
       case '/seeall':
         if (args.elementAt(0) is String) {
           return CustomPageRoute(
-            child: SeeAllPage(userID: 12, title: args.elementAt(0)),
+            child: SeeAllPage(title: args.elementAt(0)),
           );
         }
         return CustomPageRoute(child: const MyHomePage(title: 'Hata'));
@@ -43,27 +38,34 @@ class RouteGenerator {
         return CustomPageRoute(child: const SignUpPage());
       case '/forgotpassword':
         return CustomPageRoute(child: const ForgotPassword());
-      /* case '/content':
+      case '/contentpage':
         return MaterialPageRoute(
             builder: (context) => ContentScreen(
-                  pages: args,
-                )); */
+                  chapterID: args.elementAt(0),
+                  mangaID: args.elementAt(1),
+                  chapterName: args.elementAt(2),
+                  allchapters: args.elementAt(3),
+                  indexofchapter: args.elementAt(4),
+                  manga: args.elementAt(5),
+                ));
       case '/profile':
         return CustomPageRoute(
-            child: const ProfilePage(title: 'Hoşgeldin Kullanıcı', userID: 13));
+            child: const ProfilePage(title: 'Hoşgeldin Kullanıcı'));
       case '/genre':
         return CustomPageRoute(
-            child: GenrePage(userID: 13, genre: args.toString()));
+            child: GenrePage(genre: args.elementAt(0).toString()));
       case '/artist':
-        return CustomPageRoute(
-            child: ArtistPage(userID: 13, artist: args.toString()));
+        return CustomPageRoute(child: ArtistPage(artist: args.toString()));
       case '/weekly':
-        return CustomPageRoute(child: WeeklyScreen(day: args.toString()));
-      /* case '/mangapage':
+        return CustomPageRoute(
+            child: WeeklyScreen(
+                day: args.isEmpty ? '' : args.elementAt(0).toString()));
+      case '/mangapage':
         return MaterialPageRoute(
-            builder: ((context) => MangaPage(
-                  manga: args.toString(),
-                ))); */
+          builder: ((context) => MangaPage(
+                manga: args.elementAt(0),
+              )),
+        );
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(title: 'Hata'));

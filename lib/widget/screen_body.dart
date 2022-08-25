@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/screens.dart';
+import 'package:test_app/model/models.dart';
 
 // ignore: must_be_immutable
 class ScreenBody extends StatelessWidget {
@@ -46,11 +45,9 @@ class ScreenBody extends StatelessWidget {
                         height: 200,
                         width: 150,
                         child: GestureDetector(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      MangaPage(manga: mangalist[index]))),
+                          onTap: () => Navigator.of(context).pushNamed(
+                              '/mangapage',
+                              arguments: [mangalist[index]]),
                           child: ShaderMask(
                             shaderCallback: (rect) {
                               return const LinearGradient(
@@ -143,9 +140,8 @@ class ScreenBody extends StatelessWidget {
                           height: 2,
                         ),
                         InkWell(
-                          onTap: () => Navigator.of(context).popAndPushNamed(
-                              '/genre',
-                              arguments: mangalist[index].genre),
+                          onTap: () => Navigator.of(context).pushNamed('/genre',
+                              arguments: [mangalist[index].genre]),
                           child: Text(
                             mangalist[index].genre,
                             style: const TextStyle(color: Colors.white),

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/loading_page.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
-import '../widget/on_will_pop.dart';
-
 class AllMangasPage extends StatefulWidget {
-  final int userID;
-
-  const AllMangasPage({Key? key, required this.userID}) : super(key: key);
+  const AllMangasPage({Key? key}) : super(key: key);
 
   @override
   State<AllMangasPage> createState() => _AllMangasPage();

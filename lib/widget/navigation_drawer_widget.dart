@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/pages/loading_page.dart';
-import 'package:test_app/widget/build_menu_item.dart';
+import 'package:test_app/widget/all_widgets.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
@@ -61,7 +60,8 @@ class NavigationDrawerWidget extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).popAndPushNamed('/login');
+                              Navigator.of(context)
+                                  .popAndPushNamed('/login', arguments: []);
                             },
                             child: const Text(
                               'Giriş Yap',
@@ -85,8 +85,10 @@ class NavigationDrawerWidget extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).popAndPushNamed('/login');
-                              Navigator.of(context).pushNamed('/signup');
+                              Navigator.of(context)
+                                  .popAndPushNamed('/login', arguments: []);
+                              Navigator.of(context)
+                                  .pushNamed('/signup', arguments: []);
                             },
                             child: const Text(
                               'Kayıt Ol',

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
+import 'package:test_app/model/models.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
 
-import '../widget/on_will_pop.dart';
-
 class ArtistPage extends StatefulWidget {
   final String artist;
-  final int userID;
 
-  const ArtistPage({Key? key, required this.userID, required this.artist})
-      : super(key: key);
+  const ArtistPage({Key? key, required this.artist}) : super(key: key);
 
   @override
   State<ArtistPage> createState() => _ArtistPage();

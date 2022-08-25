@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_app/pages/loading_page.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 
 class LoginPage extends StatefulWidget {

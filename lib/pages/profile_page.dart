@@ -3,20 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:test_app/pages/login_page.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
-import 'package:test_app/widget/appbar_widget.dart';
-import 'package:test_app/widget/button_widget.dart';
-import 'package:test_app/model/user.dart';
-
-import '../widget/on_will_pop.dart';
+import 'package:test_app/model/models.dart';
 
 class ProfilePage extends StatefulWidget {
-  final int userID;
   final String title;
-  const ProfilePage({Key? key, required this.title, required this.userID})
-      : super(key: key);
+  const ProfilePage({Key? key, required this.title}) : super(key: key);
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }

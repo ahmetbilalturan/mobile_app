@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/pages/loading_page.dart';
-import 'package:test_app/pages/login_page.dart';
-import 'package:test_app/widget/build_menu_item.dart';
+import 'package:test_app/pages/screens.dart';
+import 'package:test_app/widget/all_widgets.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 20);

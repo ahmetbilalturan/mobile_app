@@ -2,10 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/services/authservices.dart';
-import 'package:test_app/widget/scroll_to_hide_widget.dart';
-import '../model/chapter.dart';
-import '../model/manga.dart';
-import '../widget/sliver_app_bar.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/widget/all_widgets.dart';
 
 class ContentScreen extends StatefulWidget {
   final int chapterID, mangaID, indexofchapter;
@@ -179,21 +177,14 @@ class ForwardBackButton extends StatelessWidget {
         color: Colors.white,
         icon: Icon(icon),
         onPressed: () {
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ContentScreen(
-                chapterID: widget.allchapters[widget.indexofchapter + goto].id,
-                mangaID: widget.mangaID,
-                indexofchapter: widget.indexofchapter + goto,
-                allchapters: widget.allchapters,
-                chapterName:
-                    widget.allchapters[widget.indexofchapter + goto].title,
-                manga: widget.manga,
-              ),
-            ),
-          );
+          Navigator.of(context).popAndPushNamed('/contentpage', arguments: [
+            widget.allchapters[widget.indexofchapter + goto].id,
+            widget.mangaID,
+            widget.allchapters[widget.indexofchapter + goto].title,
+            widget.allchapters,
+            widget.indexofchapter + goto,
+            widget.manga,
+          ]);
         },
       ),
     );

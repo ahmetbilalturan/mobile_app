@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_app/pages/loading_page.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/widget/all_widgets.dart';
-import '../colorlist.dart';
-import '../model/manga.dart';
-import '../services/authservices.dart';
-import '../widget/on_will_pop.dart';
+import 'package:test_app/colorlist.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/services/authservices.dart';
 
 class WeeklyScreen extends StatefulWidget {
   final String day;
@@ -130,45 +129,44 @@ class _WeeklyScreenState extends State<WeeklyScreen>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: OnWillPop(context: context).onWillPop,
-      child: DefaultTabController(
-        length: 7,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          extendBodyBehindAppBar: true,
-          backgroundColor: const Color(0xFFd4fbcc),
-          drawer: LoadingPage.isLogined
-              ? const NavigationDrawerWidgetUser()
-              : const NavigationDrawerWidget(),
-          body: Container(
-            color: ColorList.backgroundColor,
-            child: NestedScrollView(
-              headerSliverBuilder: (context, _) {
-                return [
-                  SliverTabHeader(
-                    tabcontroller: _tabController,
+    return DefaultTabController(
+      length: 7,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xFFd4fbcc),
+        drawer: widget.day == ''
+            ? (LoadingPage.isLogined
+                ? const NavigationDrawerWidgetUser()
+                : const NavigationDrawerWidget())
+            : null,
+        body: Container(
+          color: ColorList.backgroundColor,
+          child: NestedScrollView(
+            headerSliverBuilder: (context, _) {
+              return [
+                SliverTabHeader(
+                  tabcontroller: _tabController,
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                  sliver: SliverToBoxAdapter(
+                    child: buildSearch(),
                   ),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                    sliver: SliverToBoxAdapter(
-                      child: buildSearch(),
-                    ),
-                  ),
-                ];
-              },
-              body: TabBarView(
-                controller: _tabController,
-                children: [
-                  TabContent(mangalist: findDailyMangas('Pazartesi')),
-                  TabContent(mangalist: findDailyMangas('Salı')),
-                  TabContent(mangalist: findDailyMangas('Çarşamba')),
-                  TabContent(mangalist: findDailyMangas('Perşembe')),
-                  TabContent(mangalist: findDailyMangas('Cuma')),
-                  TabContent(mangalist: findDailyMangas('Cumartesi')),
-                  TabContent(mangalist: findDailyMangas('Pazar')),
-                ],
-              ),
+                ),
+              ];
+            },
+            body: TabBarView(
+              controller: _tabController,
+              children: [
+                TabContent(mangalist: findDailyMangas('Pazartesi')),
+                TabContent(mangalist: findDailyMangas('Salı')),
+                TabContent(mangalist: findDailyMangas('Çarşamba')),
+                TabContent(mangalist: findDailyMangas('Perşembe')),
+                TabContent(mangalist: findDailyMangas('Cuma')),
+                TabContent(mangalist: findDailyMangas('Cumartesi')),
+                TabContent(mangalist: findDailyMangas('Pazar')),
+              ],
             ),
           ),
         ),

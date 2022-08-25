@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/login_page.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/widget/all_widgets.dart';
 import 'package:test_app/services/authservices.dart';
 
-import '../widget/on_will_pop.dart';
-
 class FavoritesPage extends StatefulWidget {
-  final int userID;
-
-  const FavoritesPage({Key? key, required this.userID}) : super(key: key);
+  const FavoritesPage({Key? key}) : super(key: key);
 
   @override
   State<FavoritesPage> createState() => _FavoritesPage();

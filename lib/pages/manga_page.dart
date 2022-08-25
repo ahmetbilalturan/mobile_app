@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/chapter.dart';
-import 'package:test_app/model/manga.dart';
-import 'package:test_app/pages/login_page.dart';
+import 'package:test_app/model/models.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 import 'package:test_app/widget/all_widgets.dart';
-
-import 'content_screen.dart';
 
 class MangaPage extends StatefulWidget {
   final Manga manga;
@@ -116,7 +113,7 @@ class _MangaPageState extends State<MangaPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => showLoadingOverlay());
-    checkifitsinfavorites();
+    LoadingPage.isLogined ? checkifitsinfavorites() : null;
     getChapters();
   }
 
@@ -205,41 +202,43 @@ class _MangaPageState extends State<MangaPage> {
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          isitinfavorites
-                              ? IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback(
-                                              (_) => showLoadingOverlay());
-                                    });
-                                    removefromfavorites();
-                                  },
-                                  icon: Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    shadows: ColorList.textShadows,
-                                  ))
-                              : IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback(
-                                              (_) => showLoadingOverlay());
-                                    });
-                                    addtofavorites();
-                                  },
-                                  icon: Icon(
-                                    Icons.favorite,
-                                    color: Colors.white,
-                                    shadows: ColorList.textShadows,
-                                  ),
-                                ),
-                        ],
-                      ),
+                      LoadingPage.isLogined
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                isitinfavorites
+                                    ? IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) =>
+                                                    showLoadingOverlay());
+                                          });
+                                          removefromfavorites();
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          color: Colors.red,
+                                          shadows: ColorList.textShadows,
+                                        ))
+                                    : IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) =>
+                                                    showLoadingOverlay());
+                                          });
+                                          addtofavorites();
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          color: Colors.white,
+                                          shadows: ColorList.textShadows,
+                                        ),
+                                      ),
+                              ],
+                            )
+                          : const SizedBox(),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 0, 8, 30),
                         child: Column(
@@ -249,9 +248,9 @@ class _MangaPageState extends State<MangaPage> {
                             Row(
                               children: [
                                 InkWell(
-                                  onTap: () => Navigator.of(context)
-                                      .popAndPushNamed('/genre',
-                                          arguments: widget.manga.genre),
+                                  onTap: () => Navigator.of(context).pushNamed(
+                                      '/genre',
+                                      arguments: [widget.manga.genre]),
                                   child: Text(
                                     widget.manga.genre,
                                     style: TextStyle(
@@ -268,10 +267,13 @@ class _MangaPageState extends State<MangaPage> {
                                       fontFamily: 'DynaPuff'),
                                 ),
                                 InkWell(
-                                  onTap: () => Navigator.of(context)
-                                      .popAndPushNamed('/weekly',
-                                          arguments:
-                                              widget.manga.weeklyPublishDay),
+                                  onTap: () {
+                                    LoadingPage.currentRoute = '/weekly';
+                                    Navigator.of(context)
+                                        .pushNamed('/weekly', arguments: [
+                                      (widget.manga.weeklyPublishDay).toString()
+                                    ]);
+                                  },
                                   child: Text(
                                     widget.manga.weeklyPublishDay,
                                     style: TextStyle(
@@ -329,21 +331,17 @@ class _MangaPageState extends State<MangaPage> {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(0, 1, 0, 1),
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ContentScreen(
-                          chapterID: allchapters[index].id,
-                          mangaID: widget.manga.id,
-                          indexofchapter: index,
-                          allchapters: allchapters,
-                          chapterName: allchapters[index].title,
-                          manga: widget.manga,
-                        ),
-                      ),
-                    );
-                  },
+                  onTap: () => Navigator.of(context).pushNamed(
+                    '/contentpage',
+                    arguments: [
+                      allchapters[index].id,
+                      widget.manga.id,
+                      allchapters[index].title,
+                      allchapters,
+                      index,
+                      widget.manga
+                    ],
+                  ),
                   child: Container(
                     color: const Color.fromARGB(154, 42, 42, 42),
                     child: Row(
