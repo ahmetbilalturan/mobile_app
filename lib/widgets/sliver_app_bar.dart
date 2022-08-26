@@ -4,7 +4,12 @@ import 'package:test_app/colorlist.dart';
 
 class SliverHeader extends StatelessWidget {
   final String title;
-  const SliverHeader({Key? key, required this.title}) : super(key: key);
+  late bool isAdding;
+  SliverHeader({
+    Key? key,
+    required this.title,
+    isAdding = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

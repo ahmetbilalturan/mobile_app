@@ -49,7 +49,6 @@ class MenuItems {
         break;
       case 7:
         drawerRouteFunc(context, '/artistmanagementpage');
-        LoadingPage.currentRoute = '/homepage';
         break;
     }
   }

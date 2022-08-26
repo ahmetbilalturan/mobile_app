@@ -380,18 +380,7 @@ class _MangaPageState extends State<MangaPage> {
                                   Text(
                                     allchapters[index].title,
                                     style: TextStyle(
-                                        shadows: const <Shadow>[
-                                          Shadow(
-                                            offset: Offset(1, 1),
-                                            blurRadius: 3.0,
-                                            color: Colors.black,
-                                          ),
-                                          Shadow(
-                                            offset: Offset(3, 3),
-                                            blurRadius: 8.0,
-                                            color: Colors.black,
-                                          ),
-                                        ],
+                                        shadows: ColorList.textShadows,
                                         color: ColorList.textColor,
                                         fontSize: 20,
                                         fontFamily: 'DynaPuff'),

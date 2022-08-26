@@ -98,7 +98,7 @@ class _AllMangasPage extends State<AllMangasPage> {
           color: ColorList.backgroundColor,
           child: CustomScrollView(
             slivers: [
-              const SliverHeader(title: 'Tüm Mangalar'),
+              SliverHeader(title: 'Tüm Mangalar'),
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                 sliver: SliverToBoxAdapter(

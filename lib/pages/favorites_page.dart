@@ -134,7 +134,7 @@ class _FavoritesPage extends State<FavoritesPage> {
                   )
                 : CustomScrollView(
                     slivers: [
-                      const SliverHeader(title: "Favoriler"),
+                      SliverHeader(title: "Favoriler"),
                       SliverPadding(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                         sliver: SliverToBoxAdapter(

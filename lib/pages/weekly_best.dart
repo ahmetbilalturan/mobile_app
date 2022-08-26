@@ -11,9 +11,9 @@ class WeeklyBestPage extends StatefulWidget {
 class _WeeklyBestPage extends State<WeeklyBestPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.purple,
-      drawer: NavigationDrawerWidgetUser(),
+      drawer: const NavigationDrawerWidgetUser(),
       body: CustomScrollView(
         slivers: [
           SliverHeader(title: "Haftalık En İyiler"),

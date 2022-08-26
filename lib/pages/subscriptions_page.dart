@@ -134,7 +134,7 @@ class _SubscriptionsPage extends State<SubscriptionsPage> {
                   )
                 : CustomScrollView(
                     slivers: [
-                      const SliverHeader(title: "Abonelikler"),
+                      SliverHeader(title: "Abonelikler"),
                       SliverPadding(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                         sliver: SliverToBoxAdapter(
