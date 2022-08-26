@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/pages/screens.dart';
-import 'package:test_app/widget/all_widgets.dart';
+import 'package:test_app/widgets/all_widgets.dart';
 
 class NavigationDrawerWidgetUser extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
@@ -52,6 +52,13 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
               icon: Icons.book_sharp,
               onClicked: () => MenuItems().selectedItem(context, 5)),
           const SizedBox(height: 8),
+          LoginPage.isArtist
+              ? MenuItems().buildMenuItem(
+                  text: 'Çizer',
+                  icon: Icons.draw,
+                  onClicked: () => MenuItems().selectedItem(context, 7))
+              : const SizedBox(),
+          LoginPage.isArtist ? const SizedBox(height: 8) : const SizedBox(),
           const Divider(color: Colors.white70),
           const SizedBox(height: 8),
           MenuItems().buildMenuItem(

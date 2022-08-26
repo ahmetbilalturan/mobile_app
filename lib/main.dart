@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/pages/loading_page.dart';
+import 'package:test_app/pages/allmangas_page.dart';
+import 'package:test_app/pages/artist_management_page.dart';
 import 'package:test_app/route_generator.dart';
 import 'package:flutter/services.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         //route to homepage
         //home: LandingScreen(),
-        home: const LoadingPage(),
+        home: const MyGrid(),
         //initialRoute: '/login',
         onGenerateRoute: RouteGenerator.generateRoute,
       ),

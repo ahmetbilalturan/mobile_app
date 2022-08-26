@@ -5,8 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
-import 'package:test_app/widget/all_widgets.dart';
-import 'package:test_app/model/models.dart';
+import 'package:test_app/widgets/all_widgets.dart';
+import 'package:test_app/models/models.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;

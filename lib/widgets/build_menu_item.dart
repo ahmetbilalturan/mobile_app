@@ -47,6 +47,10 @@ class MenuItems {
         LoadingPage.currentRoute = '/homepage';
         Navigator.of(context).pushNamed("/homepage");
         break;
+      case 7:
+        drawerRouteFunc(context, '/artistmanagementpage');
+        LoadingPage.currentRoute = '/homepage';
+        break;
     }
   }
 

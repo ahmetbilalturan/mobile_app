@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/services/authservices.dart';
-import 'package:test_app/model/models.dart';
-import 'package:test_app/widget/all_widgets.dart';
+import 'package:test_app/models/models.dart';
+import 'package:test_app/widgets/all_widgets.dart';
 
 class ContentScreen extends StatefulWidget {
   final int chapterID, mangaID, indexofchapter;

@@ -1,4 +1,5 @@
 export 'allmangas_page.dart';
+export 'artist_management_page.dart';
 export 'artist_page.dart';
 export 'content_screen.dart';
 export 'favorites_page.dart';

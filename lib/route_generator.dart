@@ -39,15 +39,16 @@ class RouteGenerator {
       case '/forgotpassword':
         return CustomPageRoute(child: const ForgotPassword());
       case '/contentpage':
-        return MaterialPageRoute(
-            builder: (context) => ContentScreen(
-                  chapterID: args.elementAt(0),
-                  mangaID: args.elementAt(1),
-                  chapterName: args.elementAt(2),
-                  allchapters: args.elementAt(3),
-                  indexofchapter: args.elementAt(4),
-                  manga: args.elementAt(5),
-                ));
+        return CustomPageRoute(
+          child: ContentScreen(
+            chapterID: args.elementAt(0),
+            mangaID: args.elementAt(1),
+            chapterName: args.elementAt(2),
+            allchapters: args.elementAt(3),
+            indexofchapter: args.elementAt(4),
+            manga: args.elementAt(5),
+          ),
+        );
       case '/profile':
         return CustomPageRoute(
             child: const ProfilePage(title: 'Hoşgeldin Kullanıcı'));
@@ -61,11 +62,13 @@ class RouteGenerator {
             child: WeeklyScreen(
                 day: args.isEmpty ? '' : args.elementAt(0).toString()));
       case '/mangapage':
-        return MaterialPageRoute(
-          builder: ((context) => MangaPage(
-                manga: args.elementAt(0),
-              )),
+        return CustomPageRoute(
+          child: MangaPage(
+            manga: args.elementAt(0),
+          ),
         );
+      case '/artistmanagementpage':
+        return CustomPageRoute(child: const MyGrid());
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(title: 'Hata'));

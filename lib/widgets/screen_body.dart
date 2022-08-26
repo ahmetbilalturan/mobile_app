@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/model/models.dart';
+import 'package:test_app/models/models.dart';
 
 // ignore: must_be_immutable
 class ScreenBody extends StatelessWidget {

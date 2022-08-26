@@ -39,6 +39,8 @@ dependencies:
   image_picker:
   fluttertoast:
   shared_preferences:
+  reorderables:
+  reorderable_grid_view:
 
 dev_dependencies:
   flutter_test:

@@ -31,6 +31,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 LoginPage.email = val.data['email'];
                 LoginPage.username = val.data['username'];
                 LoginPage.profilepicture = val.data['profilepicture'];
+                LoginPage.isArtist = val.data['isArtist'];
                 Navigator.of(context)
                     .popAndPushNamed('/homepage', arguments: []);
               } else {

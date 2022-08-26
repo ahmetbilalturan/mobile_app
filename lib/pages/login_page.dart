@@ -7,6 +7,7 @@ import 'package:test_app/services/authservices.dart';
 class LoginPage extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   static var username, email, profilepicture, userid;
+  static bool isArtist = false;
 
   const LoginPage({Key? key}) : super(key: key);
 
@@ -187,7 +188,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/forgotpassword');
+                      Navigator.of(context)
+                          .pushNamed('/forgotpassword', arguments: []);
                     },
                     child: const Text(
                       'Şifremi Unuttum',
@@ -217,6 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                                       LoginPage.username = val.data['username'];
                                       LoginPage.profilepicture =
                                           val.data['profilepicture'];
+                                      LoginPage.isArtist = val.data['isArtist'];
                                       _handleRemeberme();
                                       setState(() {
                                         hideLoadingOverlay();
@@ -224,8 +227,9 @@ class _LoginPageState extends State<LoginPage> {
                                       LoadingPage.currentRoute = '/homepage';
                                       Navigator.of(context)
                                           .popUntil((route) => false);
-                                      Navigator.of(context)
-                                          .pushNamed('/homepage');
+                                      Navigator.of(context).pushNamed(
+                                          '/homepage',
+                                          arguments: []);
                                     } else {
                                       Fluttertoast.showToast(
                                         msg: val.data['msg'],
@@ -272,7 +276,8 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(fontSize: 20, color: Colors.blue),
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushNamed('/signup');
+                          Navigator.of(context)
+                              .pushNamed('/signup', arguments: []);
                         },
                       ),
                     ],

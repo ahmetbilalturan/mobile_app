@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_app/pages/screens.dart';
-import 'package:test_app/widget/all_widgets.dart';
+import 'package:test_app/widgets/all_widgets.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/model/models.dart';
+import 'package:test_app/models/models.dart';
 import 'package:test_app/services/authservices.dart';
 
 class WeeklyScreen extends StatefulWidget {
