@@ -4,6 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:test_app/colorlist.dart';
+import 'package:test_app/models/manga.dart';
+import 'package:test_app/pages/login_page.dart';
+import 'package:test_app/services/authservices.dart';
 import 'dart:io';
 
 import 'package:test_app/widgets/all_widgets.dart';
@@ -17,6 +20,50 @@ class MyGrid extends StatefulWidget {
 
 class _MyGridState extends State<MyGrid> {
   List<File> images = [];
+  List<Manga> allmangas = [];
+  List<Manga> dummyMangas = [];
+  OverlayEntry? entry;
+
+  void getArtistsMangas(int artistID) async {
+    await AuthService().getartistsmangas(artistID).then((val) {
+      setState(() {
+        allmangas = val.map((json) => Manga.fromJson(json)).toList();
+        dummyMangas = allmangas;
+        hideLoadingOverlay();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => showLoadingOverlay());
+    getArtistsMangas(LoginPage.userid);
+  }
+
+  void showLoadingOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    entry = OverlayEntry(
+      builder: (context) => buildLoadingOverlay(),
+    );
+
+    overlay.insert(entry!);
+  }
+
+  void hideLoadingOverlay() {
+    entry!.remove();
+    entry = null;
+  }
+
+  Widget buildLoadingOverlay() => const Material(
+        color: Colors.transparent,
+        elevation: 8,
+        child: Center(
+          child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 163, 171, 192)),
+        ),
+      );
 
   Future pickImage() async {
     try {
@@ -50,6 +97,19 @@ class _MyGridState extends State<MyGrid> {
     );
   }
 
+  Widget buildText(String text, bool isBold) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Text(
+        text,
+        style: TextStyle(
+            fontFamily: 'DynaPuff',
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            color: ColorList.textColor),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,202 +118,97 @@ class _MyGridState extends State<MyGrid> {
       drawer: const NavigationDrawerWidgetUser(),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(onPressed: () {}, icon: Icon(Icons.add_box)),
-              )
-            ],
-            iconTheme: IconThemeData(
-              color: ColorList.iconColor,
-              shadows: ColorList.textShadows,
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 10),
+            sliver: SliverAppBar(
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add_circle_outline)),
+                )
+              ],
+              iconTheme: IconThemeData(
+                color: ColorList.iconColor,
+                shadows: ColorList.textShadows,
+              ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: Text(
+                'Mangalarım',
+                style: (TextStyle(
+                    fontFamily: 'DynaPuff',
+                    shadows: ColorList.textShadows,
+                    color: ColorList.textColor,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold)),
+              ),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+              centerTitle: true,
+              floating: false, //its
+              pinned: false, //for
+              snap: false, //floating
             ),
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            title: Text(
-              '',
-              style: (TextStyle(
-                  fontFamily: 'DynaPuff',
-                  shadows: ColorList.textShadows,
-                  color: ColorList.textColor,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold)),
-            ),
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            centerTitle: true,
-            floating: false, //its
-            pinned: false, //for
-            snap: false, //floating
           ),
           SliverList(
-              delegate: SliverChildBuilderDelegate(childCount: 5,
-                  (BuildContext context, int index) {
+              delegate:
+                  SliverChildBuilderDelegate(childCount: dummyMangas.length,
+                      (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              child: Container(
-                height: 200,
-                color: const Color.fromARGB(154, 42, 42, 42),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Image.network(
-                              'https://static.wikia.nocookie.net/spy-x-family9171/images/0/0e/Volume_1.png/revision/latest?cb=20200508212135'),
+              child: InkWell(
+                onTap: () => Navigator.of(context)
+                    .pushNamed('/mychapters', arguments: []),
+                child: Container(
+                  height: 150,
+                  color: const Color.fromARGB(154, 42, 42, 42),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 100,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 8),
+                        child: Image.network(
+                          dummyMangas[index].urlImage,
+                          fit: BoxFit.fill,
                         ),
-                        Column(
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
+                        child: Column(
                           mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 5, 5, 15),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Title:',
-                                          style: TextStyle(
-                                              fontFamily: 'DynaPuff',
-                                              fontWeight: FontWeight.bold,
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Genre:',
-                                          style: TextStyle(
-                                              fontFamily: 'DynaPuff',
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Status:',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Chapter Count:',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Publish Day:',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8, 5, 5, 15),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Cart',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Curt',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Zart',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Zirt',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Text(
-                                          'Zort',
-                                          style: TextStyle(
-                                              color: ColorList.textColor),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                            buildText('Title: ', true),
+                            buildText('Genre: ', true),
+                            buildText('Status: ', true),
+                            buildText('Chapter Count: ', true),
+                            buildText('Publish Day: ', true),
                           ],
                         ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        /* IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.edit,
-                            shadows: ColorList.textShadows,
-                            color: ColorList.iconColor,
-                          ),
-                        ), */
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.add_circle_outline,
-                              shadows: ColorList.textShadows,
-                              color: ColorList.iconColor,
-                            )),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildText(dummyMangas[index].title, false),
+                            buildText(dummyMangas[index].genre, false),
+                            buildText(dummyMangas[index].status, false),
+                            buildText(
+                                (dummyMangas[index].chaptercount).toString(),
+                                false),
+                            buildText(
+                                dummyMangas[index].weeklyPublishDay, false),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             );

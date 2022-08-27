@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/my_chapters.dart';
 import 'package:test_app/pages/screens.dart';
 
 class RouteGenerator {
@@ -69,6 +70,8 @@ class RouteGenerator {
         );
       case '/artistmanagementpage':
         return CustomPageRoute(child: const MyGrid());
+      case '/mychapters':
+        return CustomPageRoute(child: const MyChapters());
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(title: 'Hata'));
