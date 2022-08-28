@@ -14,59 +14,62 @@ class NavigationDrawerWidgetUser extends StatelessWidget {
     return Drawer(
         child: Container(
       color: ColorList.drawerBackgrounColor,
-      child: ListView(
-        children: <Widget>[
-          const SizedBox(height: 15),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(height: 15),
 
-          MenuItems().buildHeader(
-              padding: padding,
-              urlImage: LoginPage.profilepicture.toString(),
-              name: LoginPage.username, //Database'den Çekilecek
-              onClicked: () =>
-                  MenuItems().selectedItem(context, 0)), //navigate profile page
+            MenuItems().buildHeader(
+                padding: padding,
+                urlImage: LoginPage.profilepicture.toString(),
+                name: LoginPage.username, //Database'den Çekilecek
+                onClicked: () => MenuItems()
+                    .selectedItem(context, 0)), //navigate profile page
 
-          const SizedBox(height: 10),
-          MenuItems().buildMenuItem(
-            text: 'Anasayfa',
-            icon: Icons.home,
-            onClicked: () => MenuItems().selectedItem(context, 1),
-          ), //with int value selectedItem function resolve which pages it should go
-          const SizedBox(height: 8),
-          MenuItems().buildMenuItem(
-              text: 'Favoriler',
-              icon: Icons.favorite,
-              onClicked: () => MenuItems().selectedItem(context, 2)),
-          const SizedBox(height: 8),
-          MenuItems().buildMenuItem(
-              text: 'Abonelikler',
-              icon: Icons.subscriptions,
-              onClicked: () => MenuItems().selectedItem(context, 3)),
-          const SizedBox(height: 8),
-          MenuItems().buildMenuItem(
-              text: 'Haftalık Yayınlar',
-              icon: Icons.calendar_month,
-              onClicked: () => MenuItems().selectedItem(context, 4)),
-          const SizedBox(height: 8),
-          MenuItems().buildMenuItem(
-              text: 'Tüm Mangalar',
-              icon: Icons.book_sharp,
-              onClicked: () => MenuItems().selectedItem(context, 5)),
-          const SizedBox(height: 8),
-          LoginPage.isArtist
-              ? MenuItems().buildMenuItem(
-                  text: 'Çizer',
-                  icon: Icons.draw,
-                  onClicked: () => MenuItems().selectedItem(context, 7))
-              : const SizedBox(),
-          LoginPage.isArtist ? const SizedBox(height: 8) : const SizedBox(),
-          const Divider(color: Colors.white70),
-          const SizedBox(height: 8),
-          MenuItems().buildMenuItem(
-              text: 'Çıkış Yap',
-              icon: Icons.logout,
-              onClicked: () => MenuItems().selectedItem(context, 6)),
-          const SizedBox(height: 24),
-        ],
+            const SizedBox(height: 10),
+            MenuItems().buildMenuItem(
+              text: 'Anasayfa',
+              icon: Icons.home,
+              onClicked: () => MenuItems().selectedItem(context, 1),
+            ), //with int value selectedItem function resolve which pages it should go
+            const SizedBox(height: 8),
+            MenuItems().buildMenuItem(
+                text: 'Favoriler',
+                icon: Icons.favorite,
+                onClicked: () => MenuItems().selectedItem(context, 2)),
+            const SizedBox(height: 8),
+            MenuItems().buildMenuItem(
+                text: 'Abonelikler',
+                icon: Icons.subscriptions,
+                onClicked: () => MenuItems().selectedItem(context, 3)),
+            const SizedBox(height: 8),
+            MenuItems().buildMenuItem(
+                text: 'Haftalık Yayınlar',
+                icon: Icons.calendar_month,
+                onClicked: () => MenuItems().selectedItem(context, 4)),
+            const SizedBox(height: 8),
+            MenuItems().buildMenuItem(
+                text: 'Tüm Mangalar',
+                icon: Icons.book_sharp,
+                onClicked: () => MenuItems().selectedItem(context, 5)),
+            const SizedBox(height: 8),
+            LoginPage.isArtist
+                ? MenuItems().buildMenuItem(
+                    text: 'Çizer',
+                    icon: Icons.draw,
+                    onClicked: () => MenuItems().selectedItem(context, 7))
+                : const SizedBox(),
+            LoginPage.isArtist ? const SizedBox(height: 8) : const SizedBox(),
+            const Divider(color: Colors.white70),
+            const SizedBox(height: 8),
+            MenuItems().buildMenuItem(
+                text: 'Çıkış Yap',
+                icon: Icons.logout,
+                onClicked: () => MenuItems().selectedItem(context, 6)),
+            const SizedBox(height: 24),
+          ],
+        ),
       ),
     ));
   }

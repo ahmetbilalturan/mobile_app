@@ -2,24 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:test_app/colorlist.dart';
-import 'package:test_app/models/manga.dart';
-import 'package:test_app/pages/login_page.dart';
+import 'package:test_app/models/models.dart';
+import 'package:test_app/pages/screens.dart';
 import 'package:test_app/services/authservices.dart';
 import 'dart:io';
-
 import 'package:test_app/widgets/all_widgets.dart';
 
-class MyGrid extends StatefulWidget {
-  const MyGrid({Key? key}) : super(key: key);
+class ArtistManagementPage extends StatefulWidget {
+  const ArtistManagementPage({Key? key}) : super(key: key);
 
   @override
-  State<MyGrid> createState() => _MyGridState();
+  State<ArtistManagementPage> createState() => _ArtistManagementPageState();
 }
 
-class _MyGridState extends State<MyGrid> {
-  List<File> images = [];
+class _ArtistManagementPageState extends State<ArtistManagementPage> {
   List<Manga> allmangas = [];
   List<Manga> dummyMangas = [];
   OverlayEntry? entry;
@@ -29,8 +26,10 @@ class _MyGridState extends State<MyGrid> {
       setState(() {
         allmangas = val.map((json) => Manga.fromJson(json)).toList();
         dummyMangas = allmangas;
-        hideLoadingOverlay();
       });
+    });
+    setState(() {
+      hideLoadingOverlay();
     });
   }
 
@@ -65,49 +64,51 @@ class _MyGridState extends State<MyGrid> {
         ),
       );
 
-  Future pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-
-      final imageTemp = File(image.path);
-
-      setState(() {
-        images.add(imageTemp);
-      });
-    } on PlatformException catch (e) {
-      Fluttertoast.showToast(
-        msg: 'Failed to pick image: $e',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    }
-  }
-
-  Widget buildItem(File image) {
-    return Card(
-      key: ValueKey(image),
-      child: Image.file(
-        image,
-        fit: BoxFit.fill,
-      ),
-    );
-  }
-
   Widget buildText(String text, bool isBold) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Text(
         text,
         style: TextStyle(
-            fontFamily: 'DynaPuff',
-            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            color: ColorList.textColor),
+          fontFamily: 'DynaPuff',
+          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+          color: ColorList.textColor,
+          fontSize: 12,
+        ),
       ),
     );
+  }
+
+  Widget buildTitle(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontFamily: 'DynaPuff',
+          fontWeight: FontWeight.bold,
+          color: ColorList.iconColor,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  void addMangaControl() {
+    bool gotOnGoing = false;
+    for (int index = 0; index < allmangas.length; index++) {
+      if (allmangas[index].status == 'Devam Etmekte' ||
+          allmangas[index].status == 'Yeni') {
+        gotOnGoing = true;
+      }
+    }
+    if (gotOnGoing) {
+      Fluttertoast.showToast(
+          msg: 'Hali hazırda devam eden manganız bulunmakta!',
+          backgroundColor: Colors.red);
+    } else {
+      //Manga ekleme ekranına götür!
+    }
   }
 
   @override
@@ -125,8 +126,9 @@ class _MyGridState extends State<MyGrid> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_circle_outline)),
+                    onPressed: addMangaControl,
+                    icon: const Icon(Icons.add_circle_outline),
+                  ),
                 )
               ],
               iconTheme: IconThemeData(
@@ -146,124 +148,98 @@ class _MyGridState extends State<MyGrid> {
               ),
               systemOverlayStyle: SystemUiOverlayStyle.dark,
               centerTitle: true,
-              floating: false, //its
-              pinned: false, //for
-              snap: false, //floating
             ),
           ),
           SliverList(
-              delegate:
-                  SliverChildBuilderDelegate(childCount: dummyMangas.length,
-                      (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              child: InkWell(
-                onTap: () => Navigator.of(context)
-                    .pushNamed('/mychapters', arguments: []),
-                child: Container(
-                  height: 150,
-                  color: const Color.fromARGB(154, 42, 42, 42),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 150,
-                        width: 100,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 8),
-                        child: Image.network(
-                          dummyMangas[index].urlImage,
-                          fit: BoxFit.fill,
-                        ),
+            delegate: SliverChildBuilderDelegate(
+              childCount: dummyMangas.length,
+              (BuildContext context, int index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).pushNamed('/mychapters',
+                        arguments: [dummyMangas[index]]),
+                    child: Container(
+                      height: 175,
+                      color: const Color.fromARGB(154, 42, 42, 42),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            height: 175,
+                            width: 125,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 8),
+                            child: Image.network(
+                              dummyMangas[index].urlImage,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 0),
+                                  child: buildTitle(dummyMangas[index].title),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 5, 5, 5),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          buildText('Tür: ', true),
+                                          buildText('Durum: ', true),
+                                          buildText('Bölüm Sayısı: ', true),
+                                          buildText('Yayın Günü: ', true),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(8, 5, 5, 5),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          buildText(
+                                              dummyMangas[index].genre, false),
+                                          buildText(
+                                              dummyMangas[index].status, false),
+                                          buildText(
+                                              (dummyMangas[index].chaptercount)
+                                                  .toString(),
+                                              false),
+                                          buildText(
+                                              dummyMangas[index]
+                                                  .weeklyPublishDay,
+                                              false),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildText('Title: ', true),
-                            buildText('Genre: ', true),
-                            buildText('Status: ', true),
-                            buildText('Chapter Count: ', true),
-                            buildText('Publish Day: ', true),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildText(dummyMangas[index].title, false),
-                            buildText(dummyMangas[index].genre, false),
-                            buildText(dummyMangas[index].status, false),
-                            buildText(
-                                (dummyMangas[index].chaptercount).toString(),
-                                false),
-                            buildText(
-                                dummyMangas[index].weeklyPublishDay, false),
-                          ],
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          }))
-        ],
-
-        /* ReorderableGridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 4,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          footer: [
-            Card(
-              child: Center(
-                child: IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: pickImage,
-                ),
-              ),
+                );
+              },
             ),
-          ],
-          onReorder: (oldIndex, newIndex) {
-            setState(() {
-              final element = images.removeAt(oldIndex);
-              images.insert(newIndex, element);
-            });
-          },
-          children: images.map((image) => buildItem(image)).toList(),
-        ), */
+          )
+        ],
       ),
-    );
-  }
-
-  PreferredSizeWidget appBar() {
-    return AppBar(
-      iconTheme: IconThemeData(
-        color: ColorList.iconColor,
-        shadows: ColorList.textShadows,
-      ),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      actions: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.remove),
-            )),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: IconButton(
-              onPressed: pickImage,
-              icon: const Icon(Icons.add),
-            )),
-      ],
     );
   }
 }
