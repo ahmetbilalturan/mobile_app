@@ -7,7 +7,6 @@ class ScrollToHideWidget extends StatefulWidget {
   final Widget child;
   final ScrollController controller;
   final Duration duration;
-  bool isVisible = true;
   late Function callback;
   final Stream<bool> stream;
 
@@ -24,14 +23,13 @@ class ScrollToHideWidget extends StatefulWidget {
 }
 
 class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
+  bool isVisible = true;
+
   void mySetState(bool boolean) {
-    /*  setState(() {
-      widget.isVisible = boolean;
-    }); */
-    if (!(widget.isVisible)) {
-      setState(() => widget.isVisible = true);
-    } else if (widget.isVisible) {
-      setState(() => widget.isVisible = false);
+    if (!isVisible) {
+      setState(() => isVisible = true);
+    } else if (isVisible) {
+      setState(() => isVisible = false);
     }
   }
 
@@ -60,17 +58,17 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
   }
 
   void show() {
-    if (!(widget.isVisible)) setState(() => widget.isVisible = true);
+    if (!isVisible) setState(() => isVisible = true);
   }
 
   void hide() {
-    if (widget.isVisible) setState(() => widget.isVisible = false);
+    if (isVisible) setState(() => isVisible = false);
   }
 
   @override
   Widget build(BuildContext context) => AnimatedContainer(
         duration: widget.duration,
-        height: widget.isVisible ? kBottomNavigationBarHeight : 0,
+        height: isVisible ? kBottomNavigationBarHeight : 0,
         child: Wrap(children: [widget.child]),
       );
 }

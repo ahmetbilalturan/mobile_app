@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/pages/screens.dart';
@@ -45,7 +46,7 @@ class MenuItems {
         Navigator.of(context).pop();
         LoadingPage.isLogined = false;
         LoadingPage.currentRoute = '/homepage';
-        Navigator.of(context).pushNamed("/homepage");
+        Navigator.of(context).pushNamed("/homepage", arguments: []);
         break;
       case 7:
         drawerRouteFunc(context, '/artistmanagementpage');

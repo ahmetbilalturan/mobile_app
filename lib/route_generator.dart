@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/pages/add_chapter_page.dart';
 import 'package:test_app/pages/my_chapters.dart';
 import 'package:test_app/pages/screens.dart';
 
@@ -75,11 +74,6 @@ class RouteGenerator {
         return CustomPageRoute(child: MyChapters(manga: args.elementAt(0)));
       case '/addchapter':
         return CustomPageRoute(child: const AddChapterPage());
-      case '/chapteroverview':
-        return CustomPageRoute(
-            child: ChapterOverview(
-          imageObjects: args.elementAt(0),
-        ));
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(title: 'Hata'));
