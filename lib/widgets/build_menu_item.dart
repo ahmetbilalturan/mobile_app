@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/pages/screens.dart';

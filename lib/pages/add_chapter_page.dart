@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:test_app/colorlist.dart';
 import 'package:test_app/pages/screens.dart';
+import 'package:test_app/widgets/all_widgets.dart';
 
 class AddChapterPage extends StatefulWidget {
   const AddChapterPage({Key? key}) : super(key: key);
@@ -52,28 +53,24 @@ class _AddChapterPageState extends State<AddChapterPage> {
 
   Future pickImage() async {
     try {
-      ///Aynı anda birden fazla fotoğraf seçme ekle!!!!
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-
-      final imageTemp = File(image.path);
-
-      setState(() {
-        if (pageController.page == 0) {
-          chapterCoverImage = imageTemp;
-        } else if (pageController.page == 1) {
-          images.add(Images(image: imageTemp, isSelected: false));
+      if (pageController.page == 0) {
+        final image =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (image == null) return;
+        setState(() {
+          chapterCoverImage = File(image.path);
+        });
+      } else if (pageController.page == 1) {
+        final image = await ImagePicker().pickMultiImage();
+        if (image == null) return;
+        for (int i = 0; i < image.length; i++) {
+          setState(() {
+            images.add(Images(image: File(image[i].path), isSelected: false));
+          });
         }
-      });
+      }
     } on PlatformException catch (e) {
-      Fluttertoast.showToast(
-        msg: 'Failed to pick image: $e',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      AddMangaChapterItems().showToast('Failed to pick image: $e', Colors.red);
     }
   }
 
@@ -123,9 +120,11 @@ class _AddChapterPageState extends State<AddChapterPage> {
       title: Text(
         'Bölüm Ekle',
         style: TextStyle(
-            fontFamily: 'DynaPuff',
-            fontWeight: FontWeight.bold,
-            color: ColorList.textColor),
+          fontFamily: 'DynaPuff',
+          fontWeight: FontWeight.bold,
+          color: ColorList.textColor,
+          fontSize: 23,
+        ),
       ),
       iconTheme: IconThemeData(
         color: ColorList.iconColor,
@@ -188,6 +187,7 @@ class _AddChapterPageState extends State<AddChapterPage> {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: IconButton(
+                      icon: const Icon(Icons.done),
                       onPressed: () {
                         showDialog(
                           context: context,
@@ -196,94 +196,18 @@ class _AddChapterPageState extends State<AddChapterPage> {
                             content: const Text(
                                 'Bu bölümü yüklemek istediğine emin misin?'),
                             actions: <Widget>[
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: ColorList.iconColor),
-                                onPressed: () =>
-                                    Navigator.of(context).pop(false),
-                                child: const Text('Hayır'),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(255, 47, 125, 188)),
-                                onPressed: () {
-                                  if (title == null ||
-                                      title == '' ||
-                                      chapterCoverImage == null ||
-                                      images.length < 10) {
-                                    if (title == null || title == '') {
-                                      showToast(
-                                          'Başlık boş olamaz', Colors.red);
-                                    }
-                                    if (chapterCoverImage == null) {
-                                      showToast(
-                                          'Bölüm kapak fotoğrafı boş olamaz',
-                                          Colors.red);
-                                    }
-                                    if (images.length < 10) {
-                                      showToast(
-                                          'Sayfa sayısı en az 10 olmalıdır',
-                                          Colors.red);
-                                    }
-                                  } else {
-                                    Navigator.of(context).pop(false);
-                                    if (!isGonnaPublish) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                                title:
-                                                    const Text('Emin misin?'),
-                                                content: const Text(
-                                                    'Oluşturduğunuz bölüm yayın sırasına alınmayacaktır!\n(Daha sonra ekleyebilirsiniz)'),
-                                                actions: <Widget>[
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            primary: const Color
-                                                                    .fromARGB(
-                                                                255,
-                                                                47,
-                                                                125,
-                                                                188)),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop(false);
-                                                    },
-                                                    child: const Text('Hayır'),
-                                                  ),
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            primary: ColorList
-                                                                .iconColor),
-                                                    onPressed: () {
-                                                      showToast(
-                                                          'Bölüm başarıyla kaydedilmiştir',
-                                                          Colors.green);
-                                                      //api add chapter çağır
-                                                      Navigator.of(context)
-                                                          .pop(false);
-                                                    },
-                                                    child: const Text('Evet'),
-                                                  )
-                                                ],
-                                              ));
-                                    } else {
-                                      showToast(
-                                          'Bölüm başarıyla kaydedilmiştir',
-                                          Colors.green);
-
-                                      ///api add chapter çağır
-                                    }
-                                  }
-                                },
-                                child: const Text('Evet'),
+                              AddMangaChapterItems().alertBoxButtons(
+                                  context, ColorList.iconColor, 'Hayır', () {}),
+                              AddMangaChapterItems().alertBoxButtons(
+                                context,
+                                const Color.fromARGB(255, 47, 125, 188),
+                                'Evet',
+                                () => checkIfChapterValid(),
                               ),
                             ],
                           ),
                         );
                       },
-                      icon: const Icon(Icons.done),
                     ),
                   )
                 : const SizedBox(),
@@ -291,47 +215,75 @@ class _AddChapterPageState extends State<AddChapterPage> {
     );
   }
 
-  void showToast(String msg, Color color) {
-    Fluttertoast.showToast(
-      msg: msg,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: color,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+  void checkIfChapterValid() {
+    if (title == null ||
+        title == '' ||
+        chapterCoverImage == null ||
+        images.length < 10) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Uyarı!'),
+          content: const Text(
+              'Eksik bilgi girdiniz! Aşağıdaki uyarılara dikkat edin!\n*Başlık boş olmamalıdır.\n**Bölümün kapak fotoğrafı boş olmamalıdır.\n***En az 10 sayfa yayınlamalısınız.'),
+          actions: [
+            AddMangaChapterItems().alertBoxButtons(
+              context,
+              Colors.grey,
+              'Tamam',
+              () {},
+            )
+          ],
+        ),
+      );
+    } else {
+      if (!isGonnaPublish) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Emin misin?'),
+            content: const Text(
+                'Oluşturduğunuz bölüm yayın sırasına alınmayacaktır!\n(Daha sonra ekleyebilirsiniz)'),
+            actions: <Widget>[
+              AddMangaChapterItems().alertBoxButtons(
+                context,
+                const Color.fromARGB(255, 47, 125, 188),
+                'Hayır',
+                () {},
+              ),
+              AddMangaChapterItems().alertBoxButtons(context,
+                  ColorList.iconColor, 'Evet', () => acceptAddChapter())
+            ],
+          ),
+        );
+      } else {
+        acceptAddChapter();
+      }
+    }
+  }
+
+  void acceptAddChapter() {
+    AddMangaChapterItems()
+        .showToast('Bölüm başarıyla kaydedilmiştir', Colors.green);
+
+    ///api add chapter çağır
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 26,
-        selectedLabelStyle: TextStyle(
-          fontFamily: 'DynaPuff',
-          fontWeight: FontWeight.bold,
-          shadows: ColorList.textShadows,
-        ),
-        showUnselectedLabels: false,
-        selectedIconTheme: IconThemeData(
-            color: const Color.fromARGB(255, 207, 107, 107),
-            shadows: ColorList.textShadows),
-        unselectedIconTheme: IconThemeData(
-            color: const Color.fromARGB(175, 207, 107, 107),
-            shadows: ColorList.textShadows),
-        type: BottomNavigationBarType.shifting,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() {
+      bottomNavigationBar: AddMangaChapterItems()
+          .bottomNavigationBar(pageController, currentIndex, (index) {
+        setState(() {
           currentIndex = index;
           pageController.animateToPage(
             index,
             duration: const Duration(milliseconds: 750),
             curve: Curves.ease,
           );
-        }),
-        items: bottomnavbaritems,
-      ),
+        });
+      }, bottomnavbaritems),
       backgroundColor: ColorList.backgroundColor,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -354,18 +306,11 @@ class _AddChapterPageState extends State<AddChapterPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                child: Text(
-                  'Bölüm Bilgileri',
-                  style: TextStyle(
-                      fontFamily: 'DynaPuff',
-                      fontWeight: FontWeight.bold,
-                      color: ColorList.iconColor,
-                      shadows: ColorList.textShadows,
-                      decoration: TextDecoration.underline,
-                      fontSize: 20),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
                 ),
+                child:
+                    AddMangaChapterItems().infoScreenTitles('Bölüm Bilgileri'),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 7, bottom: 20, right: 22),
@@ -375,44 +320,18 @@ class _AddChapterPageState extends State<AddChapterPage> {
                     children: [
                       TextFormField(
                         style: TextStyle(
-                            fontFamily: 'DynaPuff', color: ColorList.textColor),
+                          fontFamily: 'DynaPuff',
+                          color: ColorList.textColor,
+                          fontSize: 13,
+                        ),
                         onChanged: (value) {
                           setState(() {
                             title = value;
                           });
                         },
                         controller: titleController,
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Başlık',
-                            style: TextStyle(
-                                fontFamily: 'DynaPuff',
-                                fontWeight: FontWeight.bold,
-                                color: ColorList.textColor,
-                                shadows: ColorList.textShadows,
-                                fontSize: 15),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: const BorderSide(
-                              color: Colors.blue,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide:
-                                const BorderSide(color: Colors.lightBlue),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: const BorderSide(color: Colors.red),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide:
-                                const BorderSide(color: Colors.redAccent),
-                          ),
-                        ),
+                        decoration:
+                            AddMangaChapterItems().inputDecoration('Başlık'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
@@ -431,11 +350,13 @@ class _AddChapterPageState extends State<AddChapterPage> {
                               padding: const EdgeInsets.only(left: 15),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary:
-                                      const Color.fromARGB(255, 32, 39, 66),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  primary: ColorList.drawerBackgrounColor,
                                   side: const BorderSide(
                                     width: 1.5,
-                                    color: Color.fromARGB(255, 55, 67, 116),
+                                    color: Color.fromARGB(255, 45, 54, 91),
                                   ),
                                 ),
                                 onPressed: () {
@@ -475,17 +396,18 @@ class _AddChapterPageState extends State<AddChapterPage> {
                               ),
                             ),
                             Checkbox(
-                                checkColor:
-                                    const Color.fromARGB(255, 35, 102, 157),
-                                fillColor: MaterialStateProperty.resolveWith(
-                                    (states) =>
-                                        const Color.fromARGB(255, 55, 67, 116)),
-                                value: isGonnaPublish,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isGonnaPublish = value!;
-                                  });
-                                }),
+                              checkColor:
+                                  const Color.fromARGB(255, 35, 102, 157),
+                              fillColor: MaterialStateProperty.resolveWith(
+                                  (states) =>
+                                      const Color.fromARGB(255, 55, 67, 116)),
+                              value: isGonnaPublish,
+                              onChanged: (value) {
+                                setState(() {
+                                  isGonnaPublish = value!;
+                                });
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -493,16 +415,7 @@ class _AddChapterPageState extends State<AddChapterPage> {
                   ),
                 ),
               ),
-              Text(
-                'Önizleme',
-                style: TextStyle(
-                    fontFamily: 'DynaPuff',
-                    fontWeight: FontWeight.bold,
-                    color: ColorList.iconColor,
-                    shadows: ColorList.textShadows,
-                    decoration: TextDecoration.underline,
-                    fontSize: 20),
-              ),
+              AddMangaChapterItems().infoScreenTitles('Önizleme'),
             ],
           ),
         ),
@@ -553,7 +466,6 @@ class _AddChapterPageState extends State<AddChapterPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          //değişken ekle
                           title == null || title == '' ? 'Başlık' : title!,
                           style: TextStyle(
                               shadows: ColorList.textShadows,

@@ -16,3 +16,4 @@ export 'subscriptions_page.dart';
 export 'weekly_screen.dart';
 export 'weekly_best.dart';
 export 'add_chapter_page.dart';
+export 'add_manga_page.dart';

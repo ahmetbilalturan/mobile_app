@@ -74,6 +74,8 @@ class RouteGenerator {
         return CustomPageRoute(child: MyChapters(manga: args.elementAt(0)));
       case '/addchapter':
         return CustomPageRoute(child: const AddChapterPage());
+      case '/addmanga':
+        return CustomPageRoute(child: const AddMangaPage());
       default:
         return MaterialPageRoute(
             builder: (context) => const MyHomePage(title: 'Hata'));

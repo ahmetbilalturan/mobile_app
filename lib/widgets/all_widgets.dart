@@ -10,3 +10,4 @@ export 'scroll_to_hide_widget.dart';
 export 'on_will_pop.dart';
 export 'appbar_widget.dart';
 export 'button_widget.dart';
+export 'add_manga_chapter_widgets.dart';

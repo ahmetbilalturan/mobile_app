@@ -102,13 +102,14 @@ class _ArtistManagementPageState extends State<ArtistManagementPage> {
         gotOnGoing = true;
       }
     }
-    if (gotOnGoing) {
+    /* if (gotOnGoing) {
       Fluttertoast.showToast(
           msg: 'Hali hazırda devam eden manganız bulunmakta!',
           backgroundColor: Colors.red);
     } else {
       //Manga ekleme ekranına götür!
-    }
+    } */
+    Navigator.of(context).pushNamed('/addmanga', arguments: []);
   }
 
   @override
